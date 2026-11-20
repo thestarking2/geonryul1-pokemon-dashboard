@@ -512,6 +512,8 @@ body.focus-mode .focus-exit{display:block}
 .box-cell .bno{font-size:10px;color:#6b6b6b;position:absolute;left:4px;top:2px}
 .box-cell.on{border-color:#ffd23f;box-shadow:0 0 0 3px #ffd23f inset}
 .box-cell .bname{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px}
+.box-cell.empty{background:rgba(255,255,255,.13);border-style:dashed;border-color:rgba(31,92,57,.45)}
+.box-cell.empty .bno{color:rgba(234,255,239,.55)}
 .box-empty{color:#eaffef;font-size:14px;text-align:center;padding:20px 10px;line-height:1.6}
 .box-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 
@@ -1903,6 +1905,12 @@ body.focus-mode .focus-exit{display:block}
           '<span class="bname">' + esc(S.box[id].nameKo || ('#' + id)) + '</span>' +
           '</button>';
       });
+      // 고전 포켓몬 박스처럼 빈 칸을 30칸 단위로 채운다
+      var slots = Math.max(30, Math.ceil(total / 30) * 30);
+      for (var s = total; s < slots; s++) {
+        cells += '<div class="box-cell empty" aria-hidden="true"><span class="bno">' +
+          String(s + 1).padStart(2, '0') + '</span></div>';
+      }
     }
 
     var body = '<div class="box-toolbar">' +
