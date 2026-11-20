@@ -613,6 +613,115 @@ body.focus-mode .sec-name{font-size:22px}
 body.focus-mode .focus-exit{display:block}
 .focus-exit:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(43,43,51,.45)}
 
+/* ---------- 📖 영어사전 ---------- */
+.qbtn.dict{background:linear-gradient(170deg,#eaf7ff,#bfe4ff);border-color:#134a72;color:#0f3f61;box-shadow:0 4px 0 #7fb3d6}
+@media (min-width:768px){.qbtn.dict{box-shadow:0 3px 0 #7fb3d6}}
+
+.dict-wrap{display:flex;flex-direction:column;gap:9px}
+.dict-topline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dict-search{display:flex;gap:8px;align-items:center;flex:1 1 240px;min-width:0}
+.dict-search input{
+  flex:1;min-width:0;height:52px;border:3px solid var(--ink);border-radius:16px;
+  padding:0 14px;font-size:19px;background:#fff;outline:none;
+}
+.dict-search input:focus{box-shadow:0 0 0 4px rgba(58,160,255,.28)}
+.dict-search .dict-clear{width:52px;height:52px;flex:none;border:3px solid var(--ink);border-radius:16px;background:#fff;font-size:20px;font-weight:700}
+.dict-dice{height:52px;flex:none;padding:0 15px;border:3px solid var(--ink);border-radius:16px;
+  background:linear-gradient(170deg,#fff6d8,#ffe087);font-size:16px;font-weight:700;box-shadow:0 4px 0 rgba(43,43,51,.4)}
+.dict-dice:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,43,51,.4)}
+.dict-cats{display:flex;gap:6px;overflow-x:auto;padding:2px 1px 5px;scrollbar-width:none}
+.dict-cats::-webkit-scrollbar{display:none}
+.dchip{flex:0 0 auto;padding:8px 13px;border:2.5px solid var(--ink);border-radius:999px;background:#fffdf8;
+  font-size:15px;font-weight:700;white-space:nowrap;box-shadow:0 2px 0 rgba(43,43,51,.18)}
+.dchip.active{background:var(--yellow)}
+.dict-status{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--ink-soft)}
+.dict-status .pill{background:#fff3d0;border:2px solid #d9b45a;border-radius:999px;padding:1px 9px;font-weight:700;color:#6b4a00}
+.dict-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;
+  max-height:min(54vh,520px);overflow-y:auto;padding:3px 3px 6px}
+.dw{display:flex;align-items:center;gap:9px;min-height:62px;padding:9px 11px;text-align:left;
+  border:2.5px solid var(--ink);border-radius:15px;background:#fffdf8;box-shadow:0 3px 0 rgba(43,43,51,.16)}
+.dw:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(43,43,51,.16)}
+.dw .dwe{font-size:25px;line-height:1;flex:none}
+.dw .dwt{min-width:0}
+.dw .dww,.dw .dwk{display:block}
+.dw .dww{font-size:19px;font-weight:700;line-height:1.12;word-break:break-word}
+.dw .dwk{font-size:13.5px;color:var(--ink-soft);line-height:1.25}
+.dw .dbest{font-size:12px;color:#a96600;font-weight:700;margin-left:auto;flex:none}
+.dict-online-card{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:8px;padding:12px 14px;
+  border:3px solid #134a72;border-radius:16px;background:linear-gradient(170deg,#eaf7ff,#c9e9ff);
+  text-align:left;font-size:16px;font-weight:700;color:#0d3c5c;box-shadow:0 4px 0 rgba(19,74,114,.32)}
+.dict-online-card small{display:block;font-weight:400;font-size:12.5px;color:#3d6d8c;margin-top:2px}
+
+.dict-back{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 14px;
+  border:2.5px solid var(--ink);border-radius:12px;background:#fff;font-size:15px;font-weight:700;
+  box-shadow:0 3px 0 rgba(43,43,51,.25)}
+.dict-hero{display:flex;gap:12px;align-items:center;margin-top:8px;padding:12px 14px;
+  border:3px solid var(--ink);border-radius:20px;background:linear-gradient(170deg,#fffdf8,#fff3d6)}
+.dict-hero .dhemoji{font-size:56px;line-height:1;flex:none}
+.dict-hero .dhmain{min-width:0}
+.dict-word{font-size:38px;line-height:1.02;letter-spacing:-.6px;word-break:break-word}
+.dict-phon{font-size:16px;color:#6b5f52;margin-top:3px}
+.dict-ko{font-size:21px;font-weight:700;color:var(--dex-red-dark);margin-top:2px}
+.dict-best{font-size:13px;color:#8a6a00;margin-top:4px;font-weight:700}
+.dict-say{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.dsay{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:62px;padding:6px 8px;
+  border:3px solid var(--ink);border-radius:16px;background:#fffdf8;font-size:16.5px;font-weight:700;
+  box-shadow:0 4px 0 rgba(43,43,51,.22)}
+.dsay small{font-size:12px;font-weight:400;color:var(--ink-soft)}
+.dsay:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,43,51,.22)}
+.dsay.usa{background:linear-gradient(170deg,#e8f1ff,#cfe2ff)}
+.dsay.uk{background:linear-gradient(170deg,#ffeef1,#ffd9e1)}
+.dsay.slow{background:linear-gradient(170deg,#eefae6,#d6f0c6)}
+.dsay.native{background:linear-gradient(170deg,#fff7e0,#ffe9a8)}
+.dict-ex{margin-top:10px;padding:10px 13px;border:3px dashed #cdb99b;border-radius:16px;background:#fff}
+.dict-ex .dex{font-size:19px;line-height:1.35}
+.dict-ex .dek{font-size:14.5px;color:var(--ink-soft);margin-top:3px}
+.dict-ex .exsay{margin-top:8px;min-height:42px;padding:0 12px;border:2.5px solid var(--ink);border-radius:12px;
+  background:#f4f8ff;font-size:15px;font-weight:700}
+.dict-practice{margin-top:12px}
+.dict-mic{width:100%;min-height:66px;border:3.5px solid var(--ink);border-radius:20px;font-size:21px;font-weight:700;color:#fff;
+  background:linear-gradient(170deg,#ff8f80,#e2493c);box-shadow:0 5px 0 #8f1e18}
+.dict-mic:active{transform:translateY(3px);box-shadow:0 2px 0 #8f1e18}
+.dict-mic.stop{background:linear-gradient(170deg,#7d8bff,#4c5bd6);box-shadow:0 5px 0 #2c357f}
+.dict-note{margin-top:10px;padding:11px 13px;border-radius:15px;font-size:15px;line-height:1.5}
+.dict-note.info{background:#eef6ff;border:2.5px solid #9cc4e8}
+.dict-note.warn{background:#fff2e6;border:2.5px solid #e8ad74}
+.dict-note.good{background:#eaf9ec;border:2.5px solid #8ecb9b}
+.dict-listen{display:flex;align-items:center;gap:11px;margin-top:10px;padding:12px 14px;
+  border:2.5px solid #2b7bb9;border-radius:16px;background:#e8f7ff;font-size:17px;font-weight:700;color:#134a72}
+.dict-pulse{width:20px;height:20px;border-radius:50%;background:#e8483c;flex:none;animation:dictPulse 1.1s ease-out infinite}
+@keyframes dictPulse{
+  0%{box-shadow:0 0 0 0 rgba(232,72,60,.55)}
+  70%{box-shadow:0 0 0 18px rgba(232,72,60,0)}
+  100%{box-shadow:0 0 0 0 rgba(232,72,60,0)}
+}
+.dict-result{margin-top:12px;padding:13px 14px;border:3px solid var(--ink);border-radius:18px;background:#fffdf8;text-align:center}
+.dict-result .num{font-size:50px;line-height:1;letter-spacing:-1px}
+.dict-result .num small{font-size:20px;font-weight:700}
+.dict-stars{font-size:30px;letter-spacing:3px;margin-top:2px}
+.dict-heard{font-size:15px;color:var(--ink-soft);margin-top:5px}
+.dict-heard b{color:var(--ink)}
+.dict-msg{font-size:17px;font-weight:700;margin-top:7px;line-height:1.35}
+.dict-earn{display:inline-block;margin-top:9px;padding:3px 12px;border-radius:999px;
+  background:linear-gradient(170deg,#ffe487,#f7c33d);border:2.5px solid #8a5c00;color:#503300;font-size:15px;font-weight:700}
+.dict-replay{margin-top:9px}
+.dict-replay:empty{display:none}
+.dict-replay button{width:100%;min-height:48px;padding:0 15px;border:2.5px solid var(--ink);border-radius:13px;
+  background:#f4f8ff;font-size:16px;font-weight:700}
+.dict-defs{margin-top:10px}
+.dict-def{padding:9px 11px;border:2.5px solid #d8c8ae;border-radius:14px;background:#fff;margin-top:7px}
+.dict-def .pos{display:inline-block;font-size:12.5px;font-weight:700;background:#efe6d6;border-radius:8px;padding:1px 7px;color:#6b5a45}
+.dict-def .txt{font-size:16px;margin-top:4px;line-height:1.4}
+.dict-def .ex{font-size:14px;color:var(--ink-soft);margin-top:4px}
+.dict-src{font-size:12.5px;color:#8a7f70;margin-top:10px;line-height:1.45}
+@media (max-width:560px){
+  .dict-word{font-size:31px}
+  .dict-hero .dhemoji{font-size:44px}
+  .dict-grid{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));max-height:48vh}
+  .dict-say{grid-template-columns:1fr 1fr}
+  .dict-say .dsay.slow{grid-column:1 / -1}
+}
+
 /* ---------- 모달 ---------- */
 .modal-backdrop{
   position:fixed;inset:0;z-index:100;display:none;
@@ -979,6 +1088,7 @@ body.focus-mode .focus-exit{display:block}
       </div>
 
       <nav class="quick-actions">
+        <button class="qbtn dict" id="btnDict" type="button" title="영어 낱말 뜻·발음·따라 말하기">📖 영어사전</button>
         <button class="qbtn" id="btnFocus" type="button" title="할 일을 크게 보여줘요">🔎 할 일 크게</button>
         <button class="qbtn on" id="btnSound" type="button" title="효과음 켜기/끄기">🔊 소리</button>
         <button class="qbtn gacha" id="btnGacha" type="button" title="포켓몬 뽑기">
@@ -2306,6 +2416,7 @@ body.focus-mode .focus-exit{display:block}
     document.body.style.overflow = 'hidden';
   }
   function closeModal() {
+    try { dictCleanup(); } catch (e) { }
     var root = $('modalRoot');
     root.classList.remove('open');
     root.innerHTML = '';
@@ -2471,6 +2582,1054 @@ body.focus-mode .focus-exit{display:block}
     }).catch(function () {
       holder.innerHTML = '<div class="empty-note">기술 정보를 불러오지 못했어요.</div>';
     });
+  }
+
+  /* ---------------------------------------------------------------
+     9-1. 📖 영어사전 — 뜻 · 발음 듣기 · 따라 말하기
+     · 오프라인 기본 낱말 226개(7가지 분류)를 앱 안에 담아 둡니다.
+     · 기본 낱말에 없으면 dictionaryapi.dev(영어 뜻·발음·원어민 녹음)와
+       MyMemory(한국어 뜻)를 불러오고, 실패하면 솔직하게 안내합니다.
+     · 점수는 브라우저 음성 인식이 실제로 들은 말과 비교해서만 매깁니다.
+     형식: [영어 낱말, 한국어 뜻, 발음, 그림, 예문(영어), 예문(한국어), 분류]
+  --------------------------------------------------------------- */
+  var DICT_CATS = [
+    { id: 'animal', name: '동물', emoji: '🐾' },
+    { id: 'food', name: '음식·과일', emoji: '🍎' },
+    { id: 'color', name: '색깔·숫자', emoji: '🎨' },
+    { id: 'home', name: '가족·집', emoji: '🏠' },
+    { id: 'action', name: '움직임', emoji: '🏃' },
+    { id: 'feeling', name: '감정·날씨', emoji: '😊' },
+    { id: 'school', name: '학교·세상', emoji: '🏫' }
+  ];
+
+  var DICT_ROWS = [
+    /* 🐾 동물 */
+    ['dog', '개', '/dɔːɡ/ · 도그', '🐶', 'The dog can run fast.', '그 개는 빨리 달려요.', 'animal'],
+    ['cat', '고양이', '/kæt/ · 캣', '🐱', 'The cat is sleeping on the bed.', '고양이가 침대에서 자고 있어요.', 'animal'],
+    ['bird', '새', '/bɜːrd/ · 버드', '🐦', 'A bird is singing.', '새가 노래하고 있어요.', 'animal'],
+    ['fish', '물고기', '/fɪʃ/ · 피시', '🐟', 'The fish swims in the water.', '물고기가 물속에서 헤엄쳐요.', 'animal'],
+    ['rabbit', '토끼', '/ˈræbɪt/ · 래빗', '🐰', 'The rabbit has long ears.', '토끼는 귀가 길어요.', 'animal'],
+    ['bear', '곰', '/beər/ · 베어', '🐻', 'The bear is very big.', '곰은 아주 커요.', 'animal'],
+    ['lion', '사자', '/ˈlaɪən/ · 라이언', '🦁', 'The lion is the king of animals.', '사자는 동물의 왕이에요.', 'animal'],
+    ['tiger', '호랑이', '/ˈtaɪɡər/ · 타이거', '🐯', 'The tiger has orange fur.', '호랑이는 주황색 털이 있어요.', 'animal'],
+    ['elephant', '코끼리', '/ˈelɪfənt/ · 엘리펀트', '🐘', 'The elephant has a long nose.', '코끼리는 코가 길어요.', 'animal'],
+    ['monkey', '원숭이', '/ˈmʌŋki/ · 멍키', '🐵', 'The monkey likes bananas.', '원숭이는 바나나를 좋아해요.', 'animal'],
+    ['giraffe', '기린', '/dʒəˈræf/ · 지래프', '🦒', 'The giraffe has a long neck.', '기린은 목이 길어요.', 'animal'],
+    ['zebra', '얼룩말', '/ˈziːbrə/ · 지브라', '🦓', 'The zebra has black and white stripes.', '얼룩말은 검정과 흰색 줄무늬가 있어요.', 'animal'],
+    ['pig', '돼지', '/pɪɡ/ · 피그', '🐷', 'The pig is in the mud.', '돼지가 진흙 속에 있어요.', 'animal'],
+    ['cow', '소', '/kaʊ/ · 카우', '🐮', 'The cow gives us milk.', '소는 우리에게 우유를 줘요.', 'animal'],
+    ['horse', '말', '/hɔːrs/ · 호스', '🐴', 'I can ride a horse.', '나는 말을 탈 수 있어요.', 'animal'],
+    ['sheep', '양', '/ʃiːp/ · 십', '🐑', 'The sheep is white and soft.', '양은 하얗고 부드러워요.', 'animal'],
+    ['duck', '오리', '/dʌk/ · 덕', '🦆', 'The duck swims in the pond.', '오리가 연못에서 헤엄쳐요.', 'animal'],
+    ['chicken', '닭', '/ˈtʃɪkɪn/ · 치킨', '🐔', 'The chicken has a red comb.', '닭은 빨간 벼슬이 있어요.', 'animal'],
+    ['frog', '개구리', '/frɔːɡ/ · 프로그', '🐸', 'The frog jumps high.', '개구리는 높이 뛰어요.', 'animal'],
+    ['snake', '뱀', '/sneɪk/ · 스네이크', '🐍', 'The snake is long.', '뱀은 길어요.', 'animal'],
+    ['turtle', '거북이', '/ˈtɜːrtl/ · 터틀', '🐢', 'The turtle walks slowly.', '거북이는 천천히 걸어요.', 'animal'],
+    ['whale', '고래', '/weɪl/ · 웨일', '🐳', 'The whale is the biggest animal.', '고래는 가장 큰 동물이에요.', 'animal'],
+    ['dolphin', '돌고래', '/ˈdɑːlfɪn/ · 돌핀', '🐬', 'The dolphin jumps out of the sea.', '돌고래가 바다 밖으로 뛰어올라요.', 'animal'],
+    ['shark', '상어', '/ʃɑːrk/ · 샤크', '🦈', 'The shark has sharp teeth.', '상어는 날카로운 이빨이 있어요.', 'animal'],
+    ['penguin', '펭귄', '/ˈpeŋɡwɪn/ · 펭귄', '🐧', 'The penguin walks on the ice.', '펭귄은 얼음 위를 걸어요.', 'animal'],
+    ['owl', '부엉이', '/aʊl/ · 아울', '🦉', 'The owl wakes up at night.', '부엉이는 밤에 깨어나요.', 'animal'],
+    ['bee', '꿀벌', '/biː/ · 비', '🐝', 'The bee makes honey.', '꿀벌은 꿀을 만들어요.', 'animal'],
+    ['butterfly', '나비', '/ˈbʌtərflaɪ/ · 버터플라이', '🦋', 'The butterfly is beautiful.', '나비는 아름다워요.', 'animal'],
+    ['ant', '개미', '/ænt/ · 앤트', '🐜', 'The ant is very small.', '개미는 아주 작아요.', 'animal'],
+    ['spider', '거미', '/ˈspaɪdər/ · 스파이더', '🕷️', 'The spider makes a web.', '거미는 거미줄을 만들어요.', 'animal'],
+    ['dinosaur', '공룡', '/ˈdaɪnəsɔːr/ · 다이너소어', '🦕', 'The dinosaur is very big.', '공룡은 아주 커요.', 'animal'],
+    ['kangaroo', '캥거루', '/ˌkæŋɡəˈruː/ · 캥거루', '🦘', 'The kangaroo jumps with strong legs.', '캥거루는 힘센 다리로 뛰어요.', 'animal'],
+    ['panda', '판다', '/ˈpændə/ · 팬더', '🐼', 'The panda eats bamboo.', '판다는 대나무를 먹어요.', 'animal'],
+    ['fox', '여우', '/fɑːks/ · 폭스', '🦊', 'The fox has a bushy tail.', '여우는 꼬리가 풍성해요.', 'animal'],
+
+    /* 🍎 음식·과일 */
+    ['apple', '사과', '/ˈæpl/ · 애플', '🍎', 'I eat an apple every day.', '나는 매일 사과를 먹어요.', 'food'],
+    ['banana', '바나나', '/bəˈnænə/ · 버내너', '🍌', 'The monkey wants a banana.', '원숭이가 바나나를 원해요.', 'food'],
+    ['orange', '오렌지', '/ˈɔːrɪndʒ/ · 오린지', '🍊', 'This orange is sweet.', '이 오렌지는 달아요.', 'food'],
+    ['grape', '포도', '/ɡreɪp/ · 그레이프', '🍇', 'Grapes grow in a bunch.', '포도는 송이로 자라요.', 'food'],
+    ['strawberry', '딸기', '/ˈstrɔːberi/ · 스트로베리', '🍓', 'The strawberry is red.', '딸기는 빨개요.', 'food'],
+    ['watermelon', '수박', '/ˈwɔːtərmelən/ · 워터멜런', '🍉', 'Watermelon is full of juice.', '수박은 즙이 가득해요.', 'food'],
+    ['peach', '복숭아', '/piːtʃ/ · 피치', '🍑', 'The peach is soft.', '복숭아는 부드러워요.', 'food'],
+    ['pear', '배', '/peər/ · 페어', '🍐', 'I like a juicy pear.', '나는 즙이 많은 배를 좋아해요.', 'food'],
+    ['lemon', '레몬', '/ˈlemən/ · 레먼', '🍋', 'The lemon is sour.', '레몬은 시어요.', 'food'],
+    ['cherry', '체리', '/ˈtʃeri/ · 체리', '🍒', 'Cherries are small and red.', '체리는 작고 빨개요.', 'food'],
+    ['carrot', '당근', '/ˈkærət/ · 캐럿', '🥕', 'Rabbits love carrots.', '토끼는 당근을 좋아해요.', 'food'],
+    ['potato', '감자', '/pəˈteɪtoʊ/ · 포테이토', '🥔', 'The potato grows under the ground.', '감자는 땅속에서 자라요.', 'food'],
+    ['tomato', '토마토', '/təˈmeɪtoʊ/ · 토메이토', '🍅', 'The tomato is round and red.', '토마토는 둥글고 빨개요.', 'food'],
+    ['onion', '양파', '/ˈʌnjən/ · 어니언', '🧅', 'The onion makes me cry.', '양파는 나를 울게 해요.', 'food'],
+    ['broccoli', '브로콜리', '/ˈbrɑːkəli/ · 브라콜리', '🥦', 'Broccoli is green and healthy.', '브로콜리는 초록색이고 건강에 좋아요.', 'food'],
+    ['rice', '밥', '/raɪs/ · 라이스', '🍚', 'I eat rice for lunch.', '나는 점심으로 밥을 먹어요.', 'food'],
+    ['bread', '빵', '/bred/ · 브레드', '🍞', 'Mom bakes bread.', '엄마가 빵을 구워요.', 'food'],
+    ['milk', '우유', '/mɪlk/ · 밀크', '🥛', 'I drink milk in the morning.', '나는 아침에 우유를 마셔요.', 'food'],
+    ['water', '물', '/ˈwɔːtər/ · 워터', '💧', 'Drink water when you are thirsty.', '목마르면 물을 마셔요.', 'food'],
+    ['juice', '주스', '/dʒuːs/ · 주스', '🧃', 'Apple juice is my favorite.', '사과 주스는 내가 제일 좋아하는 거예요.', 'food'],
+    ['egg', '달걀', '/eɡ/ · 에그', '🥚', 'The egg is white.', '달걀은 하얘요.', 'food'],
+    ['cheese', '치즈', '/tʃiːz/ · 치즈', '🧀', 'The mouse likes cheese.', '쥐는 치즈를 좋아해요.', 'food'],
+    ['cake', '케이크', '/keɪk/ · 케이크', '🍰', 'We eat cake on my birthday.', '우리는 내 생일에 케이크를 먹어요.', 'food'],
+    ['cookie', '쿠키', '/ˈkʊki/ · 쿠키', '🍪', 'One cookie, please.', '쿠키 하나 주세요.', 'food'],
+    ['ice cream', '아이스크림', '/ˈaɪs kriːm/ · 아이스 크림', '🍦', 'Ice cream is cold and sweet.', '아이스크림은 차갑고 달아요.', 'food'],
+    ['candy', '사탕', '/ˈkændi/ · 캔디', '🍬', 'Too much candy is not good.', '사탕을 너무 많이 먹으면 안 좋아요.', 'food'],
+    ['pizza', '피자', '/ˈpiːtsə/ · 피차', '🍕', 'We share a pizza.', '우리는 피자를 나눠 먹어요.', 'food'],
+    ['noodle', '국수', '/ˈnuːdl/ · 누들', '🍜', 'I eat noodles with chopsticks.', '나는 젓가락으로 국수를 먹어요.', 'food'],
+    ['soup', '수프', '/suːp/ · 수프', '🍲', 'The soup is warm.', '수프는 따뜻해요.', 'food'],
+    ['meat', '고기', '/miːt/ · 미트', '🍖', 'The dog wants meat.', '그 개는 고기를 원해요.', 'food'],
+    ['honey', '꿀', '/ˈhʌni/ · 허니', '🍯', 'Bees make honey.', '벌은 꿀을 만들어요.', 'food'],
+    ['salad', '샐러드', '/ˈsæləd/ · 샐러드', '🥗', 'I eat salad with tomatoes.', '나는 토마토와 함께 샐러드를 먹어요.', 'food'],
+
+    /* 🎨 색깔·숫자 */
+    ['red', '빨강', '/red/ · 레드', '🔴', 'The apple is red.', '사과는 빨개요.', 'color'],
+    ['blue', '파랑', '/bluː/ · 블루', '🔵', 'The sky is blue.', '하늘은 파래요.', 'color'],
+    ['yellow', '노랑', '/ˈjeloʊ/ · 옐로우', '🟡', 'The sun is yellow.', '해는 노래요.', 'color'],
+    ['green', '초록', '/ɡriːn/ · 그린', '🟢', 'The grass is green.', '풀은 초록색이에요.', 'color'],
+    ['purple', '보라', '/ˈpɜːrpl/ · 퍼플', '🟣', 'I like purple grapes.', '나는 보라색 포도를 좋아해요.', 'color'],
+    ['pink', '분홍', '/pɪŋk/ · 핑크', '🌸', 'The pig is pink.', '돼지는 분홍색이에요.', 'color'],
+    ['brown', '갈색', '/braʊn/ · 브라운', '🟤', 'The bear is brown.', '곰은 갈색이에요.', 'color'],
+    ['black', '검정', '/blæk/ · 블랙', '⚫', 'The night is black.', '밤은 검어요.', 'color'],
+    ['white', '흰색', '/waɪt/ · 화이트', '⚪', 'The snow is white.', '눈은 하얘요.', 'color'],
+    ['rainbow', '무지개', '/ˈreɪnboʊ/ · 레인보우', '🌈', 'A rainbow is in the sky.', '하늘에 무지개가 있어요.', 'color'],
+    ['one', '하나', '/wʌn/ · 원', '1️⃣', 'I have one ball.', '나는 공이 하나 있어요.', 'color'],
+    ['two', '둘', '/tuː/ · 투', '2️⃣', 'Two birds are flying.', '새 두 마리가 날고 있어요.', 'color'],
+    ['three', '셋', '/θriː/ · 쓰리', '3️⃣', 'I see three stars.', '나는 별 세 개를 봐요.', 'color'],
+    ['four', '넷', '/fɔːr/ · 포', '4️⃣', 'A cat has four legs.', '고양이는 다리가 네 개예요.', 'color'],
+    ['five', '다섯', '/faɪv/ · 파이브', '5️⃣', 'I have five fingers.', '나는 손가락이 다섯 개예요.', 'color'],
+    ['six', '여섯', '/sɪks/ · 식스', '6️⃣', 'Six ducks are swimming.', '오리 여섯 마리가 헤엄쳐요.', 'color'],
+    ['seven', '일곱', '/ˈsevn/ · 세븐', '7️⃣', 'There are seven days in a week.', '일주일은 7일이에요.', 'color'],
+    ['eight', '여덟', '/eɪt/ · 에이트', '8️⃣', 'The spider has eight legs.', '거미는 다리가 여덟 개예요.', 'color'],
+    ['nine', '아홉', '/naɪn/ · 나인', '9️⃣', 'Nine candles are on the cake.', '케이크 위에 초 아홉 개가 있어요.', 'color'],
+    ['ten', '열', '/ten/ · 텐', '🔟', 'I can count to ten.', '나는 열까지 셀 수 있어요.', 'color'],
+    ['eleven', '열하나', '/ɪˈlevn/ · 일레븐', '1️⃣', 'Eleven players are on the field.', '운동장에 선수 열한 명이 있어요.', 'color'],
+    ['twelve', '열둘', '/twelv/ · 트웰브', '🕛', 'A clock has twelve numbers.', '시계에는 숫자가 열두 개 있어요.', 'color'],
+    ['thirteen', '열셋', '/ˌθɜːrˈtiːn/ · 써틴', '🎈', 'Thirteen is my lucky number.', '열셋은 내 행운의 숫자예요.', 'color'],
+    ['fourteen', '열넷', '/ˌfɔːrˈtiːn/ · 포틴', '🎈', 'I have fourteen stickers.', '나는 스티커가 열네 개 있어요.', 'color'],
+    ['fifteen', '열다섯', '/ˌfɪfˈtiːn/ · 피프틴', '⏱️', 'Fifteen minutes is short.', '15분은 짧아요.', 'color'],
+    ['sixteen', '열여섯', '/ˌsɪksˈtiːn/ · 식스틴', '🎈', 'Sixteen birds sit on the tree.', '나무에 새 열여섯 마리가 앉아 있어요.', 'color'],
+    ['seventeen', '열일곱', '/ˌsevnˈtiːn/ · 세븐틴', '🎈', 'Seventeen is a big number.', '열일곱은 큰 숫자예요.', 'color'],
+    ['eighteen', '열여덟', '/ˌeɪˈtiːn/ · 에이틴', '🎓', 'My brother is eighteen.', '내 형은 열여덟 살이에요.', 'color'],
+    ['nineteen', '열아홉', '/ˌnaɪnˈtiːn/ · 나인틴', '🎈', 'Nineteen steps to the door.', '문까지 열아홉 걸음이에요.', 'color'],
+    ['twenty', '스물', '/ˈtwenti/ · 트웬티', '💯', 'Twenty kids are in my class.', '우리 반에는 아이가 스무 명 있어요.', 'color'],
+
+    /* 🏠 가족·집 */
+    ['family', '가족', '/ˈfæməli/ · 패밀리', '👨‍👩‍👦', 'I love my family.', '나는 우리 가족을 사랑해요.', 'home'],
+    ['mom', '엄마', '/mɑːm/ · 맘', '👩', 'Mom cooks dinner.', '엄마가 저녁을 만들어요.', 'home'],
+    ['dad', '아빠', '/dæd/ · 대드', '👨', 'Dad plays with me.', '아빠가 나랑 놀아줘요.', 'home'],
+    ['baby', '아기', '/ˈbeɪbi/ · 베이비', '👶', 'The baby is sleeping.', '아기가 자고 있어요.', 'home'],
+    ['brother', '형·오빠·남동생', '/ˈbrʌðər/ · 브라더', '👦', 'My brother is tall.', '내 형은 키가 커요.', 'home'],
+    ['sister', '누나·언니·여동생', '/ˈsɪstər/ · 시스터', '👧', 'My sister sings well.', '내 누나는 노래를 잘해요.', 'home'],
+    ['grandmother', '할머니', '/ˈɡrænmʌðər/ · 그랜드마더', '👵', 'Grandmother tells me stories.', '할머니가 이야기를 들려주세요.', 'home'],
+    ['grandfather', '할아버지', '/ˈɡrænfɑːðər/ · 그랜드파더', '👴', 'Grandfather walks with me.', '할아버지가 나와 함께 걸으세요.', 'home'],
+    ['friend', '친구', '/frend/ · 프렌드', '🤝', 'My friend is kind.', '내 친구는 착해요.', 'home'],
+    ['house', '집', '/haʊs/ · 하우스', '🏠', 'Our house is warm.', '우리 집은 따뜻해요.', 'home'],
+    ['room', '방', '/ruːm/ · 룸', '🛌', 'My room is clean.', '내 방은 깨끗해요.', 'home'],
+    ['door', '문', '/dɔːr/ · 도어', '🚪', 'Please close the door.', '문을 닫아 주세요.', 'home'],
+    ['window', '창문', '/ˈwɪndoʊ/ · 윈도우', '🪟', 'Open the window.', '창문을 열어 주세요.', 'home'],
+    ['bed', '침대', '/bed/ · 베드', '🛏️', 'I jump on my bed.', '나는 침대 위에서 뛰어요.', 'home'],
+    ['chair', '의자', '/tʃeər/ · 체어', '🪑', 'Sit on the chair.', '의자에 앉으세요.', 'home'],
+    ['table', '탁자', '/ˈteɪbl/ · 테이블', '🍽️', 'We eat at the table.', '우리는 탁자에서 먹어요.', 'home'],
+    ['sofa', '소파', '/ˈsoʊfə/ · 소파', '🛋️', 'The cat sleeps on the sofa.', '고양이가 소파에서 자요.', 'home'],
+    ['kitchen', '부엌', '/ˈkɪtʃɪn/ · 키친', '🍳', 'Mom is in the kitchen.', '엄마가 부엌에 있어요.', 'home'],
+    ['lamp', '전등', '/læmp/ · 램프', '💡', 'Turn on the lamp.', '전등을 켜 주세요.', 'home'],
+    ['clock', '시계', '/klɑːk/ · 클락', '⏰', 'The clock says eight.', '시계가 8시를 가리켜요.', 'home'],
+    ['key', '열쇠', '/kiː/ · 키', '🔑', 'This is the key to my room.', '이건 내 방 열쇠예요.', 'home'],
+    ['book', '책', '/bʊk/ · 북', '📕', 'I read a book every night.', '나는 매일 밤 책을 읽어요.', 'home'],
+    ['toy', '장난감', '/tɔɪ/ · 토이', '🧸', 'My toy is soft.', '내 장난감은 부드러워요.', 'home'],
+    ['ball', '공', '/bɔːl/ · 볼', '⚽', 'Kick the ball!', '공을 차 봐!', 'home'],
+    ['pillow', '베개', '/ˈpɪloʊ/ · 필로우', '💤', 'The pillow is soft.', '베개는 폭신해요.', 'home'],
+    ['blanket', '담요', '/ˈblæŋkɪt/ · 블랭킷', '🧣', 'The blanket is cozy.', '담요는 포근해요.', 'home'],
+    ['mirror', '거울', '/ˈmɪrər/ · 미러', '🪞', 'I see my face in the mirror.', '거울에 내 얼굴이 보여요.', 'home'],
+    ['cup', '컵', '/kʌp/ · 컵', '🥤', 'This cup is mine.', '이 컵은 내 거예요.', 'home'],
+    ['spoon', '숟가락', '/spuːn/ · 스푼', '🥄', 'I eat soup with a spoon.', '나는 숟가락으로 수프를 먹어요.', 'home'],
+    ['fork', '포크', '/fɔːrk/ · 포크', '🍴', 'Use a fork and a knife.', '포크와 나이프를 사용하세요.', 'home'],
+    ['plate', '접시', '/pleɪt/ · 플레이트', '🥣', 'Put the apple on the plate.', '사과를 접시에 놓아요.', 'home'],
+    ['bathtub', '욕조', '/ˈbæθtʌb/ · 배스터브', '🛁', 'I play in the bathtub.', '나는 욕조에서 놀아요.', 'home'],
+    ['toothbrush', '칫솔', '/ˈtuːθbrʌʃ/ · 투스브러시', '🪥', 'Brush your teeth with a toothbrush.', '칫솔로 이를 닦아요.', 'home'],
+    ['soap', '비누', '/soʊp/ · 소프', '🧼', 'Wash your hands with soap.', '비누로 손을 씻어요.', 'home'],
+
+    /* 🏃 움직임 */
+    ['run', '달리다', '/rʌn/ · 런', '🏃', 'I run in the park.', '나는 공원에서 달려요.', 'action'],
+    ['walk', '걷다', '/wɔːk/ · 워크', '🚶', 'We walk to school.', '우리는 학교까지 걸어가요.', 'action'],
+    ['jump', '점프하다', '/dʒʌmp/ · 점프', '🤸', 'Jump high!', '높이 뛰어 봐!', 'action'],
+    ['eat', '먹다', '/iːt/ · 이트', '😋', 'I eat breakfast at seven.', '나는 7시에 아침을 먹어요.', 'action'],
+    ['drink', '마시다', '/drɪŋk/ · 드링크', '🥤', 'I drink water after play.', '나는 놀고 나서 물을 마셔요.', 'action'],
+    ['sleep', '자다', '/sliːp/ · 슬립', '😴', 'I sleep at nine.', '나는 9시에 자요.', 'action'],
+    ['wash', '씻다', '/wɑːʃ/ · 워시', '🚿', 'Wash your face.', '세수하세요.', 'action'],
+    ['brush', '양치하다', '/brʌʃ/ · 브러시', '🪥', 'Brush your teeth.', '이를 닦아요.', 'action'],
+    ['read', '읽다', '/riːd/ · 리드', '📖', 'I read a story.', '나는 이야기를 읽어요.', 'action'],
+    ['write', '쓰다', '/raɪt/ · 라이트', '✍️', 'Write your name.', '이름을 써 보세요.', 'action'],
+    ['draw', '그리다', '/drɔː/ · 드로우', '🎨', 'I draw a dinosaur.', '나는 공룡을 그려요.', 'action'],
+    ['sing', '노래하다', '/sɪŋ/ · 싱', '🎤', 'We sing together.', '우리는 함께 노래해요.', 'action'],
+    ['dance', '춤추다', '/dæns/ · 댄스', '💃', 'I dance with my sister.', '나는 누나와 춤을 춰요.', 'action'],
+    ['play', '놀다', '/pleɪ/ · 플레이', '🎮', 'Let us play outside.', '밖에서 놀자.', 'action'],
+    ['swim', '수영하다', '/swɪm/ · 스윔', '🏊', 'I swim in the pool.', '나는 수영장에서 수영해요.', 'action'],
+    ['ride', '타다', '/raɪd/ · 라이드', '🚲', 'I ride my bike.', '나는 자전거를 타요.', 'action'],
+    ['fly', '날다', '/flaɪ/ · 플라이', '✈️', 'Birds fly in the sky.', '새들이 하늘을 날아요.', 'action'],
+    ['climb', '오르다', '/klaɪm/ · 클라임', '🧗', 'I climb the ladder.', '나는 사다리를 올라가요.', 'action'],
+    ['throw', '던지다', '/θroʊ/ · 스로우', '🏀', 'Throw the ball to me.', '나에게 공을 던져요.', 'action'],
+    ['catch', '잡다', '/kætʃ/ · 캐치', '🧤', 'Catch the ball!', '공을 잡아!', 'action'],
+    ['kick', '차다', '/kɪk/ · 킥', '🦵', 'Kick the ball with your foot.', '발로 공을 차세요.', 'action'],
+    ['push', '밀다', '/pʊʃ/ · 푸시', '🛒', 'Push the cart.', '카트를 밀어요.', 'action'],
+    ['pull', '당기다', '/pʊl/ · 풀', '🪢', 'Pull the door open.', '문을 당겨서 여세요.', 'action'],
+    ['open', '열다', '/ˈoʊpən/ · 오픈', '🔓', 'Open the box.', '상자를 열어 봐요.', 'action'],
+    ['close', '닫다', '/kloʊz/ · 클로즈', '🔒', 'Close the window, please.', '창문을 닫아 주세요.', 'action'],
+    ['sit', '앉다', '/sɪt/ · 싯', '💺', 'Sit down, please.', '앉으세요.', 'action'],
+    ['stand', '서다', '/stænd/ · 스탠드', '🧍', 'Stand up straight.', '바르게 서세요.', 'action'],
+    ['laugh', '웃다', '/læf/ · 래프', '😄', 'We laugh together.', '우리는 함께 웃어요.', 'action'],
+    ['cry', '울다', '/kraɪ/ · 크라이', '😢', 'The baby cries.', '아기가 울어요.', 'action'],
+    ['hug', '안아주다', '/hʌɡ/ · 허그', '🤗', 'I hug my mom.', '나는 엄마를 안아요.', 'action'],
+    ['help', '돕다', '/help/ · 헬프', '🙌', 'I help my dad.', '나는 아빠를 도와요.', 'action'],
+    ['listen', '듣다', '/ˈlɪsn/ · 리슨', '👂', 'Listen to me.', '내 말을 들어 봐요.', 'action'],
+    ['look', '보다', '/lʊk/ · 룩', '👀', 'Look at the moon.', '달을 봐요.', 'action'],
+    ['cook', '요리하다', '/kʊk/ · 쿡', '👩‍🍳', 'I cook with my mom.', '나는 엄마와 요리해요.', 'action'],
+
+    /* 😊 감정·날씨 */
+    ['happy', '행복한', '/ˈhæpi/ · 해피', '😊', 'I am happy today.', '나는 오늘 행복해요.', 'feeling'],
+    ['sad', '슬픈', '/sæd/ · 새드', '😢', 'The boy is sad.', '그 소년은 슬퍼요.', 'feeling'],
+    ['angry', '화난', '/ˈæŋɡri/ · 앵그리', '😠', 'Do not be angry.', '화내지 마세요.', 'feeling'],
+    ['scared', '무서운', '/skerd/ · 스케어드', '😨', 'I am scared of the dark.', '나는 어두운 것이 무서워요.', 'feeling'],
+    ['tired', '피곤한', '/ˈtaɪərd/ · 타이어드', '😪', 'I am tired after play.', '나는 놀고 나면 피곤해요.', 'feeling'],
+    ['hungry', '배고픈', '/ˈhʌŋɡri/ · 헝그리', '😋', 'I am hungry.', '나는 배고파요.', 'feeling'],
+    ['thirsty', '목마른', '/ˈθɜːrsti/ · 써스티', '🥤', 'I am thirsty.', '나는 목말라요.', 'feeling'],
+    ['sleepy', '졸린', '/ˈsliːpi/ · 슬리피', '😴', 'The baby is sleepy.', '아기가 졸려요.', 'feeling'],
+    ['excited', '신난', '/ɪkˈsaɪtɪd/ · 익사이티드', '🤩', 'I am excited about the trip.', '나는 여행이 신나요.', 'feeling'],
+    ['funny', '웃긴', '/ˈfʌni/ · 퍼니', '😂', 'This joke is funny.', '이 농담은 웃겨요.', 'feeling'],
+    ['love', '사랑', '/lʌv/ · 러브', '❤️', 'I love you.', '사랑해요.', 'feeling'],
+    ['kind', '친절한', '/kaɪnd/ · 카인드', '🫶', 'Be kind to your friends.', '친구에게 친절하게 대해요.', 'feeling'],
+    ['sun', '해', '/sʌn/ · 썬', '☀️', 'The sun is bright.', '해는 밝아요.', 'feeling'],
+    ['moon', '달', '/muːn/ · 문', '🌙', 'The moon is round tonight.', '오늘 밤 달은 둥글어요.', 'feeling'],
+    ['star', '별', '/stɑːr/ · 스타', '⭐', 'Stars shine at night.', '별은 밤에 빛나요.', 'feeling'],
+    ['sky', '하늘', '/skaɪ/ · 스카이', '🌥️', 'The sky is high.', '하늘은 높아요.', 'feeling'],
+    ['cloud', '구름', '/klaʊd/ · 클라우드', '☁️', 'The cloud looks like a sheep.', '구름이 양처럼 보여요.', 'feeling'],
+    ['rain', '비', '/reɪn/ · 레인', '🌧️', 'The rain is falling.', '비가 내리고 있어요.', 'feeling'],
+    ['snow', '눈', '/snoʊ/ · 스노우', '❄️', 'Snow is white and cold.', '눈은 하얗고 차가워요.', 'feeling'],
+    ['wind', '바람', '/wɪnd/ · 윈드', '🌬️', 'The wind is strong.', '바람이 세요.', 'feeling'],
+    ['storm', '폭풍', '/stɔːrm/ · 스톰', '🌪️', 'The storm is coming.', '폭풍이 오고 있어요.', 'feeling'],
+    ['hot', '더운', '/hɑːt/ · 핫', '🥵', 'It is hot in summer.', '여름에는 더워요.', 'feeling'],
+    ['cold', '추운', '/koʊld/ · 콜드', '🥶', 'It is cold in winter.', '겨울에는 추워요.', 'feeling'],
+    ['warm', '따뜻한', '/wɔːrm/ · 웜', '🌤️', 'The sun is warm.', '햇살이 따뜻해요.', 'feeling'],
+    ['cool', '시원한', '/kuːl/ · 쿨', '🧊', 'The water is cool.', '물이 시원해요.', 'feeling'],
+    ['sunny', '맑은', '/ˈsʌni/ · 서니', '🌞', 'It is a sunny day.', '맑은 날이에요.', 'feeling'],
+    ['cloudy', '흐린', '/ˈklaʊdi/ · 클라우디', '⛅', 'It is cloudy today.', '오늘은 흐려요.', 'feeling'],
+    ['rainy', '비 오는', '/ˈreɪni/ · 레이니', '☔', 'It is a rainy day.', '비 오는 날이에요.', 'feeling'],
+    ['windy', '바람 부는', '/ˈwɪndi/ · 윈디', '🎐', 'It is windy outside.', '밖은 바람이 불어요.', 'feeling'],
+    ['weather', '날씨', '/ˈweðər/ · 웨더', '🌦️', 'The weather is nice.', '날씨가 좋아요.', 'feeling'],
+    ['lightning', '번개', '/ˈlaɪtnɪŋ/ · 라이트닝', '⚡', 'Lightning is bright.', '번개는 밝아요.', 'feeling'],
+    ['thunder', '천둥', '/ˈθʌndər/ · 썬더', '🔊', 'Thunder is loud.', '천둥은 시끄러워요.', 'feeling'],
+
+    /* 🏫 학교·세상 */
+    ['school', '학교', '/skuːl/ · 스쿨', '🏫', 'I go to school by bus.', '나는 버스로 학교에 가요.', 'school'],
+    ['teacher', '선생님', '/ˈtiːtʃər/ · 티처', '🧑‍🏫', 'My teacher is kind.', '우리 선생님은 친절해요.', 'school'],
+    ['student', '학생', '/ˈstuːdnt/ · 스튜던트', '🧑‍🎓', 'I am a good student.', '나는 좋은 학생이에요.', 'school'],
+    ['classroom', '교실', '/ˈklæsruːm/ · 클래스룸', '📚', 'Our classroom is bright.', '우리 교실은 밝아요.', 'school'],
+    ['pencil', '연필', '/ˈpensl/ · 펜슬', '✏️', 'This pencil is long.', '이 연필은 길어요.', 'school'],
+    ['crayon', '크레용', '/ˈkreɪɑːn/ · 크레용', '🖍️', 'I draw with a crayon.', '나는 크레용으로 그려요.', 'school'],
+    ['eraser', '지우개', '/ɪˈreɪsər/ · 이레이저', '🧽', 'Use the eraser.', '지우개를 사용하세요.', 'school'],
+    ['bag', '가방', '/bæɡ/ · 백', '🎒', 'My bag is heavy.', '내 가방은 무거워요.', 'school'],
+    ['paper', '종이', '/ˈpeɪpər/ · 페이퍼', '📄', 'Give me a paper, please.', '종이 한 장 주세요.', 'school'],
+    ['scissors', '가위', '/ˈsɪzərz/ · 시저스', '✂️', 'Cut the paper with scissors.', '가위로 종이를 자르세요.', 'school'],
+    ['glue', '풀', '/ɡluː/ · 글루', '🧴', 'Use glue for the picture.', '그림에 풀을 붙이세요.', 'school'],
+    ['computer', '컴퓨터', '/kəmˈpjuːtər/ · 컴퓨터', '💻', 'I play on the computer.', '나는 컴퓨터로 놀아요.', 'school'],
+    ['phone', '전화기', '/foʊn/ · 폰', '📱', 'Mom answers the phone.', '엄마가 전화를 받아요.', 'school'],
+    ['bus', '버스', '/bʌs/ · 버스', '🚌', 'The bus is yellow.', '버스는 노래요.', 'school'],
+    ['car', '자동차', '/kɑːr/ · 카', '🚗', 'Our car is small.', '우리 차는 작아요.', 'school'],
+    ['train', '기차', '/treɪn/ · 트레인', '🚆', 'The train is fast.', '기차는 빨라요.', 'school'],
+    ['airplane', '비행기', '/ˈerpleɪn/ · 에어플레인', '✈️', 'The airplane flies high.', '비행기는 높이 날아요.', 'school'],
+    ['bike', '자전거', '/baɪk/ · 바이크', '🚲', 'I ride my bike.', '나는 자전거를 타요.', 'school'],
+    ['boat', '배', '/boʊt/ · 보트', '⛵', 'The boat is on the sea.', '배가 바다 위에 있어요.', 'school'],
+    ['hospital', '병원', '/ˈhɑːspɪtl/ · 하스피틀', '🏥', 'The doctor works in the hospital.', '의사는 병원에서 일해요.', 'school'],
+    ['park', '공원', '/pɑːrk/ · 파크', '🌳', 'We play in the park.', '우리는 공원에서 놀아요.', 'school'],
+    ['market', '시장', '/ˈmɑːrkɪt/ · 마킷', '🏪', 'We buy fruit at the market.', '우리는 시장에서 과일을 사요.', 'school'],
+    ['movie', '영화', '/ˈmuːvi/ · 무비', '🎬', 'We watch a movie.', '우리는 영화를 봐요.', 'school'],
+    ['music', '음악', '/ˈmjuːzɪk/ · 뮤직', '🎵', 'I listen to music.', '나는 음악을 들어요.', 'school'],
+    ['picture', '그림', '/ˈpɪktʃər/ · 픽처', '🖼️', 'This picture is pretty.', '이 그림은 예뻐요.', 'school'],
+    ['money', '돈', '/ˈmʌni/ · 머니', '💰', 'I save my money.', '나는 용돈을 모아요.', 'school'],
+    ['time', '시간', '/taɪm/ · 타임', '🕐', 'It is time to sleep.', '잘 시간이에요.', 'school'],
+    ['day', '날', '/deɪ/ · 데이', '📅', 'Today is a good day.', '오늘은 좋은 날이에요.', 'school'],
+    ['night', '밤', '/naɪt/ · 나이트', '🌃', 'Good night!', '잘 자!', 'school'],
+    ['birthday', '생일', '/ˈbɜːrθdeɪ/ · 버스데이', '🎂', 'My birthday is in August.', '내 생일은 8월이에요.', 'school']
+  ];
+
+  var DICT_WORDS = [];
+  var DICT_BY_WORD = {};
+  DICT_ROWS.forEach(function (row) {
+    var e = {
+      word: row[0], ko: row[1], phonetic: row[2], emoji: row[3],
+      ex: row[4], exKo: row[5], cat: row[6], builtin: true
+    };
+    DICT_WORDS.push(e);
+    if (!DICT_BY_WORD[e.word]) DICT_BY_WORD[e.word] = e;
+  });
+
+  var DICT_XP = 5;              // 따라 말하기 한 번에 주는 XP
+  var DICT_STAR_MIN = 80;       // 이 점수부터 별을 줍니다
+  var DICT_DAILY_CAP = 5;       // 하루에 칭찬을 주는 낱말 수
+  var DICT_API = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+  var DICT_TRANS = 'https://api.mymemory.translated.net/get';
+  var DICT_CACHE_KEY = 'gr_dict_cache_v1';
+  var dictCache = readJSON(DICT_CACHE_KEY, {});
+  if (!dictCache || typeof dictCache !== 'object') dictCache = {};
+  var dictState = { cat: 'all', query: '', entry: null };
+  var dictAudio = null;
+  var dictRec = { active: false, sr: null, mr: null, stream: null, chunks: [], timer: null, url: '', pendingReplay: false };
+  var dictVoices = [];
+
+  /* ---- 낱말 비교 · 점수 (실제로 들린 말과만 비교합니다) ---- */
+  function dictNorm(s) {
+    return String(s == null ? '' : s).toLowerCase()
+      .replace(/[’']/g, '')
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  function dictLevenshtein(a, b) {
+    var m = a.length, n = b.length;
+    if (!m) return n;
+    if (!n) return m;
+    var prev = [], cur = [], i, j;
+    for (j = 0; j <= n; j++) prev[j] = j;
+    for (i = 1; i <= m; i++) {
+      cur[0] = i;
+      for (j = 1; j <= n; j++) {
+        var cost = a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1;
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+      }
+      for (j = 0; j <= n; j++) prev[j] = cur[j];
+    }
+    return prev[n];
+  }
+  function dictSim(a, b) {
+    var x = dictNorm(a), y = dictNorm(b);
+    if (!x && !y) return 1;
+    if (!x || !y) return 0;
+    if (x === y) return 1;
+    var max = Math.max(x.length, y.length);
+    return Math.max(0, 1 - dictLevenshtein(x, y) / max);
+  }
+  function dictScoreFromSim(sim) {
+    var s = clamp(sim, 0, 1);
+    if (s >= 0.999) return 100;
+    if (s >= 0.75) return Math.round(70 + (Math.min(s, 0.995) - 0.75) / 0.245 * 24);   // 70~94
+    if (s >= 0.45) return Math.round(40 + (s - 0.45) / 0.30 * 29);                     // 40~69
+    return Math.round(s / 0.45 * 39);                                                  // 0~39
+  }
+  function dictScore(target, heardList) {
+    var list = Object.prototype.toString.call(heardList) === '[object Array]' ? heardList : [heardList];
+    var best = { score: 0, heard: '', sim: 0 };
+    list.forEach(function (h) {
+      var txt = String(h == null ? '' : h);
+      if (!dictNorm(txt)) return;
+      var sim = dictSim(target, txt);
+      var sc = dictScoreFromSim(sim);
+      if (sc > best.score || (sc === best.score && !best.heard)) best = { score: sc, heard: txt, sim: sim };
+    });
+    return best;
+  }
+  function dictStarsFor(score) { return score >= 90 ? 3 : score >= 70 ? 2 : 1; }
+  function dictStarText(score) {
+    var n = dictStarsFor(score), out = '';
+    for (var i = 0; i < 3; i++) out += (i < n ? '⭐' : '☆');
+    return out;
+  }
+  function dictFeedbackFor(score) {
+    if (score >= 100) return '완벽해요! 원어민이랑 똑같아요! 🎉';
+    if (score >= 95) return '아주 훌륭해요! 정말 잘했어요! 🎉';
+    if (score >= 85) return '아주 좋아요! 아주 또박또박했어요! 👏';
+    if (score >= 70) return '잘했어요! 한 번 더 말하면 더 좋아져요! 💪';
+    if (score >= 55) return '거의 다 왔어요! 천천히 듣고 따라 해 봐요 😊';
+    if (score >= 40) return '조금만 더! 발음을 다시 듣고 말해 볼까요? 🌱';
+    return '괜찮아요! 다시 듣고 천천히 따라 해 봐요. 할 수 있어요! 🌟';
+  }
+  function dictPosKo(pos) {
+    var map = {
+      noun: '명사', verb: '동사', adjective: '형용사', adverb: '부사', pronoun: '대명사',
+      preposition: '전치사', conjunction: '접속사', interjection: '감탄사', numeral: '수사',
+      determiner: '한정사', exclamation: '감탄사'
+    };
+    var p = String(pos || '').toLowerCase();
+    return map[p] ? map[p] + ' · ' + p : (pos || '');
+  }
+
+  /* ---- 오늘의 칭찬 기록 ---- */
+  function dictRewardState() {
+    var t = todayKey();
+    if (!S.dict || typeof S.dict !== 'object' || S.dict.date !== t) S.dict = { date: t, words: {} };
+    if (!S.dict.words || typeof S.dict.words !== 'object') S.dict.words = {};
+    return S.dict;
+  }
+  function dictCounts(st) {
+    var xp = 0, star = 0;
+    var words = (st && st.words) || {};
+    Object.keys(words).forEach(function (k) {
+      if (words[k] && words[k].xp) xp++;
+      if (words[k] && words[k].star) star++;
+    });
+    return { xp: xp, star: star };
+  }
+  function dictBestToday(word) {
+    var st = dictRewardState();
+    var rec = st.words[dictNorm(word)];
+    return rec && rec.best ? Number(rec.best) : 0;
+  }
+  function dictAward(entry, score) {
+    var st = dictRewardState();
+    var key = dictNorm(entry.word);
+    var rec = st.words[key] || { best: 0, xp: false, star: false };
+    rec.best = Math.max(Number(rec.best) || 0, score);
+    var counts = dictCounts(st);
+    var out = { xp: 0, star: 0, capped: false, leveled: false, again: !!rec.xp };
+    if (!rec.xp && counts.xp < DICT_DAILY_CAP) {
+      rec.xp = true;
+      out.xp = DICT_XP;
+      out.leveled = addXp(DICT_XP);
+    }
+    if (score >= DICT_STAR_MIN && !rec.star && counts.star < DICT_DAILY_CAP) {
+      rec.star = true;
+      out.star = 1;
+      S.progress.stars += 1;
+    }
+    if (!out.xp && counts.xp >= DICT_DAILY_CAP) out.capped = true;
+    st.words[key] = rec;
+    save();
+    try { paintPartnerProgress(); renderPartnerStats(); } catch (e) {}
+    if (out.xp || out.star) {
+      sndCheck();
+      var bits = [];
+      if (out.xp) bits.push('+' + out.xp + ' XP');
+      if (out.star) bits.push('별 +1 ⭐');
+      setTimeout(function () { toast('🎉 ' + bits.join(' · ') + '!', 'gold'); }, 140);
+    }
+    if (out.leveled) {
+      setTimeout(function () {
+        sndFanfare();
+        toast('✨ 레벨 업! Lv.' + S.progress.level, 'gold');
+        try { paintPartnerProgress(); refreshEvolveButton(); } catch (e) {}
+      }, 700);
+    }
+    return out;
+  }
+
+  /* ---- 영어 발음 재생 (미국·영국·천천히) ---- */
+  function dictLoadVoices() {
+    try { dictVoices = (window.speechSynthesis && window.speechSynthesis.getVoices()) || []; }
+    catch (e) { dictVoices = []; }
+  }
+  function dictPickVoice(lang) {
+    if (!dictVoices.length) dictLoadVoices();
+    var want = String(lang || '').toLowerCase();
+    var exact = [], near = [];
+    dictVoices.forEach(function (v) {
+      var l = String(v.lang || '').replace('_', '-').toLowerCase();
+      if (l === want) exact.push(v);
+      else if (want && l.indexOf(want.split('-')[0]) === 0) near.push(v);
+    });
+    function pref(list) {
+      for (var i = 0; i < list.length; i++) {
+        if (/google|natural|neural|samantha|daniel|kate|serena/i.test(list[i].name || '')) return list[i];
+      }
+      return list[0] || null;
+    }
+    var v = pref(exact) || pref(near);
+    return { voice: v, exact: !!pref(exact) };
+  }
+  function dictStopAudio() {
+    try {
+      if (dictAudio) { dictAudio.pause(); dictAudio.currentTime = 0; dictAudio = null; }
+    } catch (e) { }
+    try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { }
+  }
+  function dictSpeak(text, lang, rate) {
+    var msg = cleanText(text);
+    if (!msg) return false;
+    if (!TTS_OK) { toast('이 브라우저에서는 소리내어 읽기를 쓸 수 없어요'); return false; }
+    try {
+      window.speechSynthesis.cancel();
+      var u = new window.SpeechSynthesisUtterance(msg);
+      u.lang = lang || 'en-US';
+      u.rate = Number(rate) || 1;
+      u.pitch = 1;
+      var pick = dictPickVoice(u.lang);
+      if (pick.voice) u.voice = pick.voice;
+      window.speechSynthesis.speak(u);
+      if (!pick.exact && String(u.lang).toLowerCase() === 'en-gb') {
+        toast('이 기기에는 영국 발음 목소리가 없어 영어 목소리로 읽어 줄게요');
+      }
+      return true;
+    } catch (e) {
+      toast('발음을 재생하지 못했어요');
+      return false;
+    }
+  }
+  function dictPlayNative(url, text, lang) {
+    dictStopAudio();
+    if (!url) { dictSpeak(text, lang || 'en-US', 1); return; }
+    try {
+      dictAudio = new window.Audio(url);
+      var done = false;
+      var fallback = function () {
+        if (done) return;
+        done = true;
+        dictSpeak(text, lang || 'en-US', 1);
+      };
+      dictAudio.onerror = fallback;
+      var pr = dictAudio.play();
+      if (pr && pr.catch) pr.catch(fallback);
+    } catch (e) {
+      dictSpeak(text, lang || 'en-US', 1);
+    }
+  }
+  function dictPlayReplay() {
+    if (!dictRec.url) { toast('다시 들을 목소리가 없어요'); return; }
+    dictStopAudio();
+    try {
+      dictAudio = new window.Audio(dictRec.url);
+      var pr = dictAudio.play();
+      if (pr && pr.catch) pr.catch(function () { toast('녹음한 소리를 재생하지 못했어요'); });
+    } catch (e) {
+      toast('녹음한 소리를 재생하지 못했어요');
+    }
+  }
+
+  /* ---- 따라 말하기 (음성 인식 + 녹음) ---- */
+  function dictSRAvailable() {
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    return typeof SR === 'function' ? SR : null;
+  }
+  function dictResultArea(html) {
+    var box = $('dictResult');
+    if (box) box.innerHTML = html;
+  }
+  function dictShowReplay() {
+    var box = $('dictReplay');
+    if (!box) { dictRec.pendingReplay = true; return; }
+    dictRec.pendingReplay = false;
+    if (!dictRec.url) { box.innerHTML = ''; return; }
+    box.innerHTML = '<button type="button" data-dact="replay">🎧 내 목소리 다시 듣기</button>';
+  }
+  function dictStopRec() {
+    if (dictRec.timer) { clearTimeout(dictRec.timer); dictRec.timer = null; }
+    var sr = dictRec.sr;
+    dictRec.sr = null;
+    if (sr) {
+      try { sr.onresult = null; sr.onerror = null; sr.onend = null; } catch (e) { }
+      try { sr.abort(); } catch (e) { }
+    }
+    var mr = dictRec.mr;
+    if (mr) {
+      dictRec.mr = null;
+      try { if (mr.state === 'recording') mr.stop(); } catch (e) { }
+    }
+    if (dictRec.stream) {
+      try { dictRec.stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) { }
+      dictRec.stream = null;
+    }
+    dictRec.active = false;
+    var mic = $('dictMic');
+    if (mic) { mic.classList.remove('stop'); mic.textContent = '🎤 따라 말하기'; }
+  }
+  function dictStartMediaRecorder() {
+    dictRec.chunks = [];
+    try {
+      if (dictRec.url) { try { URL.revokeObjectURL(dictRec.url); } catch (e) { } dictRec.url = ''; }
+      if (!window.MediaRecorder || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+        if (!dictRec.active) {
+          try { stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) { }
+          return;
+        }
+        dictRec.stream = stream;
+        try {
+          var opts = {};
+          if (window.MediaRecorder.isTypeSupported && window.MediaRecorder.isTypeSupported('audio/webm')) opts.mimeType = 'audio/webm';
+          var mr = new window.MediaRecorder(stream, opts);
+          dictRec.mr = mr;
+          mr.ondataavailable = function (ev) {
+            if (ev && ev.data && ev.data.size) dictRec.chunks.push(ev.data);
+          };
+          mr.onstop = function () {
+            try {
+              if (dictRec.chunks.length && window.Blob && window.URL && URL.createObjectURL) {
+                var blob = new window.Blob(dictRec.chunks, { type: (dictRec.chunks[0] && dictRec.chunks[0].type) || 'audio/webm' });
+                dictRec.url = URL.createObjectURL(blob);
+              }
+            } catch (e) { dictRec.url = ''; }
+            if (dictRec.stream) {
+              try { dictRec.stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) { }
+              dictRec.stream = null;
+            }
+            dictShowReplay();
+          };
+          mr.start();
+        } catch (e) { /* 녹음은 못 해도 인식은 계속 */ }
+      }).catch(function () { /* 마이크를 못 잡아도 인식은 시도 */ });
+    } catch (e) { }
+  }
+  function dictUnsupportedHtml() {
+    return '<div class="dict-note warn">이 브라우저에서는 음성 인식을 지원하지 않아요.<br>태블릿 <b>크롬(Chrome)</b>이나 <b>삼성 인터넷</b>에서 열어 주세요!<br>지금도 🇺🇸·🇬🇧 발음을 듣고 따라 말할 수 있어요.</div>';
+  }
+  function dictIdleHtml(entry) {
+    if (!dictSRAvailable()) return dictUnsupportedHtml();
+    return '<div class="dict-note info">🎤 를 누르고 <b>' + esc((entry && entry.word) || '') +
+      '</b> 를 큰 소리로 말해 보세요.<br>들은 그대로 비교해서 점수를 알려 줘요!</div>';
+  }
+  function dictStartRecord() {
+    var entry = dictState.entry;
+    if (!entry || entry.pending) return;
+    if (dictRec.active) { dictStopRec(); return; }
+    var SR = dictSRAvailable();
+    if (!SR) { dictResultArea(dictUnsupportedHtml()); return; }
+    dictStopAudio();
+    dictRec.active = true;
+    dictResultArea('<div class="dict-listen"><span class="dict-pulse"></span><span>듣고 있어요! 큰 소리로 말해 보세요!</span></div>' +
+      '<button class="dict-mic stop" type="button" data-dact="stop">⏹ 그만 듣기</button>');
+    var mic = $('dictMic');
+    if (mic) { mic.classList.add('stop'); mic.textContent = '⏹ 그만 듣기'; }
+
+    dictStartMediaRecorder();
+
+    var sr = null;
+    try { sr = new SR(); } catch (e) { sr = null; }
+    if (!sr) {
+      dictStopRec();
+      dictResultArea(dictUnsupportedHtml());
+      return;
+    }
+    dictRec.sr = sr;
+    try {
+      sr.lang = 'en-US';
+      sr.interimResults = false;
+      sr.maxAlternatives = 5;
+      sr.continuous = false;
+    } catch (e) { }
+    sr.onresult = function (ev) { dictOnSpeech(ev, entry); };
+    sr.onerror = function (ev) { dictOnSpeechError(ev, entry); };
+    sr.onend = function () { if (dictRec.active) dictStopRec(); };
+    try {
+      sr.start();
+    } catch (e) {
+      dictStopRec();
+      dictResultArea('<div class="dict-note warn">마이크를 켜지 못했어요.<br>브라우저 주소창의 <b>마이크 허용</b>을 확인하고 다시 눌러 주세요.</div>');
+      return;
+    }
+    dictRec.timer = setTimeout(function () {
+      if (!dictRec.active) return;
+      dictStopRec();
+      dictResultArea('<div class="dict-note info">잘 안 들렸어요. 🎤 를 다시 누르고 낱말을 또렷하게 말해 볼까요?</div>' +
+        '<div class="dict-replay" id="dictReplay"></div>');
+      dictShowReplay();
+    }, 12000);
+  }
+  function dictOnSpeech(ev, entry) {
+    var list = [];
+    try {
+      var results = ev && ev.results;
+      if (results && results.length) {
+        for (var i = 0; i < results.length; i++) {
+          var r = results[i];
+          if (!r) continue;
+          for (var j = 0; j < r.length; j++) {
+            if (r[j] && r[j].transcript) list.push(String(r[j].transcript));
+          }
+        }
+      }
+    } catch (e) { }
+    dictStopRec();
+    if (!list.length) {
+      dictResultArea('<div class="dict-note info">소리가 잘 안 들렸어요. 🎤 를 누르고 <b>' + esc(entry.word) +
+        '</b> 를 다시 말해 볼까요?</div><div class="dict-replay" id="dictReplay"></div>');
+      dictShowReplay();
+      return;
+    }
+    var best = dictScore(entry.word, list);
+    var award = dictAward(entry, best.score);
+    dictResultArea('<div class="dict-result">' +
+      '<div class="num">' + best.score + '<small>점</small></div>' +
+      '<div class="dict-stars" aria-label="별 ' + dictStarsFor(best.score) + '개">' + dictStarText(best.score) + '</div>' +
+      '<div class="dict-heard">들린 발음: <b>' + esc(best.heard) + '</b></div>' +
+      '<div class="dict-msg">' + esc(dictFeedbackFor(best.score)) + '</div>' +
+      (award.xp || award.star
+        ? '<div class="dict-earn">' + [award.xp ? '+' + award.xp + ' XP' : '', award.star ? '⭐ +1' : ''].filter(function (x) { return !!x; }).join(' · ') + '</div>'
+        : (award.capped
+          ? '<div class="dict-earn" style="background:#eef1f5;border-color:#9aa6b3;color:#44505c">오늘 칭찬은 여기까지! 내일 또 해 봐요 🌙</div>'
+          : (award.again ? '<div class="dict-earn" style="background:#eef1f5;border-color:#9aa6b3;color:#44505c">오늘 이 낱말은 이미 칭찬받았어요. 다른 낱말도 해 봐요 😊</div>' : ''))) +
+      '<div class="dict-replay" id="dictReplay"></div>' +
+      '</div>');
+    dictShowReplay();
+    setTimeout(dictShowReplay, 500);
+    if (dictState.entry) {
+      var bestEl = document.querySelector('#modalRoot .dict-best');
+      if (bestEl) bestEl.textContent = '내 최고 점수 ' + best.score + '점';
+    }
+  }
+  function dictOnSpeechError(ev, entry) {
+    var code = (ev && ev.error) || '';
+    dictStopRec();
+    if (code === 'aborted') return;
+    var msg;
+    if (code === 'not-allowed' || code === 'service-not-allowed') {
+      msg = '마이크를 쓸 수 없어요.<br>브라우저 주소창의 <b>마이크 허용</b>을 켜고 다시 눌러 주세요.<br>부모님이 설정을 도와주세요!';
+    } else if (code === 'no-speech') {
+      msg = '소리가 잘 안 들렸어요. 🎤 를 누르고 <b>' + esc(entry.word) + '</b> 를 또렷하게 말해 볼까요?';
+    } else if (code === 'network') {
+      msg = '인터넷 연결이 있어야 음성 인식을 할 수 있어요.<br>연결을 확인하고 다시 눌러 주세요.';
+    } else if (code === 'audio-capture') {
+      msg = '마이크를 찾지 못했어요. 마이크가 있는 기기인지 확인해 주세요.';
+    } else {
+      msg = '음성을 알아듣지 못했어요. 잠시 뒤 다시 눌러 주세요.';
+    }
+    dictResultArea('<div class="dict-note warn">' + msg + '</div><div class="dict-replay" id="dictReplay"></div>');
+    dictShowReplay();
+  }
+
+  /* ---- 목록 · 상세 화면 ---- */
+  function dictStatusInner() {
+    var c = dictCounts(dictRewardState());
+    return '<span>낱말 <b>' + DICT_WORDS.length + '</b>개</span>' +
+      '<span class="pill">오늘 발음 별 ⭐ ' + c.star + ' / ' + DICT_DAILY_CAP + '</span>' +
+      '<span class="pill">오늘 XP ' + (c.xp * DICT_XP) + ' / ' + (DICT_DAILY_CAP * DICT_XP) + '</span>';
+  }
+  function dictFiltered() {
+    var q = dictState.query.trim().toLowerCase();
+    var out = [];
+    DICT_WORDS.forEach(function (e) {
+      if (dictState.cat !== 'all' && e.cat !== dictState.cat) return;
+      if (q) {
+        var w = e.word.toLowerCase();
+        if (w.indexOf(q) === -1 && String(e.ko).indexOf(q) === -1) return;
+      }
+      out.push(e);
+    });
+    if (q) {
+      out.sort(function (a, b) {
+        var ap = a.word.toLowerCase().indexOf(q) === 0 ? 0 : 1;
+        var bp = b.word.toLowerCase().indexOf(q) === 0 ? 0 : 1;
+        if (ap !== bp) return ap - bp;
+        return a.word.length - b.word.length;
+      });
+    }
+    return out;
+  }
+  function dictListHtml() {
+    var q = dictState.query.trim();
+    var list = dictFiltered();
+    var html = '';
+    var exact = q ? (DICT_BY_WORD[q.toLowerCase()] || dictCache[dictNorm(q)]) : null;
+    if (q && !exact && q.length >= 2) {
+      html += '<button class="dict-online-card" type="button" data-dact="online" data-q="' + esc(q) + '">' +
+        '<span style="font-size:26px">🌐</span>' +
+        '<span>「' + esc(q) + '」 인터넷에서 찾아보기<small>' +
+        (dictCache[dictNorm(q)] ? '인터넷에서 찾은 뜻을 열어요' : '영어 뜻과 한국어 뜻을 찾아와요 (인터넷 필요)') +
+        '</small></span></button>';
+    }
+    if (!list.length) {
+      html += '<div class="empty-note" style="padding:8px 2px">' +
+        (q ? '기본 낱말에는 없어요. 위의 🌐 버튼으로 인터넷에서 찾아보세요!' : '이 분류에는 낱말이 없어요.') +
+        '</div>';
+      return html;
+    }
+    html += '<div class="dict-grid">';
+    list.forEach(function (e) {
+      var best = dictBestToday(e.word);
+      html += '<button class="dw" type="button" data-dact="word" data-word="' + esc(e.word) + '">' +
+        '<span class="dwe">' + esc(e.emoji) + '</span>' +
+        '<span class="dwt"><span class="dww">' + esc(e.word) + '</span><span class="dwk">' + esc(e.ko) + '</span></span>' +
+        (best ? '<span class="dbest">' + best + '점</span>' : '') +
+        '</button>';
+    });
+    html += '</div>';
+    return html;
+  }
+  function dictHomeHtml() {
+    var chips = '<button class="dchip' + (dictState.cat === 'all' ? ' active' : '') + '" type="button" data-dact="cat" data-cat="all">📚 전체</button>';
+    DICT_CATS.forEach(function (c) {
+      chips += '<button class="dchip' + (dictState.cat === c.id ? ' active' : '') + '" type="button" data-dact="cat" data-cat="' + c.id + '">' +
+        c.emoji + ' ' + c.name + '</button>';
+    });
+    return '<div class="dict-wrap">' +
+      '<div class="dict-topline">' +
+      '<div class="dict-search">' +
+      '<input id="dictQuery" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="영어 낱말을 적어 보세요 (예: apple)" value="' + esc(dictState.query) + '">' +
+      '<button class="dict-clear" type="button" data-dact="clear" aria-label="지우기">✕</button>' +
+      '</div>' +
+      '<button class="dict-dice" type="button" data-dact="random">🎲 오늘의 낱말</button>' +
+      '</div>' +
+      '<div class="dict-cats" id="dictCats">' + chips + '</div>' +
+      '<div class="dict-status" id="dictStatus">' + dictStatusInner() + '</div>' +
+      '<div id="dictResults">' + dictListHtml() + '</div>' +
+      '</div>';
+  }
+  function dictDetailHtml(entry) {
+    var online = !entry.builtin;
+    var best = entry.word ? dictBestToday(entry.word) : 0;
+    var html = '<div class="dict-wrap">';
+    html += '<div><button class="dict-back" type="button" data-dact="back">← 낱말 목록으로</button></div>';
+    html += '<div class="dict-hero"><div class="dhemoji">' + esc(entry.emoji || '📖') + '</div>' +
+      '<div class="dhmain">' +
+      '<div class="dict-word">' + esc(entry.word || '') + '</div>' +
+      (entry.phonetic ? '<div class="dict-phon">' + esc(entry.phonetic) + '</div>' : '') +
+      '<div class="dict-ko">' + esc(entry.ko || (entry.pending ? '뜻을 찾는 중...' : '한국어 뜻을 찾지 못했어요')) + '</div>' +
+      (best ? '<div class="dict-best">내 최고 점수 ' + best + '점</div>' : '') +
+      '</div></div>';
+    html += '<div class="dict-say">' +
+      '<button class="dsay usa" type="button" data-dact="say" data-lang="en-US" data-rate="1">🇺🇸 미국 발음<small>보통 빠르기</small></button>' +
+      '<button class="dsay uk" type="button" data-dact="say" data-lang="en-GB" data-rate="1">🇬🇧 영국 발음<small>보통 빠르기</small></button>' +
+      '<button class="dsay slow" type="button" data-dact="say" data-lang="en-US" data-rate="0.6">🐢 천천히 듣기<small>아주 천천히</small></button>' +
+      '</div>';
+    var nat = '';
+    if (entry.audioUS) nat += '<button class="dsay native" type="button" data-dact="native" data-url="' + esc(entry.audioUS) + '" data-lang="en-US">🔈 원어민 녹음<small>미국</small></button>';
+    if (entry.audioUK) nat += '<button class="dsay native" type="button" data-dact="native" data-url="' + esc(entry.audioUK) + '" data-lang="en-GB">🔈 원어민 녹음<small>영국</small></button>';
+    if (nat) html += '<div class="dict-say" style="margin-top:8px">' + nat + '</div>';
+    if (entry.ex) {
+      html += '<div class="dict-ex"><div class="dex">' + esc(entry.ex) + '</div>' +
+        (entry.exKo ? '<div class="dek">' + esc(entry.exKo) + '</div>' : '') +
+        '<button class="exsay" type="button" data-dact="example">🔊 예문 듣기</button></div>';
+    }
+    if (entry.pending) {
+      html += '<div class="dict-note info">🌐 인터넷에서 「' + esc(entry.word) + '」의 뜻과 발음을 찾고 있어요...</div>';
+    } else if (entry.failed) {
+      html += '<div class="dict-note warn">인터넷에서 이 낱말의 뜻을 찾지 못했어요.<br>철자를 확인하거나 연결을 확인해 주세요. 발음 연습은 그대로 할 수 있어요!</div>';
+    }
+    if (entry.defs && entry.defs.length) {
+      html += '<div class="dict-defs">';
+      entry.defs.forEach(function (d) {
+        html += '<div class="dict-def">' +
+          (d.pos ? '<span class="pos">' + esc(dictPosKo(d.pos)) + '</span>' : '') +
+          '<div class="txt">' + esc(d.def) + '</div>' +
+          (d.ex ? '<div class="ex">' + esc(d.ex) + '</div>' : '') +
+          '</div>';
+      });
+      html += '</div>';
+    }
+    html += '<div class="dict-practice">' +
+      '<button class="dict-mic" id="dictMic" type="button" data-dact="record">🎤 따라 말하기</button>' +
+      '<div id="dictResult">' + dictIdleHtml(entry) + '</div>' +
+      '</div>';
+    if (online) {
+      html += '<div class="dict-src">🌐 인터넷에서 찾은 정보예요 (dictionaryapi.dev · MyMemory 번역).' +
+        (entry.ko ? ' 한국어 뜻은 자동 번역이라 조금 다를 수 있어요.' : '') + '</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+  function renderDictHome(focus) {
+    var body = document.querySelector('#modalRoot .modal-body');
+    if (!body) return;
+    body.innerHTML = dictHomeHtml();
+    var root = $('modalRoot');
+    if (root) root.scrollTop = 0;
+    if (focus) {
+      var inp = $('dictQuery');
+      if (inp) { try { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); } catch (e) { } }
+    }
+  }
+  function renderDictDetail() {
+    var body = document.querySelector('#modalRoot .modal-body');
+    if (!body) return;
+    body.innerHTML = dictDetailHtml(dictState.entry || {});
+    var root = $('modalRoot');
+    if (root) root.scrollTop = 0;
+    dictShowReplay();
+  }
+  function paintDictResults() {
+    var box = $('dictResults');
+    if (box) box.innerHTML = dictListHtml();
+    var chips = document.querySelectorAll('#dictCats .dchip');
+    for (var i = 0; i < chips.length; i++) {
+      chips[i].classList.toggle('active', chips[i].getAttribute('data-cat') === dictState.cat);
+    }
+    var st = $('dictStatus');
+    if (st) st.innerHTML = dictStatusInner();
+  }
+  function openDictEntry(entry) {
+    dictStopRec();
+    dictStopAudio();
+    if (dictRec.url) {
+      try { URL.revokeObjectURL(dictRec.url); } catch (e) { }
+      dictRec.url = '';
+    }
+    dictRec.chunks = [];
+    dictState.entry = entry;
+    renderDictDetail();
+  }
+  function openDict() {
+    dictState = { cat: 'all', query: '', entry: null };
+    openModal(modalShell('📖 영어사전', dictHomeHtml(), { wide: true }), true);
+  }
+  function dictSubmitQuery() {
+    var q = dictState.query.trim();
+    if (!q) return;
+    var e = DICT_BY_WORD[q.toLowerCase()] || dictCache[dictNorm(q)];
+    if (e) { openDictEntry(e); return; }
+    var list = dictFiltered();
+    if (list.length === 1 && q.length >= 2) { openDictEntry(list[0]); return; }
+    if (q.length >= 2) { dictLoadOnline(q); return; }
+    toast('낱말을 두 글자 이상 적어 주세요');
+  }
+
+  /* ---- 인터넷 사전 (기본 낱말에 없을 때) ---- */
+  function dictFetchJSON(url, ms) {
+    if (typeof fetch !== 'function') return Promise.reject(new Error('no fetch'));
+    var opts = { mode: 'cors' };
+    var ctrl = null;
+    if (typeof AbortController === 'function') {
+      ctrl = new AbortController();
+      opts.signal = ctrl.signal;
+      setTimeout(function () { try { ctrl.abort(); } catch (e) { } }, ms || 7000);
+    }
+    return fetch(url, opts).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    });
+  }
+  function dictParseApi(data) {
+    if (!data || !data.length || !data[0]) return null;
+    var first = data[0] || {};
+    var out = { word: String(first.word || ''), phonetic: '', defs: [], audioUS: '', audioUK: '', audioAny: '' };
+    (first.phonetics || []).forEach(function (p) {
+      if (!p) return;
+      if (!out.phonetic && p.text) out.phonetic = String(p.text);
+      if (p.audio) {
+        var a = String(p.audio);
+        if (a.indexOf('http') !== 0) a = 'https:' + (a.indexOf('//') === 0 ? '' : '//') + a;
+        var low = a.toLowerCase();
+        if (!out.audioUS && (low.indexOf('-us') >= 0 || low.indexOf('_us') >= 0)) out.audioUS = a;
+        if (!out.audioUK && (low.indexOf('-uk') >= 0 || low.indexOf('_uk') >= 0)) out.audioUK = a;
+        if (!out.audioAny) out.audioAny = a;
+      }
+    });
+    if (!out.audioUS && out.audioAny) out.audioUS = out.audioAny;
+    (first.meanings || []).forEach(function (m) {
+      if (!m || out.defs.length >= 3) return;
+      var d = m.definitions && m.definitions[0];
+      if (!d || !d.definition) return;
+      out.defs.push({ pos: String(m.partOfSpeech || ''), def: String(d.definition), ex: String(d.example || '') });
+    });
+    if (!out.defs.length && !out.phonetic && !out.audioAny) return null;
+    return out;
+  }
+  function dictParseTransl(data, word) {
+    if (!data) return '';
+    if (data.responseStatus && Number(data.responseStatus) !== 200) return '';
+    var t = data.responseData && data.responseData.translatedText;
+    if (!t) return '';
+    t = String(t)
+      .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<').replace(/&gt;/g, '>').trim();
+    if (!t || /MYMEMORY WARNING/i.test(t)) return '';
+    if (dictNorm(t) === dictNorm(word)) return '';
+    return t.length > 80 ? t.slice(0, 80) + '…' : t;
+  }
+  function dictSaveCache() {
+    var keys = Object.keys(dictCache);
+    while (keys.length > 200) delete dictCache[keys.shift()];
+    writeJSON(DICT_CACHE_KEY, dictCache);
+  }
+  function dictLoadOnline(q) {
+    var word = dictNorm(q) || String(q || '').trim().toLowerCase();
+    if (!word) return;
+    var cached = dictCache[word];
+    if (cached) { openDictEntry(cached); return; }
+    dictStopRec();
+    dictStopAudio();
+    var placeholder = { word: word, ko: '', phonetic: '', emoji: '🌐', builtin: false, online: true, pending: true, defs: [] };
+    dictState.entry = placeholder;
+    renderDictDetail();
+    Promise.all([
+      dictFetchJSON(DICT_API + encodeURIComponent(word), 8000).then(dictParseApi).catch(function () { return null; }),
+      dictFetchJSON(DICT_TRANS + '?q=' + encodeURIComponent(word) + '&langpair=' + encodeURIComponent('en|ko'), 7000)
+        .then(function (d) { return dictParseTransl(d, word); }).catch(function () { return ''; })
+    ]).then(function (res) {
+      if (!dictState.entry || dictState.entry.word !== word || !dictState.entry.pending) return;
+      var api = res[0], ko = res[1];
+      if (!api && !ko) {
+        dictState.entry = {
+          word: word, ko: '', phonetic: '', emoji: '🌐', builtin: false, online: true,
+          pending: false, failed: true, defs: []
+        };
+        renderDictDetail();
+        toast('인터넷에서 뜻을 찾지 못했어요. 철자를 확인해 보세요!');
+        return;
+      }
+      var entry = api || { word: word, phonetic: '', defs: [], audioUS: '', audioUK: '' };
+      entry.word = entry.word || word;
+      entry.builtin = false;
+      entry.online = true;
+      entry.pending = false;
+      entry.failed = false;
+      entry.emoji = '🌐';
+      entry.ko = ko || '';
+      dictCache[word] = entry;
+      dictSaveCache();
+      dictState.entry = entry;
+      renderDictDetail();
+    });
+  }
+
+  /* ---- 사전 안 버튼 처리 ---- */
+  function dictHandleAct(el) {
+    var act = el.getAttribute('data-dact');
+    var entry = dictState.entry;
+    if (act === 'cat') {
+      dictState.cat = el.getAttribute('data-cat') || 'all';
+      dictState.query = '';
+      var inp = $('dictQuery');
+      if (inp) inp.value = '';
+      paintDictResults();
+      return;
+    }
+    if (act === 'clear') {
+      dictState.query = '';
+      var inp2 = $('dictQuery');
+      if (inp2) { inp2.value = ''; inp2.focus(); }
+      paintDictResults();
+      return;
+    }
+    if (act === 'random') {
+      if (!DICT_WORDS.length) return;
+      openDictEntry(DICT_WORDS[Math.floor(Math.random() * DICT_WORDS.length)]);
+      return;
+    }
+    if (act === 'word') {
+      var w = el.getAttribute('data-word') || '';
+      var e = DICT_BY_WORD[w.toLowerCase()] || dictCache[dictNorm(w)];
+      if (e) openDictEntry(e);
+      return;
+    }
+    if (act === 'online') { dictLoadOnline(el.getAttribute('data-q') || ''); return; }
+    if (act === 'back') {
+      dictStopRec();
+      dictStopAudio();
+      dictState.entry = null;
+      renderDictHome(true);
+      return;
+    }
+    if (act === 'say') {
+      if (!entry) return;
+      dictSpeak(entry.word, el.getAttribute('data-lang') || 'en-US', Number(el.getAttribute('data-rate')) || 1);
+      return;
+    }
+    if (act === 'example') {
+      if (!entry || !entry.ex) return;
+      dictSpeak(entry.ex, 'en-US', 0.85);
+      return;
+    }
+    if (act === 'native') {
+      if (!entry) return;
+      dictPlayNative(el.getAttribute('data-url'), entry.word, el.getAttribute('data-lang') || 'en-US');
+      return;
+    }
+    if (act === 'record') { dictStartRecord(); return; }
+    if (act === 'stop') {
+      dictStopRec();
+      dictResultArea('<div class="dict-note info">그만 들었어요. 🎤 를 다시 눌러 말해 보세요.</div><div class="dict-replay" id="dictReplay"></div>');
+      dictShowReplay();
+      return;
+    }
+    if (act === 'replay') { dictPlayReplay(); return; }
+  }
+  function dictCleanup() {
+    dictStopRec();
+    dictStopAudio();
+    if (dictRec.url) {
+      try { URL.revokeObjectURL(dictRec.url); } catch (e) { }
+      dictRec.url = '';
+    }
+    dictRec.chunks = [];
+    dictState.entry = null;
   }
 
   /* ---------------------------------------------------------------
@@ -3638,6 +4797,7 @@ body.focus-mode .focus-exit{display:block}
     S.progress.date = t;
     S.progress.ballsAwardedToday = 0;
     S.progress.sectionsToday = [];
+    S.dict = { date: t, words: {} };
     save();
     renderTasks();
     paintPartnerProgress();
@@ -3694,6 +4854,7 @@ body.focus-mode .focus-exit{display:block}
     });
     $('btnGacha').addEventListener('click', function () { openGacha(); });
     $('btnSettings').addEventListener('click', function () { openSettings('basic'); });
+    $('btnDict').addEventListener('click', function () { openDict(); });
     $('btnDetail').addEventListener('click', function () {
       openDetail(partnerData.pokemon ? partnerData.pokemon.id : S.partner.id);
     });
@@ -3789,6 +4950,20 @@ body.focus-mode .focus-exit{display:block}
     $('btnEvManager').addEventListener('click', function () { openEventManager(); });
     $('btnIcs').addEventListener('click', function () { openICSImport(); });
 
+    // 영어사전 검색창 — 글자를 칠 때마다 바로 걸러 줍니다
+    $('modalRoot').addEventListener('input', function (ev) {
+      var t = ev.target;
+      if (!t || t.id !== 'dictQuery') return;
+      dictState.query = t.value;
+      paintDictResults();
+    });
+    $('modalRoot').addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (!t || t.id !== 'dictQuery' || ev.key !== 'Enter') return;
+      if (ev.preventDefault) ev.preventDefault();
+      dictSubmitQuery();
+    });
+
     // 모달 공통
     $('modalRoot').addEventListener('click', onModalClick);
     document.addEventListener('keydown', function (ev) {
@@ -3808,6 +4983,9 @@ body.focus-mode .focus-exit{display:block}
     }
     var closeBtn = t.closest ? t.closest('[data-close]') : null;
     if (closeBtn) { closeModal(); return; }
+
+    var dictEl = t.closest ? t.closest('[data-dact]') : null;
+    if (dictEl) { dictHandleAct(dictEl); return; }
 
     var evmChip = t.closest ? t.closest('[data-mevm]') : null;
     if (evmChip) {
@@ -4093,6 +5271,11 @@ body.focus-mode .focus-exit{display:block}
     flushHeader();
     renderClock();
     setInterval(renderClock, 1000);
+    if (TTS_OK) {
+      dictLoadVoices();
+      try { window.speechSynthesis.addEventListener('voiceschanged', dictLoadVoices); }
+      catch (e) { try { window.speechSynthesis.onvoiceschanged = dictLoadVoices; } catch (e2) { } }
+    }
     renderAll();
     loadWeather();
     syncCalendarFile();
