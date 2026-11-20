@@ -429,6 +429,115 @@ ul{margin:0;padding:0;list-style:none}
 .task-empty{font-size:14px;color:var(--ink-soft)}
 .tasks-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;font-size:13.5px;color:var(--ink-soft);flex-wrap:wrap}
 
+/* ===============================================================
+   한 화면 압축 레이아웃 (태블릿·PC 768px 이상)
+   헤더·날씨·파트너 카드를 납작하게 만들고, 할 일 섹션을 2열로 놓아
+   스크롤 없이 오늘 할 일을 다 볼 수 있게 합니다.
+   =============================================================== */
+@media (min-width:768px){
+  /* --- 상단 헤더 --- */
+  .app{padding:10px 14px 40px}
+  .dex-header{padding:8px 14px 9px;border-radius:22px;box-shadow:0 6px 0 var(--dex-red-darker),0 12px 24px rgba(120,40,30,.16)}
+  .dex-lights{margin-bottom:5px;gap:6px}
+  .light{width:13px;height:13px;border-width:2.5px}
+  .light.red,.light.yellow,.light.green{width:10px;height:10px}
+  .light-line{height:3px}
+  .dex-top{gap:8px}
+  .brand{gap:9px}
+  .pokeball-logo{width:34px;height:34px;border-width:2.5px}
+  .pokeball-logo::after{width:9px;height:9px;border-width:2.5px}
+  .dex-header h1{font-size:clamp(17px,1.85vw,23px)}
+  .brand-sub{margin-top:0;font-size:12.5px;gap:6px}
+  .now-temp{padding:0 7px;font-size:12px;border-width:1.5px}
+  .quick-actions{gap:6px}
+  .qbtn{min-height:36px;padding:0 11px;font-size:13.5px;border-width:2.5px;border-radius:11px;gap:5px;box-shadow:0 3px 0 rgba(43,43,51,.5)}
+  .qbtn .ball-mini{width:15px;height:15px;border-width:2px}
+  .qbtn .chip{font-size:12px;min-width:19px;padding:0 5px;border-width:2px;border-radius:8px}
+
+  /* --- 날씨 : 한 줄 슬림 칩 --- */
+  .weather-strip{margin-top:6px;gap:6px;padding:0;flex-wrap:nowrap;overflow-x:auto}
+  .wx{
+    display:flex;align-items:center;gap:5px;flex:0 0 auto;min-width:0;
+    padding:3px 9px;border-radius:11px;border-width:2px;background:rgba(255,255,255,.18);
+  }
+  .wx.today{box-shadow:none;padding:3px 10px}
+  .wx .day{font-size:12px;white-space:nowrap}
+  .wx .emo{font-size:14px;margin:0;line-height:1}
+  .wx .tmp{font-size:12.5px}
+  .wx .pop{font-size:11px;opacity:.85;white-space:nowrap}
+  .wx-state{font-size:12px;padding:2px}
+
+  /* --- 보드 --- */
+  .board{gap:12px;margin-top:10px}
+  .task-col{gap:10px}
+  .card{padding:10px 12px 12px;border-radius:18px}
+  .cday{min-height:44px;font-size:15px}
+  .cal-filters{gap:5px;margin-bottom:8px}
+  .fchip{padding:3px 9px;font-size:13px;border-width:2.5px}
+  .day-panel{margin-top:8px;padding-top:8px}
+
+  /* --- 파트너 카드 : 한 줄 납작하게 --- */
+  .partner-card{padding:8px 12px}
+  .partner-hero{gap:10px;flex-wrap:wrap;align-items:center}
+  .partner-top{gap:10px;flex:0 1 auto;align-items:center}
+  .partner-sprite-wrap{width:64px;height:64px;border-radius:14px;border-width:2.5px}
+  .partner-sprite{width:52px;height:52px}
+  .lv-badge{font-size:11.5px;padding:0 6px;border-width:2.5px;border-radius:8px;left:-6px;top:-8px;box-shadow:0 2px 0 rgba(43,43,51,.35)}
+  .partner-info{max-width:none}
+  .partner-name{font-size:18.5px;letter-spacing:-.3px}
+  .partner-no{font-size:11px}
+  .partner-genus{display:none}
+  .type-badges{margin-top:1px;gap:4px}
+  .tbadge{font-size:10.5px;padding:0 6px;border-width:2px;border-radius:7px}
+  .xp-wrap{margin-top:4px}
+  .xp-label{font-size:10.5px;margin-bottom:2px}
+  .xp-bar{height:9px;border-width:2px;border-radius:7px}
+  .evo-dots{margin-top:3px;font-size:10.5px;gap:4px}
+  .evo-dots .dot{width:9px;height:9px;border-width:2px}
+  .evo-dots .lnk{width:10px;height:2px}
+  .partner-side{flex:0 0 auto;max-width:none;margin-left:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px;justify-content:flex-end}
+  .partner-stats{grid-template-columns:repeat(4,minmax(0,auto));gap:6px}
+  .pstat{font-size:12px;padding:2px 7px;border-width:2px;border-radius:9px;box-shadow:0 2px 0 rgba(43,43,51,.16);gap:3px}
+  .partner-actions{display:flex;flex-wrap:wrap;gap:6px}
+  .partner-actions .pbtn{min-height:32px;padding:0 9px;font-size:12px;border-width:2.5px;border-radius:9px;box-shadow:0 2px 0 rgba(43,43,51,.3);grid-column:auto}
+
+  /* --- 오늘의 할 일 : 섹션 2열 --- */
+  .tasks-card{padding:10px 12px 12px}
+  .tasks-head{margin-bottom:2px;align-items:center;gap:8px}
+  .tasks-title{font-size:18px;gap:6px}
+  .tasks-sub{font-size:12px;margin-top:1px}
+  .today-ring{width:50px;height:50px;border-width:2.5px}
+  .today-ring span{width:40px;height:40px;font-size:12.5px}
+  body:not(.focus-mode) .sections{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;margin-top:9px;align-items:start;
+  }
+  .section{padding:7px 8px 8px;border-width:2.5px;border-radius:14px;box-shadow:0 3px 0 rgba(43,43,51,.14)}
+  .sec-head{gap:6px;margin-bottom:5px}
+  .sec-emoji{font-size:18px}
+  .sec-name{font-size:15px}
+  .sec-name small{font-size:11px;margin-left:4px}
+  .sec-count{font-size:12px;padding:0 6px;border-width:2px;border-radius:9px}
+  .sec-badge{font-size:13px}
+  .sec-progress{height:6px;border-width:1.5px;margin-bottom:6px}
+  .tasks{grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:6px}
+  .task{min-height:44px;padding:5px 8px;font-size:14.5px;gap:7px;border-width:2.5px;border-radius:11px;box-shadow:0 3px 0 rgba(43,43,51,.16)}
+  .task .temoji{font-size:17px}
+  .task .tcheck{width:24px;height:24px;font-size:13px;border-width:2.5px}
+  .task-empty{font-size:12.5px}
+  .tasks-foot{margin-top:8px;font-size:12px}
+}
+
+/* 달력과 할 일을 나란히 두는 넓은 화면 */
+@media (min-width:1061px){
+  .board{grid-template-columns:minmax(330px,400px) minmax(0,1fr)}
+}
+
+/* 넓은 화면에서는 태블릿 세로처럼 할 일이 더 크게 보이도록 */
+@media (min-width:1360px){
+  .tasks{grid-template-columns:repeat(auto-fill,minmax(152px,1fr))}
+}
+
 /* ---------- 집중 모드 ---------- */
 body.focus-mode .cal-col,
 body.focus-mode .weather-strip,
