@@ -1701,7 +1701,7 @@ body.focus-mode .focus-exit{display:block}
     var cls = o.wide ? 'modal wide' : 'modal';
     return '<div class="' + cls + '" data-modal="1">' +
       '<div class="modal-head"><h3>' + esc(title) + '</h3>' +
-      '<button class="modal-x" type="button" data-close="1" aria-label="닫기">✕</button></div>' +
+      (o.noClose ? '' : '<button class="modal-x" type="button" data-close="1" aria-label="닫기">✕</button>') + '</div>' +
       '<div class="modal-body">' + bodyHtml + '</div>' +
       (o.foot ? '<div class="modal-foot">' + o.foot + '</div>' : '') +
       '</div>';
@@ -2055,7 +2055,7 @@ body.focus-mode .focus-exit{display:block}
   --------------------------------------------------------------- */
   function openStarter() {
     openModal(modalShell('🎉 첫 파트너 포켓몬',
-      '<div class="detail-loading"><div class="spinner"></div>포켓몬을 불러오는 중이에요...</div>', {}), false);
+      '<div class="detail-loading"><div class="spinner"></div>포켓몬을 불러오는 중이에요...</div>', { noClose: true }), false);
     Promise.all(STARTERS.map(function (st) {
       return Promise.all([
         getPokemon(st.id).catch(function () { return null; }),
@@ -2074,11 +2074,11 @@ body.focus-mode .focus-exit{display:block}
       openModal(modalShell('🎉 첫 파트너 포켓몬',
         '<div class="starter-intro"><h3>건률이의 첫 파트너를 골라 주세요!</h3>' +
         '<p>함께 아침을 시작할 포켓몬이에요. 할 일을 끝낼수록 함께 자라요.</p></div>' +
-        '<div class="starter-grid">' + grid + '</div>', {}), false);
+        '<div class="starter-grid">' + grid + '</div>', { noClose: true }), false);
     }).catch(function () {
       openModal(modalShell('🎉 첫 파트너 포켓몬',
         '<div class="detail-loading">포켓몬을 불러오지 못했어요.<br>부모 설정에서 파트너를 다시 고를 수 있어요.</div>' +
-        '<div class="modal-foot"><button class="btn" type="button" data-act="starter-skip">피카츄로 시작하기</button></div>', {}), false);
+        '<div class="modal-foot"><button class="btn" type="button" data-act="starter-skip">피카츄로 시작하기</button></div>', { noClose: true }), false);
     });
   }
 
@@ -2808,7 +2808,9 @@ body.focus-mode .focus-exit{display:block}
     // 모달 공통
     $('modalRoot').addEventListener('click', onModalClick);
     document.addEventListener('keydown', function (ev) {
-      if (ev.key === 'Escape') closeModal();
+      if (ev.key !== 'Escape') return;
+      var root = $('modalRoot');
+      if (root.classList.contains('open') && root.getAttribute('data-dismissible') !== '0') closeModal();
     });
   }
 
