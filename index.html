@@ -245,7 +245,58 @@ ul{margin:0;padding:0;list-style:none}
   border:none;background:#ffe6e3;border-radius:9px;width:32px;height:32px;font-size:15px;flex:none;
   border:2px solid rgba(43,43,51,.25);
 }
+.ev-item .evwho-sel{
+  font-size:12.5px;font-weight:700;padding:3px 4px;border-radius:10px;flex:none;
+  border:2px solid rgba(43,43,51,.35);background:#fff;max-width:104px;cursor:pointer;
+}
+.ev-sync{
+  font-size:11.5px;font-weight:700;color:var(--ink-soft);white-space:nowrap;
+  border:2px dashed rgba(43,43,51,.3);border-radius:10px;padding:1px 6px;
+}
 .empty-note{font-size:14px;color:var(--ink-soft);padding:6px 2px}
+
+/* ---------- 일정 일괄 관리 ---------- */
+.evm-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.evm-count{font-size:13.5px;font-weight:700;color:var(--ink-soft)}
+.evm-check-all{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:700;cursor:pointer}
+.evm-check-all input{width:22px;height:22px;accent-color:var(--dex-red);cursor:pointer}
+.evm-list{
+  display:flex;flex-direction:column;gap:6px;max-height:44vh;overflow-y:auto;
+  padding:8px 4px;border-top:2px dashed #e0cfb7;border-bottom:2px dashed #e0cfb7;margin-bottom:10px;
+}
+.evm-row{
+  display:flex;align-items:center;gap:8px;background:#fff;border:2.5px solid var(--ink);
+  border-radius:12px;padding:7px 9px;font-size:14.5px;cursor:pointer;
+}
+.evm-row.synced{background:#f6f3ec;border-style:dashed;opacity:.9;cursor:default}
+.evm-row input[type=checkbox]{width:22px;height:22px;flex:none;accent-color:var(--dex-red);cursor:pointer}
+.evm-row input[type=checkbox]:disabled{cursor:default}
+.evm-cdot{width:9px;height:26px;border-radius:5px;flex:none}
+.evm-date{font-size:13px;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+.evm-title{flex:1;min-width:0;word-break:break-all}
+.evm-member{font-size:12.5px;font-weight:700;padding:2px 7px;border-radius:10px;border:2px solid rgba(43,43,51,.35);white-space:nowrap}
+.evm-sync{
+  font-size:11.5px;font-weight:700;color:var(--ink-soft);white-space:nowrap;
+  border:2px dashed rgba(43,43,51,.3);border-radius:10px;padding:1px 6px;
+}
+.evm-sync-wrap{margin-bottom:10px}
+.evm-sync-head{font-size:13.5px;font-weight:700;color:var(--ink-soft);margin-bottom:6px}
+.evm-list-sync{max-height:20vh;border-color:#ddd0b8}
+.evm-hint{font-size:12.5px;color:var(--ink-soft);margin-top:5px}
+.evm-empty{padding:14px 4px;text-align:center;color:var(--ink-soft);font-size:14.5px;line-height:1.5}
+.evm-actions{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;
+  background:#fff8e6;border:2.5px dashed #e0b96a;border-radius:14px;padding:9px 10px;
+}
+.evm-move{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.evm-lbl{font-size:13.5px;font-weight:700;color:var(--ink-soft)}
+.evm-move select{height:40px;border:2.5px solid var(--ink);border-radius:11px;padding:0 6px;font-size:14px;font-weight:700;background:#fff;max-width:130px}
+@media (max-width:600px){
+  .evm-row{font-size:13.5px;gap:6px;padding:6px 7px}
+  .evm-date{font-size:12px}
+  .evm-member{font-size:11.5px;padding:1px 5px}
+  .evm-actions{justify-content:center}
+}
 
 /* ---------- 파트너 카드 ---------- */
 .partner-card{
@@ -606,6 +657,7 @@ body.focus-mode .focus-exit{display:block}
 .btn.warn{background:#ffe2dd}
 .btn.green{background:var(--green);color:#fff}
 .btn.sm{padding:6px 10px;font-size:13.5px;min-height:36px;border-width:2.5px}
+.btn:disabled{opacity:.45;cursor:default;transform:none;box-shadow:0 4px 0 rgba(43,43,51,.12)}
 
 .task-edit-list{display:flex;flex-direction:column;gap:7px}
 .te-sec{border:2.5px dashed #d6c5ab;border-radius:14px;padding:9px 10px;background:#fffdf7}
@@ -736,6 +788,7 @@ body.focus-mode .focus-exit{display:block}
     <section class="col cal-col card" aria-label="가족 캘린더">
       <div class="card-head">
         <div class="card-title">📅 가족 캘린더</div>
+        <button class="mini-btn today-btn" id="btnEvManager" type="button" title="일정 담당자를 바꾸거나 여러 개를 한 번에 지워요">🗂 일괄 관리</button>
         <div class="cal-nav">
           <button class="mini-btn" id="calPrev" type="button" aria-label="이전 달">‹</button>
           <div class="cal-month" id="calMonth">----년 --월</div>
@@ -2054,8 +2107,10 @@ body.focus-mode .focus-exit{display:block}
      12. 스타터 선택
   --------------------------------------------------------------- */
   function openStarter() {
+    var skipBtn = '<div class="modal-foot"><button class="btn" type="button" data-act="starter-skip">⚡ 피카츄로 바로 시작</button></div>';
     openModal(modalShell('🎉 첫 파트너 포켓몬',
-      '<div class="detail-loading"><div class="spinner"></div>포켓몬을 불러오는 중이에요...</div>', { noClose: true }), false);
+      '<div class="detail-loading"><div class="spinner"></div>포켓몬을 불러오는 중이에요...<br>' +
+      '<span class="empty-note">불러오기가 오래 걸리면 아래 버튼으로 바로 시작할 수 있어요.</span></div>' + skipBtn, { noClose: true }), false);
     Promise.all(STARTERS.map(function (st) {
       return Promise.all([
         getPokemon(st.id).catch(function () { return null; }),
@@ -2071,21 +2126,26 @@ body.focus-mode .focus-exit{display:block}
           '<strong>' + esc(name) + '</strong>' +
           '<small>' + esc((s && s.genusKo) || '포켓몬') + '</small></button>';
       }).join('');
+      if (!grid) {
+        // 포켓몬을 하나도 그리지 못했을 때도 막하지 않고 바로 시작할 수 있게
+        openModal(modalShell('🎉 첫 파트너 포켓몬',
+          '<div class="detail-loading">포켓몬 목록을 불러오지 못했어요.<br>아래 버튼으로 바로 시작하고, 나중에 부모 설정에서 파트너를 고를 수 있어요.</div>' + skipBtn, { noClose: true }), false);
+        return;
+      }
       openModal(modalShell('🎉 첫 파트너 포켓몬',
         '<div class="starter-intro"><h3>건률이의 첫 파트너를 골라 주세요!</h3>' +
         '<p>함께 아침을 시작할 포켓몬이에요. 할 일을 끝낼수록 함께 자라요.</p></div>' +
-        '<div class="starter-grid">' + grid + '</div>', { noClose: true }), false);
+        '<div class="starter-grid">' + grid + '</div>' + skipBtn, { noClose: true }), false);
     }).catch(function () {
       openModal(modalShell('🎉 첫 파트너 포켓몬',
-        '<div class="detail-loading">포켓몬을 불러오지 못했어요.<br>부모 설정에서 파트너를 다시 고를 수 있어요.</div>' +
-        '<div class="modal-foot"><button class="btn" type="button" data-act="starter-skip">피카츄로 시작하기</button></div>', { noClose: true }), false);
+        '<div class="detail-loading">포켓몬을 불러오지 못했어요.<br>부모 설정에서 파트너를 다시 고를 수 있어요.</div>' + skipBtn, { noClose: true }), false);
     });
   }
 
   function pickStarter(id) {
     S.partner.id = Number(id);
     S.box[id] = { id: Number(id), caughtAt: Date.now(), from: 'starter' };
-    S.starterPicked = true;
+    S.starterPicked = true;   // 다시는 첫 화면 안내가 뜨지 않도록 저장
     partnerData.id = 0;
     save();
     closeModal();
@@ -2165,12 +2225,17 @@ body.focus-mode .focus-exit{display:block}
     } else {
       wrap.innerHTML = evs.map(function (e) {
         var mem = MEMBERS[e.member] || MEMBERS.family;
-        var canDelete = !String(e.id || '').startsWith('sync-') && e.source !== 'calendar.json';
+        var canEdit = !String(e.id || '').startsWith('sync-') && e.source !== 'calendar.json';
+        var who = canEdit
+          ? '<select class="evwho-sel" data-act="ev-member" data-id="' + esc(e.id) + '" aria-label="담당자 바꾸기" ' +
+            'style="border-color:' + mem.color + ';background:' + mem.color + '22">' + memberOptions(e.member) + '</select>'
+          : '<span class="evwho" style="background:' + mem.color + '22">' + esc(mem.name) + '</span>' +
+            '<span class="ev-sync" title="가족 캘린더 파일에서 불러온 일정이라 여기서는 고칠 수 없어요">🔄 파일</span>';
         return '<div class="ev-item">' +
           '<span class="evbar" style="background:' + mem.color + '"></span>' +
           '<span class="evtxt">' + (e.time ? '<b>' + esc(e.time) + '</b> ' : '') + esc(e.title) + '</span>' +
-          '<span class="evwho" style="background:' + mem.color + '22">' + esc(mem.name) + '</span>' +
-          (canDelete ? '<button class="ev-del" type="button" data-act="ev-del" data-id="' + esc(e.id) + '" aria-label="일정 삭제">🗑</button>' : '') +
+          who +
+          (canEdit ? '<button class="ev-del" type="button" data-act="ev-del" data-id="' + esc(e.id) + '" aria-label="일정 삭제">🗑</button>' : '') +
           '</div>';
       }).join('');
     }
@@ -2214,6 +2279,220 @@ body.focus-mode .focus-exit{display:block}
       renderDayPanel();
       toast('일정을 지웠어요');
     }
+  }
+
+  function memberOptions(sel) {
+    return ['geonryul', 'mom', 'dad', 'family'].map(function (m) {
+      return '<option value="' + m + '"' + (m === sel ? ' selected' : '') + '>' + esc(MEMBERS[m].name) + '</option>';
+    }).join('');
+  }
+
+  /* 일정 한 건의 담당자만 바로 바꾸기 (날짜 상세에서) */
+  function setEventMember(id, member) {
+    if (!MEMBERS[member] || member === 'all') return false;
+    var ev = null;
+    (S.events || []).forEach(function (e) { if (e.id === id) ev = e; });
+    if (!ev) return false;
+    if (ev.member === member) return true;
+    ev.member = member;
+    // 같은 날·같은 제목으로 같은 담당자 일정이 이미 있으면 하나로 합침
+    var merged = 0;
+    S.events = S.events.filter(function (e) {
+      if (e.id === ev.id) return true;
+      if (e.date === ev.date && e.title === ev.title && e.member === ev.member) { merged++; return false; }
+      return true;
+    });
+    save();
+    renderCalendar();
+    renderDayPanel();
+    toast('✅ ' + MEMBERS[member].name + ' 일정으로 바꿨어요' + (merged ? ' (같은 일정 ' + merged + '개는 하나로 합쳤어요)' : ''));
+    return true;
+  }
+
+  /* ---- 일정 일괄 관리 ---- */
+  var evmFilter = 'all';
+  var evmSel = {};
+  var evmTarget = '';
+
+  function localEventsSorted() {
+    return (S.events || []).slice().sort(function (a, b) {
+      if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+      var at = a.time || '99:99', bt = b.time || '99:99';
+      return at < bt ? -1 : at > bt ? 1 : 0;
+    });
+  }
+
+  function evmListEvents() {
+    return localEventsSorted().filter(function (e) {
+      return evmFilter === 'all' || e.member === evmFilter;
+    });
+  }
+
+  function evmPicks() {
+    return evmListEvents().filter(function (e) { return !!evmSel[e.id]; });
+  }
+
+  function evmDateLabel(e) {
+    var d = parseDay(e.date);
+    return (d.getMonth() + 1) + '/' + d.getDate() + ' (' + WEEKDAYS[d.getDay()] + ')' + (e.time ? ' ' + e.time : '');
+  }
+
+  function evmRowHtml(e, readonly) {
+    var mem = MEMBERS[e.member] || MEMBERS.family;
+    if (readonly) {
+      return '<div class="evm-row synced">' +
+        '<input type="checkbox" disabled aria-label="읽기 전용">' +
+        '<span class="evm-cdot" style="background:' + mem.color + '"></span>' +
+        '<span class="evm-date">' + esc(evmDateLabel(e)) + '</span>' +
+        '<span class="evm-title">' + esc(e.title) + '</span>' +
+        '<span class="evm-member" style="background:' + mem.color + '22">' + esc(mem.name) + '</span>' +
+        '<span class="evm-sync">🔄 불러옴</span>' +
+        '</div>';
+    }
+    return '<label class="evm-row">' +
+      '<input type="checkbox" class="evm-pick" data-id="' + esc(e.id) + '"' + (evmSel[e.id] ? ' checked' : '') + '>' +
+      '<span class="evm-cdot" style="background:' + mem.color + '"></span>' +
+      '<span class="evm-date">' + esc(evmDateLabel(e)) + '</span>' +
+      '<span class="evm-title">' + esc(e.title) + '</span>' +
+      '<span class="evm-member" style="background:' + mem.color + '22">' + esc(mem.name) + '</span>' +
+      '</label>';
+  }
+
+  function evmBody() {
+    var list = evmListEvents();
+    var picks = evmPicks();
+    var total = (S.events || []).length;
+    var chips = ['all', 'geonryul', 'mom', 'dad', 'family'].map(function (m) {
+      return '<button class="fchip' + (evmFilter === m ? ' active' : '') + '" type="button" data-mevm="' + m + '">' +
+        esc(MEMBERS[m].name) + '</button>';
+    }).join('');
+
+    var html = '<div class="evm-top"><div class="cal-filters" style="margin:0">' + chips + '</div></div>' +
+      '<div class="evm-top">' +
+      '<label class="evm-check-all"><input type="checkbox" id="evmAll"' +
+      ((list.length && picks.length === list.length) ? ' checked' : '') + (list.length ? '' : ' disabled') + '> 전체 선택</label>' +
+      '<span class="evm-count" id="evmCount">' + picks.length + ' / ' + list.length + '개 선택</span></div>' +
+      '<div class="evm-list" id="evmList">';
+
+    if (!list.length) {
+      html += '<div class="evm-empty">' + (total
+        ? '이 담당자의 일정은 없어요.'
+        : '직접 추가한 일정이 아직 없어요.<br>달력에서 날짜를 누르고 아래 칸에 일정을 적어 추가해 보세요 😊') + '</div>';
+    } else {
+      list.forEach(function (e) { html += evmRowHtml(e); });
+    }
+    html += '</div>';
+
+    if (S.synced && S.synced.length) {
+      var syncedRows = S.synced.filter(function (e) {
+        return evmFilter === 'all' || e.member === evmFilter;
+      }).map(function (e) { return evmRowHtml(e, true); }).join('');
+      html += '<div class="evm-sync-wrap"><div class="evm-sync-head">🔄 가족 캘린더 파일(calendar.json) 일정 ' + S.synced.length + '개 · 읽기 전용</div>' +
+        '<div class="evm-list evm-list-sync">' + (syncedRows || '<div class="evm-empty">이 담당자의 일정은 없어요.</div>') + '</div>' +
+        '<div class="evm-hint">불러온 일정은 calendar.json 파일을 고치면 함께 바뀝니다.</div></div>';
+    }
+
+    var targetOpts = '<option value="">담당자 고르기</option>' + ['geonryul', 'mom', 'dad', 'family'].map(function (m) {
+      return '<option value="' + m + '"' + (evmTarget === m ? ' selected' : '') + '>' + esc(MEMBERS[m].name) + '</option>';
+    }).join('');
+
+    html += '<div class="evm-actions">' +
+      '<div class="evm-move"><span class="evm-lbl">선택한 일정 담당자</span>' +
+      '<select id="evmMember">' + targetOpts + '</select>' +
+      '<button class="btn sm primary" type="button" data-act="evm-apply-member"' +
+      ((picks.length && evmTarget) ? '' : ' disabled') + '>변경</button></div>' +
+      '<button class="btn sm warn" type="button" data-act="evm-delete"' +
+      (picks.length ? '' : ' disabled') + '>🗑 선택한 일정 삭제</button>' +
+      '</div>';
+    return html;
+  }
+
+  function evmRender() {
+    var body = document.querySelector('#modalRoot .modal-body');
+    if (!body) return;
+    body.innerHTML = evmBody();
+  }
+
+  function openEventManager() {
+    evmSel = {};               // 열 때마다 새로 고르기
+    evmTarget = '';
+    openModal(modalShell('🗂 일정 일괄 관리', evmBody(), {
+      wide: true,
+      foot: '<button class="btn" type="button" data-close="1">닫기</button>'
+    }));
+  }
+
+  /* 선택 수·버튼 상태만 다시 그리기 */
+  function evmSyncUI() {
+    var list = evmListEvents();
+    var picks = evmPicks();
+    var cnt = $('evmCount');
+    if (cnt) cnt.textContent = picks.length + ' / ' + list.length + '개 선택';
+    var allBox = $('evmAll');
+    if (allBox) {
+      allBox.checked = list.length > 0 && picks.length === list.length;
+      allBox.disabled = !list.length;
+    }
+    var selM = $('evmMember');
+    var btnM = document.querySelector('#modalRoot [data-act="evm-apply-member"]');
+    if (btnM) btnM.disabled = !(picks.length && selM && selM.value);
+    var btnD = document.querySelector('#modalRoot [data-act="evm-delete"]');
+    if (btnD) btnD.disabled = !picks.length;
+  }
+
+  function applyBulkMember(member) {
+    if (!MEMBERS[member] || member === 'all') { toast('바꿀 담당자를 골라 주세요'); return; }
+    var picks = evmPicks();
+    if (!picks.length) { toast('일정을 먼저 골라 주세요'); return; }
+    var n = 0;
+    picks.forEach(function (e) { if (e.member !== member) n++; e.member = member; });
+
+    // 같은 날·같은 제목·같은 담당자가 되면 한 건만 남깁니다
+    var seen = {}, merged = 0;
+    S.events = (S.events || []).filter(function (e) {
+      var k = e.date + '|' + e.title + '|' + e.member;
+      if (seen[k]) { merged++; return false; }
+      seen[k] = true;
+      return true;
+    });
+    var alive = {};
+    S.events.forEach(function (e) { alive[e.id] = true; });
+    Object.keys(evmSel).forEach(function (id) { if (!alive[id]) delete evmSel[id]; });
+
+    save();
+    renderCalendar();
+    renderDayPanel();
+    evmRender();
+    if (!n && !merged) {
+      toast('고른 일정이 이미 ' + MEMBERS[member].name + ' 일정이에요');
+      return;
+    }
+    toast('✅ ' + n + '개 일정을 ' + MEMBERS[member].name + ' 일정으로 바꿨어요' +
+      (merged ? ' (같은 일정 ' + merged + '개는 하나로 합쳤어요)' : ''), 'gold');
+  }
+
+  function bulkDeleteEvents() {
+    var picks = evmPicks();
+    if (!picks.length) { toast('지울 일정을 먼저 골라 주세요'); return; }
+    var msg = '선택한 일정 ' + picks.length + '개를 지울까요?\n지운 일정은 되돌릴 수 없어요.\n\n' +
+      picks.slice(0, 3).map(function (e) {
+        return '· ' + evmDateLabel(e) + ' ' + (MEMBERS[e.member] || MEMBERS.family).name + ' · ' + e.title;
+      }).join('\n');
+    if (picks.length > 3) msg += '\n· 외 ' + (picks.length - 3) + '개';
+    if (!window.confirm(msg)) return;
+
+    var ids = {};
+    picks.forEach(function (e) { ids[e.id] = true; });
+    var before = (S.events || []).length;
+    S.events = (S.events || []).filter(function (e) { return !ids[e.id]; });
+    var removed = before - S.events.length;
+    Object.keys(ids).forEach(function (id) { delete evmSel[id]; });
+
+    save();
+    renderCalendar();
+    renderDayPanel();
+    evmRender();
+    toast('🗑 일정 ' + removed + '개를 지웠어요');
   }
 
   /* ---- .ics 가져오기 ---- */
@@ -2567,6 +2846,9 @@ body.focus-mode .focus-exit{display:block}
       '<div class="set-group"><h4>📅 가족 캘린더 가져오기</h4>' +
       '<div class="empty-note" style="padding:0 0 8px">네이버·구글·애플 캘린더에서 내보낸 .ics 파일을 불러올 수 있어요.</div>' +
       '<div class="row-btns"><button class="btn" type="button" data-act="ics">📅 일정(.ics) 불러오기</button></div></div>' +
+      '<div class="set-group"><h4>🗂 일정 정리</h4>' +
+      '<div class="empty-note" style="padding:0 0 8px">직접 추가한 일정의 담당자를 한꺼번에 바꾸거나, 여러 개를 한 번에 지울 수 있어요.</div>' +
+      '<div class="row-btns"><button class="btn" type="button" data-act="ev-manager">🗂 일정 일괄 관리</button></div></div>' +
       '<div class="set-group"><h4>📊 기록</h4><div class="redeem-log">' +
       '· 할 일 완료: ' + doneCountAll() + '개 (오늘)<br>' +
       '· 레벨: Lv.' + S.progress.level + ' · XP ' + S.progress.xp + '/' + xpNeed(S.progress.level) + '<br>' +
@@ -2803,6 +3085,12 @@ body.focus-mode .focus-exit{display:block}
       if (!btn) return;
       if (window.confirm('이 일정을 지울까요?')) deleteEvent(btn.getAttribute('data-id'));
     });
+    $('dayEvents').addEventListener('change', function (ev) {
+      var sel = ev.target.closest ? ev.target.closest('select[data-act="ev-member"]') : null;
+      if (!sel) return;
+      setEventMember(sel.getAttribute('data-id'), sel.value);
+    });
+    $('btnEvManager').addEventListener('click', function () { openEventManager(); });
     $('btnIcs').addEventListener('click', function () { openICSImport(); });
 
     // 모달 공통
@@ -2824,6 +3112,14 @@ body.focus-mode .focus-exit{display:block}
     }
     var closeBtn = t.closest ? t.closest('[data-close]') : null;
     if (closeBtn) { closeModal(); return; }
+
+    var evmChip = t.closest ? t.closest('[data-mevm]') : null;
+    if (evmChip) {
+      evmFilter = evmChip.getAttribute('data-mevm');
+      evmSel = {};              // 필터를 바꾸면 보이는 목록 기준으로 다시 고르기
+      evmRender();
+      return;
+    }
 
     var actEl = t.closest ? t.closest('[data-act]') : null;
     if (!actEl) return;
@@ -2962,6 +3258,9 @@ body.focus-mode .focus-exit{display:block}
       return;
     }
     if (act === 'ics') { openICSImport(); return; }
+    if (act === 'ev-manager') { openEventManager(); return; }
+    if (act === 'evm-apply-member') { applyBulkMember($('evmMember') ? $('evmMember').value : ''); return; }
+    if (act === 'evm-delete') { bulkDeleteEvents(); return; }
     if (act === 'close') { closeModal(); return; }
   }
 
@@ -2974,6 +3273,29 @@ body.focus-mode .focus-exit{display:block}
       if (t.id === 'jsonImportInput') {
         var f = t.files && t.files[0];
         if (f) importJSONFile(f);
+        return;
+      }
+      if (t.id === 'evmAll') {
+        var evmRows = evmListEvents();
+        evmRows.forEach(function (e) {
+          if (t.checked) evmSel[e.id] = true; else delete evmSel[e.id];
+        });
+        var boxes = document.querySelectorAll('#modalRoot .evm-pick');
+        for (var bi = 0; bi < boxes.length; bi++) {
+          boxes[bi].checked = !!evmSel[boxes[bi].getAttribute('data-id')];
+        }
+        evmSyncUI();
+        return;
+      }
+      if (t.classList.contains('evm-pick')) {
+        var pid = t.getAttribute('data-id');
+        if (t.checked) evmSel[pid] = true; else delete evmSel[pid];
+        evmSyncUI();
+        return;
+      }
+      if (t.id === 'evmMember') {
+        evmTarget = t.value;
+        evmSyncUI();
         return;
       }
       if (t.classList.contains('sec-name-input')) {
@@ -3091,7 +3413,17 @@ body.focus-mode .focus-exit{display:block}
     }
 
     // 로그인(첫 방문) → 스타터 선택
-    if (!S.starterPicked) {
+    // 이미 쓰던 기록(XP·포켓몬·일정·완료)이 있으면 다시 묻지 않아요
+    var hasHistory = Object.keys(S.box || {}).length > 0 ||
+      Number((S.progress && S.progress.xp) || 0) > 0 ||
+      (S.events || []).length > 0 ||
+      Object.keys((S.done && S.done.ids) || {}).length > 0;
+    if (!S.starterPicked && hasHistory) {
+      S.starterPicked = true;   // 기록이 있으면 이미 시작한 것으로 보고 저장
+      save();
+    }
+    if (!S.starterPicked && Object.keys(S.box || {}).length === 0 &&
+      Number((S.progress && S.progress.xp) || 0) === 0 && !hasHistory) {
       setTimeout(function () { openStarter(); }, 400);
     }
   }
