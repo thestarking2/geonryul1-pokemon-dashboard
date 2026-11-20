@@ -900,7 +900,7 @@ body.focus-mode .focus-exit{display:block}
 }
 
 /* ---------- 주간 리포트 ---------- */
-.wk-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;align-items:end;margin:6px 0 10px}
+.wk-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;align-items:end;margin:6px 0 10px;max-width:620px}
 .wk-col{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
 .wk-bar{
   width:100%;height:94px;display:flex;align-items:flex-end;
@@ -910,7 +910,8 @@ body.focus-mode .focus-exit{display:block}
 .wk-col.full .wk-bar i{background:linear-gradient(180deg,#ffd23f,#ff9a3f)}
 .wk-col.today .wk-bar{box-shadow:0 0 0 3px rgba(58,160,255,.5)}
 .wk-pct{font-size:12px;font-weight:700;color:var(--ink-soft);white-space:nowrap}
-.wk-day{font-size:12.5px;font-weight:700;white-space:nowrap}
+.wk-day{font-size:12.5px;font-weight:700;white-space:nowrap;text-align:center}
+.wk-day small{display:block;font-size:10px;font-weight:400;color:var(--ink-soft)}
 .wk-headline{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;font-size:15px;margin-bottom:8px}
 .wk-headline b{font-size:22px}
 .wk-row{display:flex;gap:8px;font-size:14.5px;padding:5px 0;border-bottom:1.5px dashed #e6d9c4}
@@ -3347,10 +3348,10 @@ body.focus-mode .focus-exit{display:block}
     var bars = r.days.map(function (d) {
       var h = d.has ? clamp(d.pct, 0, 100) : 0;
       return '<div class="wk-col' + (d.pct === 100 && d.has ? ' full' : '') + (d.key === today ? ' today' : '') + '">' +
-        '<div class="wk-bar" title="' + esc(d.dayLabel + ' ' + d.done + '/' + d.total + '개') + '">' +
+        '<div class="wk-bar" title="' + esc(d.has ? d.dayLabel + ' ' + d.done + '/' + d.total + '개' : d.dayLabel + ' 기록 없음') + '">' +
         '<i style="height:' + h + '%"></i></div>' +
         '<span class="wk-pct">' + (d.has ? d.pct + '%' : '—') + '</span>' +
-        '<span class="wk-day">' + esc(d.weekday) + '</span></div>';
+        '<span class="wk-day">' + esc(d.weekday) + '<small>' + esc(d.dayLabel) + '</small></span></div>';
     }).join('');
 
     var html = '<div class="set-group">' +
