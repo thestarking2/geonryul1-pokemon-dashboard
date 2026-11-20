@@ -1125,7 +1125,7 @@ body.focus-mode .focus-exit{display:block}
   var API = 'https://pokeapi.co/api/v2/';
   var SPRITE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
   var MAX_DEX = 1025;
-  var FETCH_TIMEOUT = 7000;   // 한 번의 요청을 기다리는 최대 시간(ms)
+  var FETCH_TIMEOUT = 6000;   // 한 번의 요청을 기다리는 최대 시간(ms)
   var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
   var WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
@@ -2180,7 +2180,18 @@ body.focus-mode .focus-exit{display:block}
   function refreshPartner(force) {
     var id = S.partner.id;
     if (!force && partnerData.pokemon && partnerData.id === id) { paintPartner(); return Promise.resolve(); }
-    $('partnerGenus').textContent = '도감을 불러오는 중...';
+    // 인터넷을 기다리는 동안에도 아는 포켓몬이면 바로 보여 준다 — "불러오는 중"에 멈추지 않도록
+    var offP = offlinePokemon(id);
+    var offS = offlineSpecies(id);
+    if (offP) {
+      if (offP.sprite) $('partnerSprite').src = offP.sprite;
+      $('partnerName').textContent = (offS && offS.nameKo) || offP.name;
+      $('partnerNo').textContent = dexNo(offP.id);
+      $('partnerGenus').textContent = (offS && offS.genusKo) || '포켓몬';
+      paintTypes($('partnerTypes'), offP.types);
+    } else {
+      $('partnerGenus').textContent = '도감을 불러오는 중...';
+    }
     return getPokemon(id).then(function (p) {
       partnerData.pokemon = p;
       partnerData.id = p.id;
@@ -2195,6 +2206,7 @@ body.focus-mode .focus-exit{display:block}
         }).catch(function () { });
       });
     }).catch(function () {
+      if (offP) return;   // 기본 도감으로 이미 보여 주고 있으면 그대로 둔다
       $('partnerGenus').innerHTML = '포켓몬 정보를 불러오지 못했어요 · ' +
         '<button class="link-btn" type="button" data-act="partner-retry">🔄 다시 불러오기</button>';
       var img = $('partnerSprite');
