@@ -1,0 +1,3061 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e8483c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="건률네 포켓몬">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<title>건률네 포켓몬 대시보드</title>
+<meta name="description" content="건률이의 하루 루틴과 포켓몬 도감을 한 화면에 담은 우리 가족 대시보드">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23fff' stroke='%232b2b33' stroke-width='6'/%3E%3Cpath d='M5 50a45 45 0 0 1 90 0z' fill='%23e8483c'/%3E%3Cline x1='5' y1='50' x2='95' y2='50' stroke='%232b2b33' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='13' fill='%23fff' stroke='%232b2b33' stroke-width='6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+/* ============ 건률네 포켓몬 대시보드 — 스타일 ============ */
+:root{
+  --dex-red:#e8483c;
+  --dex-red-dark:#b82a22;
+  --dex-red-darker:#8f1e18;
+  --cream:#fdf4e6;
+  --ink:#2b2b33;
+  --ink-soft:#5d5a66;
+  --card:#fffdf8;
+  --paper:#ffffff;
+  --blue:#3aa0ff;
+  --yellow:#ffd23f;
+  --green:#3fae64;
+  --green-soft:#e3f6e8;
+  --pink:#ff8fb1;
+  --violet:#9b7bff;
+  --shadow:0 6px 0 #ded0bb;
+  --radius:22px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Jua','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;
+  background-color:var(--cream);
+  background-image:radial-gradient(circle at 1px 1px, rgba(190,160,125,.30) 1px, transparent 0);
+  background-size:22px 22px;
+  color:var(--ink);
+  min-height:100vh;
+  -webkit-text-size-adjust:100%;
+  overflow-x:hidden;
+}
+button{font-family:inherit;color:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;color:inherit}
+h1,h2,h3,h4,p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+
+.app{max-width:1560px;margin:0 auto;padding:14px 16px 60px}
+
+/* ---------- 상단 포켓덱스 헤더 ---------- */
+.dex-header{
+  position:relative;
+  border:4px solid var(--ink);
+  border-radius:26px;
+  padding:14px 18px 16px;
+  color:#fff;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.10) 0 2px, transparent 2px 33px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 2px, transparent 2px 33px),
+    linear-gradient(165deg,#f4695f 0%,#e5433a 45%,#cf2f28 100%);
+  box-shadow:0 8px 0 var(--dex-red-darker), 0 18px 34px rgba(120,40,30,.18);
+  overflow:hidden;
+}
+.dex-header::after{
+  content:'';
+  position:absolute;inset:auto -40px -60px auto;
+  width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle at 40% 40%, rgba(255,255,255,.18), transparent 65%);
+  pointer-events:none;
+}
+.dex-lights{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.light{width:18px;height:18px;border-radius:50%;border:3px solid var(--ink);box-shadow:inset -1px -2px 0 rgba(0,0,0,.25)}
+.light.blue{background:radial-gradient(circle at 35% 30%,#b9e3ff,#2f8fe0)}
+.light.red{background:radial-gradient(circle at 35% 30%,#ff9a9a,#d22a20);width:14px;height:14px}
+.light.yellow{background:radial-gradient(circle at 35% 30%,#fff3b0,#f7c422);width:14px;height:14px}
+.light.green{background:radial-gradient(circle at 35% 30%,#c8f5cd,#3fae64);width:14px;height:14px}
+.light-line{flex:1;height:4px;border-radius:4px;background:rgba(43,43,51,.35);margin-left:6px}
+
+.dex-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.pokeball-logo{
+  width:46px;height:46px;border-radius:50%;border:3px solid var(--ink);flex:none;
+  background:linear-gradient(to bottom,#f4625a 0 45%,var(--ink) 45% 55%,#fff 55% 100%);
+  position:relative;box-shadow:0 3px 0 rgba(0,0,0,.22);
+}
+.pokeball-logo::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--ink);
+}
+.brand-text{min-width:0}
+.dex-header h1{
+  font-size:clamp(20px,2.5vw,30px);line-height:1.15;letter-spacing:-.5px;
+  text-shadow:0 2px 0 rgba(0,0,0,.28);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.brand-sub{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:4px;font-size:14px;opacity:.96}
+.brand-sub .dot-sep{opacity:.55}
+#liveClock{font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:.5px}
+.now-temp{background:rgba(43,43,51,.35);border:2px solid rgba(43,43,51,.5);padding:1px 9px;border-radius:20px}
+
+.quick-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.qbtn{
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:50px;padding:0 15px;
+  border-radius:16px;border:3px solid var(--ink);
+  background:#fffdf8;color:var(--ink);
+  font-size:16px;font-weight:700;
+  box-shadow:0 4px 0 rgba(43,43,51,.55);
+  transition:transform .06s ease, filter .15s ease;
+}
+.qbtn:hover{filter:brightness(1.04)}
+.qbtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,43,51,.55)}
+.qbtn.on{background:var(--yellow)}
+.qbtn.gacha{background:linear-gradient(170deg,#fff6d8,#ffe087)}
+.qbtn .ball-mini{
+  width:22px;height:22px;border-radius:50%;border:2.5px solid var(--ink);flex:none;
+  background:linear-gradient(to bottom,#f4625a 0 45%,var(--ink) 45% 55%,#fff 55% 100%);
+}
+.qbtn .chip{
+  display:inline-block;min-width:26px;text-align:center;
+  background:var(--dex-red);color:#fff;border:2.5px solid var(--ink);
+  border-radius:12px;padding:1px 7px;font-size:15px;
+}
+
+/* ---------- 날씨 ---------- */
+.weather-strip{
+  display:flex;gap:8px;margin-top:14px;overflow-x:auto;padding:2px 2px 4px;
+  scrollbar-width:none;
+}
+.weather-strip::-webkit-scrollbar{display:none}
+.wx{
+  flex:1 1 0;min-width:104px;
+  background:rgba(255,255,255,.16);
+  border:2.5px solid rgba(43,43,51,.45);
+  border-radius:16px;padding:8px 6px;text-align:center;color:#fff;
+  backdrop-filter:blur(2px);
+}
+.wx.today{background:rgba(255,255,255,.92);color:var(--ink);border-color:var(--ink);box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.wx .day{font-size:13px;font-weight:700;opacity:.92}
+.wx .emo{font-size:26px;line-height:1.15;margin:1px 0}
+.wx .tmp{font-size:15px;font-weight:700;white-space:nowrap}
+.wx .tmp .lo{opacity:.72;font-weight:400}
+.wx .pop{font-size:12px;opacity:.9}
+.wx-state{font-size:14px;opacity:.92;padding:8px 4px}
+
+/* ---------- 보드 ---------- */
+.board{display:grid;grid-template-columns:minmax(330px,410px) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
+@media (max-width:1060px){
+  .board{grid-template-columns:1fr}
+  .task-col{order:1}
+  .cal-col{order:2}
+}
+.task-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.cal-col{min-width:0}
+
+.card{
+  background:var(--card);
+  border:3.5px solid var(--ink);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:14px 16px 16px;
+}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.card-title{font-size:19px;display:flex;align-items:center;gap:8px}
+
+/* ---------- 가족 캘린더 ---------- */
+.cal-nav{display:flex;align-items:center;gap:6px}
+.mini-btn{
+  width:42px;height:42px;border-radius:12px;border:2.5px solid var(--ink);
+  background:#fff;font-size:18px;font-weight:700;display:grid;place-items:center;
+  box-shadow:0 3px 0 rgba(43,43,51,.3);
+}
+.mini-btn:active{transform:translateY(2px);box-shadow:none}
+.mini-btn.today-btn{width:auto;padding:0 12px;font-size:15px}
+.cal-month{font-size:18px;font-weight:700;min-width:118px;text-align:center}
+
+.cal-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.fchip{
+  border:2.5px solid var(--ink);background:#fff;border-radius:20px;
+  padding:5px 11px;font-size:14px;font-weight:700;opacity:.62;
+  box-shadow:0 2px 0 rgba(43,43,51,.22);
+}
+.fchip.active{opacity:1}
+.fchip[data-m="all"].active{background:#fff5cf}
+.fchip[data-m="geonryul"].active{background:#ffd9c9}
+.fchip[data-m="mom"].active{background:#ffe0ee}
+.fchip[data-m="dad"].active{background:#d6e8ff}
+.fchip[data-m="family"].active{background:#d8f3dd}
+
+.cal-grid-head{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.cal-grid-head div{text-align:center;font-size:13px;font-weight:700;color:var(--ink-soft);padding:2px 0}
+.cal-grid-head div.sun{color:#e0453b}
+.cal-grid-head div.sat{color:#2f7fd6}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cday{
+  position:relative;border:2.5px solid transparent;background:transparent;border-radius:12px;
+  min-height:52px;padding:3px 2px 0;display:flex;flex-direction:column;align-items:center;
+  font-size:16px;font-weight:700;transition:background .12s ease;
+}
+.cday:hover{background:#f7ecdc}
+.cday.other{opacity:.32}
+.cday.sun{color:#e0453b}
+.cday.sat{color:#2f7fd6}
+.cday.today{border-color:var(--dex-red);background:#fff0ea;color:var(--dex-red)}
+.cday.selected{background:var(--ink);color:#fff;border-color:var(--ink)}
+.cday.selected .evdot{background:#fff !important}
+.cdots{display:flex;gap:2px;margin-top:auto;padding-bottom:4px;height:9px;align-items:center}
+.evdot{width:6px;height:6px;border-radius:50%;background:var(--ink)}
+
+.day-panel{margin-top:12px;border-top:2.5px dashed #e0cfb7;padding-top:12px}
+.day-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.day-title strong{font-size:16.5px}
+.add-ev{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.add-ev input[type=text]{
+  flex:1 1 130px;min-width:0;height:44px;border:2.5px solid var(--ink);border-radius:12px;
+  padding:0 10px;font-size:15px;background:#fff;
+}
+.add-ev select{
+  height:44px;border:2.5px solid var(--ink);border-radius:12px;padding:0 6px;
+  font-size:14px;background:#fff;font-weight:700;
+}
+.add-ev button{
+  height:44px;padding:0 14px;border-radius:12px;border:2.5px solid var(--ink);
+  background:var(--yellow);font-weight:700;font-size:15px;box-shadow:0 3px 0 rgba(43,43,51,.3);
+}
+.add-ev button:active{transform:translateY(2px);box-shadow:none}
+.ev-list{display:flex;flex-direction:column;gap:6px}
+.ev-item{
+  display:flex;align-items:center;gap:8px;background:#fff;border:2.5px solid var(--ink);
+  border-radius:12px;padding:7px 9px;font-size:15px;
+}
+.ev-item .evbar{width:7px;align-self:stretch;border-radius:6px;flex:none}
+.ev-item .evtxt{flex:1;min-width:0;word-break:break-all}
+.ev-item .evwho{font-size:12.5px;font-weight:700;padding:2px 7px;border-radius:10px;border:2px solid rgba(43,43,51,.35);white-space:nowrap}
+.ev-del{
+  border:none;background:#ffe6e3;border-radius:9px;width:32px;height:32px;font-size:15px;flex:none;
+  border:2px solid rgba(43,43,51,.25);
+}
+.empty-note{font-size:14px;color:var(--ink-soft);padding:6px 2px}
+
+/* ---------- 파트너 카드 ---------- */
+.partner-card{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 84% 16%, #fff4bf 0 42px, transparent 43px),
+    linear-gradient(175deg,#bfe9ff 0%,#d9f2ff 52%,#eaf9ff 53%,#f2fbf4 100%);
+  padding:14px 16px 14px;
+}
+.partner-card::before{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:34%;
+  background:linear-gradient(180deg,#cfeeae,#b7e493);opacity:.65;
+  border-top:3px dashed rgba(43,43,51,.12);
+}
+.partner-top{position:relative;display:flex;gap:14px;align-items:center}
+.partner-sprite-wrap{
+  position:relative;flex:none;width:132px;height:132px;display:grid;place-items:center;
+  background:rgba(255,255,255,.55);border:3px solid var(--ink);border-radius:24px;
+  box-shadow:0 4px 0 rgba(43,43,51,.18);
+}
+.partner-sprite{width:112px;height:112px;image-rendering:pixelated;filter:drop-shadow(0 6px 3px rgba(0,0,0,.18));animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.lv-badge{
+  position:absolute;left:-8px;top:-10px;background:var(--yellow);border:3px solid var(--ink);
+  border-radius:12px;padding:2px 8px;font-size:15px;font-weight:700;box-shadow:0 3px 0 rgba(43,43,51,.35);
+}
+.partner-info{position:relative;flex:1;min-width:0}
+.partner-name-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.partner-name{font-size:27px;letter-spacing:-.5px}
+.partner-no{font-size:14px;font-weight:700;color:var(--ink-soft)}
+.partner-genus{font-size:13.5px;color:var(--ink-soft);margin-top:1px}
+.type-badges{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.tbadge{
+  font-size:13px;font-weight:700;color:#fff;border:2.5px solid var(--ink);
+  border-radius:10px;padding:1px 8px;text-shadow:0 1px 2px rgba(0,0,0,.3);
+}
+.xp-wrap{margin-top:9px}
+.xp-label{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--ink-soft);margin-bottom:3px}
+.xp-bar{height:16px;border:3px solid var(--ink);border-radius:12px;background:#fff;overflow:hidden;position:relative}
+.xp-fill{height:100%;width:0%;background:linear-gradient(90deg,#8ee06a,#3fae64);transition:width .45s cubic-bezier(.2,.9,.2,1)}
+.evo-dots{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+.evo-dots .dot{width:13px;height:13px;border-radius:50%;border:2.5px solid var(--ink);background:#fff}
+.evo-dots .dot.on{background:var(--yellow)}
+.evo-dots .lnk{width:14px;height:3px;background:rgba(43,43,51,.35);border-radius:3px}
+.partner-stats{display:flex;gap:8px;margin-top:12px;position:relative;flex-wrap:wrap}
+.pstat{
+  background:#fffdf8;border:2.5px solid var(--ink);border-radius:14px;
+  padding:5px 10px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:5px;
+  box-shadow:0 3px 0 rgba(43,43,51,.16);
+}
+.partner-actions{display:flex;gap:8px;margin-top:12px;position:relative;flex-wrap:wrap}
+.pbtn{
+  border:3px solid var(--ink);border-radius:14px;background:#fff;font-weight:700;font-size:15px;
+  padding:9px 13px;min-height:46px;box-shadow:0 4px 0 rgba(43,43,51,.3);
+}
+.pbtn:active{transform:translateY(3px);box-shadow:none}
+.pbtn.primary{background:var(--blue);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.pbtn.evolve{
+  background:linear-gradient(170deg,#fff1a8,#ffd23f);
+  animation:pulse 1.1s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+.partner-loading{font-size:14px;color:var(--ink-soft)}
+
+/* ---------- 오늘의 할 일 ---------- */
+.tasks-card{padding:14px 16px 18px}
+.tasks-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+.tasks-title{font-size:21px;display:flex;align-items:center;gap:8px}
+.tasks-sub{font-size:14px;color:var(--ink-soft);margin-top:2px}
+.today-ring{
+  display:grid;place-items:center;width:66px;height:66px;border-radius:50%;
+  background:conic-gradient(var(--green) calc(var(--p,0) * 1%), #eee7da 0);
+  border:3px solid var(--ink);flex:none;position:relative;
+}
+.today-ring span{
+  width:52px;height:52px;border-radius:50%;background:#fffdf8;display:grid;place-items:center;
+  font-size:15px;font-weight:700;line-height:1;text-align:center;
+}
+.sections{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.section{
+  border:3px solid var(--ink);border-radius:18px;background:#fff;
+  padding:10px 11px 11px;box-shadow:0 4px 0 rgba(43,43,51,.14);
+}
+.section.weekend{background:linear-gradient(180deg,#fff8e2,#fffdf7)}
+.section.weekend.hot{background:linear-gradient(180deg,#fff0c9,#fffbe9);border-color:#e0912c;box-shadow:0 4px 0 rgba(224,145,44,.35)}
+.section.done{background:linear-gradient(180deg,#edf9ef,#fffdf7)}
+.sec-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.sec-emoji{font-size:23px;line-height:1}
+.sec-name{font-size:18px;flex:1;min-width:0}
+.sec-name small{font-size:12.5px;font-weight:400;color:var(--ink-soft);margin-left:6px}
+.sec-count{
+  font-size:14px;font-weight:700;background:#f1e8da;border:2.5px solid var(--ink);
+  border-radius:12px;padding:1px 8px;white-space:nowrap;
+}
+.section.done .sec-count{background:var(--green);color:#fff}
+.sec-badge{font-size:16px}
+.sec-progress{height:9px;background:#f0e7d9;border-radius:8px;overflow:hidden;border:2px solid rgba(43,43,51,.18);margin-bottom:8px}
+.sec-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#8ee06a,#3fae64);transition:width .35s ease}
+.tasks{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.task{
+  display:flex;align-items:center;gap:10px;text-align:left;
+  border:3px solid var(--ink);border-radius:15px;background:#fffdf8;
+  padding:9px 11px;min-height:64px;font-size:16.5px;font-weight:700;
+  box-shadow:0 4px 0 rgba(43,43,51,.16);
+  transition:transform .07s ease, background .15s ease;
+  user-select:none;
+}
+.task:hover{background:#fff}
+.task:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,43,51,.16)}
+.task .temoji{font-size:24px;flex:none;line-height:1}
+.task .ttext{flex:1;min-width:0;word-break:keep-all;line-height:1.24}
+.task .tcheck{
+  width:34px;height:34px;border-radius:50%;border:3px solid var(--ink);flex:none;
+  background:#fff;display:grid;place-items:center;font-size:18px;color:#fff;transition:background .15s ease;
+}
+.task.done{background:var(--green-soft);border-color:#2f8a4e}
+.task.done .ttext{text-decoration:line-through;text-decoration-thickness:2px;opacity:.62}
+.task.done .tcheck{background:var(--green);border-color:#2f8a4e}
+.task.reward-pop{animation:pop .38s ease}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.task-empty{font-size:14px;color:var(--ink-soft)}
+.tasks-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;font-size:13.5px;color:var(--ink-soft);flex-wrap:wrap}
+
+/* ---------- 집중 모드 ---------- */
+body.focus-mode .cal-col,
+body.focus-mode .weather-strip,
+body.focus-mode .brand-sub .wx-inline,
+body.focus-mode .tasks-sub,
+body.focus-mode .sec-name small{display:none}
+body.focus-mode .board{grid-template-columns:1fr}
+body.focus-mode .dex-header{padding:10px 14px}
+body.focus-mode .dex-header h1{font-size:22px}
+body.focus-mode .partner-top{gap:10px}
+body.focus-mode .partner-card{padding:10px 14px}
+body.focus-mode .partner-sprite-wrap{width:96px;height:96px;border-radius:18px}
+body.focus-mode .partner-sprite{width:80px;height:80px}
+body.focus-mode .partner-name{font-size:23px}
+body.focus-mode .partner-genus,
+body.focus-mode .partner-stats{display:none}
+body.focus-mode .task{min-height:84px;font-size:22px;padding:12px 14px}
+body.focus-mode .task .temoji{font-size:30px}
+body.focus-mode .task .tcheck{width:42px;height:42px;font-size:22px}
+body.focus-mode .tasks{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+body.focus-mode .sec-name{font-size:22px}
+.focus-exit{
+  position:fixed;right:14px;bottom:14px;z-index:60;
+  min-height:56px;padding:0 20px;border-radius:18px;border:3.5px solid var(--ink);
+  background:var(--yellow);font-size:17px;font-weight:700;box-shadow:0 6px 0 rgba(43,43,51,.45);
+  display:none;
+}
+body.focus-mode .focus-exit{display:block}
+.focus-exit:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(43,43,51,.45)}
+
+/* ---------- 모달 ---------- */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:100;display:none;
+  background:rgba(28,24,22,.55);backdrop-filter:blur(3px);
+  padding:14px;overflow-y:auto;
+}
+.modal-backdrop.open{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{
+  width:min(760px,100%);margin:12px auto 40px;
+  background:var(--card);border:4px solid var(--ink);border-radius:26px;
+  box-shadow:0 12px 0 rgba(0,0,0,.35);
+  animation:rise .22s cubic-bezier(.2,.9,.3,1.2);
+  overflow:hidden;
+}
+.modal.wide{width:min(980px,100%)}
+@keyframes rise{from{transform:translateY(18px) scale(.98);opacity:.6}to{transform:none;opacity:1}}
+.modal-head{
+  display:flex;align-items:center;gap:10px;padding:12px 16px;
+  background:linear-gradient(165deg,#f4695f,#d8352b);color:#fff;
+  border-bottom:4px solid var(--ink);
+}
+.modal-head h3{font-size:20px;flex:1;min-width:0}
+.modal-x{
+  width:42px;height:42px;border-radius:12px;border:3px solid var(--ink);background:#fff;color:var(--ink);
+  font-size:19px;font-weight:700;display:grid;place-items:center;flex:none;
+}
+.modal-body{padding:14px 16px 18px}
+.modal-foot{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;padding:0 16px 16px}
+
+/* 도감 상세 */
+.detail-top{display:flex;gap:14px;flex-wrap:wrap}
+.detail-sprite-box{
+  flex:none;width:172px;height:172px;display:grid;place-items:center;border:3.5px solid var(--ink);
+  border-radius:22px;background:radial-gradient(circle at 50% 60%,#fffbe8,#f0e6d2);
+  box-shadow:inset 0 0 0 6px rgba(255,255,255,.6);
+}
+.detail-sprite{width:148px;height:148px;image-rendering:pixelated;filter:drop-shadow(0 6px 4px rgba(0,0,0,.2))}
+.detail-main{flex:1;min-width:200px}
+.detail-name{font-size:28px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.detail-no{font-size:15px;color:var(--ink-soft);font-weight:700}
+.detail-genus{font-size:15px;color:var(--ink-soft);margin-top:2px}
+.detail-types{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.detail-meta{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;font-size:15px}
+.detail-meta b{font-weight:700}
+.flavor{
+  margin-top:12px;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:10px 12px;
+  font-size:15.5px;line-height:1.5;position:relative;
+}
+.flavor::before{content:'도감 설명';position:absolute;top:-11px;left:12px;background:var(--yellow);border:2.5px solid var(--ink);border-radius:8px;font-size:11.5px;padding:0 6px;font-weight:700}
+.stats-list{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.stat-row{display:flex;align-items:center;gap:8px;font-size:14px}
+.stat-row .sname{width:66px;flex:none;font-weight:700;color:var(--ink-soft)}
+.stat-bar{flex:1;height:13px;border:2.5px solid var(--ink);border-radius:9px;background:#f3ead9;overflow:hidden}
+.stat-bar i{display:block;height:100%;background:linear-gradient(90deg,#ffd23f,#ff8f3f);border-radius:6px}
+.stat-row .sval{width:34px;text-align:right;font-weight:700}
+.moves-wrap{margin-top:16px}
+.moves-title{font-size:17px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.moves{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:7px}
+.move-btn{
+  border:2.5px solid var(--ink);border-radius:12px;background:#fff;padding:7px 9px;
+  font-size:14.5px;font-weight:700;text-align:left;display:flex;align-items:center;gap:6px;
+  box-shadow:0 3px 0 rgba(43,43,51,.16);
+}
+.move-btn:active{transform:translateY(2px);box-shadow:none}
+.move-btn .mt{width:9px;height:22px;border-radius:5px;flex:none}
+.move-detail{
+  margin-top:10px;border:3px dashed #cbb99d;border-radius:14px;padding:10px 12px;background:#fffdf3;font-size:14.5px;line-height:1.5;
+}
+.move-detail h4{font-size:16px;margin-bottom:4px}
+.move-kv{display:flex;gap:12px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-soft);margin:4px 0 6px}
+.evo-track{display:flex;align-items:center;gap:6px;margin-top:14px;flex-wrap:wrap}
+.evo-stage{
+  border:3px solid #cbb99d;border-radius:16px;padding:6px;width:96px;text-align:center;background:#fff;opacity:.55;
+}
+.evo-stage.on{border-color:var(--ink);opacity:1;box-shadow:0 4px 0 rgba(43,43,51,.2)}
+.evo-stage img{width:64px;height:64px;image-rendering:pixelated}
+.evo-stage span{display:block;font-size:12.5px;font-weight:700;line-height:1.15}
+.evo-arrow{font-size:18px;color:var(--ink-soft)}
+.detail-loading{padding:30px;text-align:center;font-size:15px;color:var(--ink-soft)}
+.spinner{width:34px;height:34px;border-radius:50%;border:4px solid #eadfcd;border-top-color:var(--dex-red);margin:0 auto 10px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- 포켓몬 박스 ---------- */
+.box-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.seg{display:flex;border:2.5px solid var(--ink);border-radius:12px;overflow:hidden}
+.seg button{border:none;background:#fff;padding:7px 11px;font-size:14px;font-weight:700}
+.seg button.active{background:var(--yellow)}
+.box-count{font-size:14px;font-weight:700;color:var(--ink-soft);margin-left:auto}
+.box-screen{
+  background:linear-gradient(180deg,#3f8f5c,#52a873);
+  border:4px solid var(--ink);border-radius:16px;padding:10px;
+  box-shadow:inset 0 0 0 4px rgba(255,255,255,.22);
+}
+.box-label{display:flex;justify-content:space-between;color:#eaffef;font-size:13px;font-weight:700;margin-bottom:6px;letter-spacing:1px}
+.box-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.box-cell{
+  background:rgba(255,255,255,.92);border:2.5px solid #1f5c39;border-radius:10px;
+  padding:4px 2px;display:flex;flex-direction:column;align-items:center;gap:1px;
+  font-size:11.5px;font-weight:700;min-height:84px;position:relative;
+}
+.box-cell img{width:48px;height:48px;image-rendering:pixelated}
+.box-cell .bno{font-size:10px;color:#6b6b6b;position:absolute;left:4px;top:2px}
+.box-cell.on{border-color:#ffd23f;box-shadow:0 0 0 3px #ffd23f inset}
+.box-cell .bname{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px}
+.box-empty{color:#eaffef;font-size:14px;text-align:center;padding:20px 10px;line-height:1.6}
+.box-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+
+/* ---------- 뽑기 ---------- */
+.gacha-stage{
+  text-align:center;padding:8px 4px 2px;position:relative;min-height:300px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+}
+.big-ball{
+  width:128px;height:128px;border-radius:50%;border:6px solid var(--ink);position:relative;
+  background:linear-gradient(to bottom,#f4625a 0 45%,var(--ink) 45% 55%,#fff 55% 100%);
+  box-shadow:0 8px 0 rgba(43,43,51,.25);
+}
+.big-ball::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:38px;height:38px;border-radius:50%;background:#fff;border:6px solid var(--ink);
+  box-shadow:inset 0 0 0 3px #eee;
+}
+.shaking{animation:shake .62s ease-in-out infinite}
+@keyframes shake{
+  0%,100%{transform:rotate(-14deg)}
+  25%{transform:rotate(12deg)}
+  50%{transform:rotate(-9deg)}
+  75%{transform:rotate(7deg)}
+}
+.gacha-msg{font-size:18px;font-weight:700}
+.gacha-hint{font-size:14px;color:var(--ink-soft)}
+.catch-card{
+  width:100%;max-width:420px;background:#fff;border:4px solid var(--ink);border-radius:22px;
+  padding:14px;box-shadow:0 8px 0 rgba(43,43,51,.22);animation:pop .45s ease;
+}
+.catch-sprite{width:140px;height:140px;image-rendering:pixelated;filter:drop-shadow(0 6px 4px rgba(0,0,0,.2))}
+.catch-name{font-size:24px;margin-top:2px}
+.catch-sub{font-size:14px;color:var(--ink-soft)}
+.gacha-burst{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 45%, rgba(255,255,255,.95), rgba(255,255,255,0) 60%);
+  animation:burst .6s ease-out forwards;
+}
+@keyframes burst{from{opacity:1;transform:scale(.4)}to{opacity:0;transform:scale(1.4)}}
+
+/* ---------- 스타터 ---------- */
+.starter-intro{text-align:center;margin-bottom:12px}
+.starter-intro h3{font-size:22px;margin-bottom:4px}
+.starter-intro p{font-size:14.5px;color:var(--ink-soft);line-height:1.5}
+.starter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.starter-pick{
+  border:3.5px solid var(--ink);border-radius:18px;background:linear-gradient(180deg,#fffdf4,#f6efdd);
+  padding:8px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  box-shadow:0 5px 0 rgba(43,43,51,.22);
+}
+.starter-pick:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(43,43,51,.22)}
+.starter-pick img{width:96px;height:96px;image-rendering:pixelated}
+.starter-pick strong{font-size:16px}
+.starter-pick small{font-size:12px;color:var(--ink-soft)}
+.starter-pick:hover{background:#fffbe8}
+
+/* ---------- 설정 ---------- */
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab{
+  border:3px solid var(--ink);border-radius:14px;background:#fff;padding:8px 13px;
+  font-size:15px;font-weight:700;box-shadow:0 3px 0 rgba(43,43,51,.2);
+}
+.tab.active{background:var(--yellow)}
+.set-group{border:3px solid var(--ink);border-radius:16px;padding:11px 12px;margin-bottom:12px;background:#fff}
+.set-group h4{font-size:16px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.field{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.field label{font-size:14.5px;font-weight:700;min-width:88px}
+.field input[type=text],.field input[type=number],.field select{
+  flex:1 1 150px;min-width:0;height:42px;border:2.5px solid var(--ink);border-radius:11px;
+  padding:0 9px;font-size:15px;background:#fff;
+}
+.field .hint{font-size:12.5px;color:var(--ink-soft);flex-basis:100%;margin-left:96px}
+.switch{
+  width:64px;height:36px;border-radius:20px;border:3px solid var(--ink);background:#ded4c4;position:relative;flex:none;
+}
+.switch::after{content:'';position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;background:#fff;border:2.5px solid var(--ink);transition:left .16s ease}
+.switch.on{background:var(--green)}
+.switch.on::after{left:30px}
+.row-btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
+  border:3px solid var(--ink);border-radius:13px;background:#fff;padding:9px 14px;
+  font-size:15px;font-weight:700;min-height:44px;box-shadow:0 4px 0 rgba(43,43,51,.22);
+}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(43,43,51,.22)}
+.btn.primary{background:var(--blue);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.btn.warn{background:#ffe2dd}
+.btn.green{background:var(--green);color:#fff}
+.btn.sm{padding:6px 10px;font-size:13.5px;min-height:36px;border-width:2.5px}
+
+.task-edit-list{display:flex;flex-direction:column;gap:7px}
+.te-sec{border:2.5px dashed #d6c5ab;border-radius:14px;padding:9px 10px;background:#fffdf7}
+.te-head{display:flex;align-items:center;gap:6px;margin-bottom:7px}
+.te-head input{flex:1;min-width:0;height:38px;border:2.5px solid var(--ink);border-radius:10px;padding:0 8px;font-size:15px;font-weight:700;background:#fff}
+.te-row{display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.te-row input[type=text]{flex:1;min-width:0;height:38px;border:2.5px solid var(--ink);border-radius:10px;padding:0 8px;font-size:14.5px;background:#fff}
+.te-row input[type=text].emo{flex:0 0 52px;text-align:center;padding:0 2px}
+.te-row .mini-btn{width:34px;height:34px;border-width:2.5px;font-size:14px;box-shadow:0 2px 0 rgba(43,43,51,.22)}
+.te-add{margin-top:4px}
+.reward-list{display:flex;flex-direction:column;gap:7px}
+.reward-row{display:flex;align-items:center;gap:7px;border:2.5px solid var(--ink);border-radius:12px;padding:7px 9px;background:#fff}
+.reward-row .remoji{font-size:20px}
+.reward-row .rname{flex:1;min-width:0}
+.reward-row input.rname-input{flex:1;min-width:0;height:36px;border:2.5px solid #cbb99d;border-radius:9px;padding:0 8px;font-size:14.5px;background:#fffdf7}
+.reward-row .rcost{display:flex;align-items:center;gap:3px;font-size:14px;font-weight:700}
+.reward-row input.rcost-input{width:60px;height:36px;border:2.5px solid #cbb99d;border-radius:9px;padding:0 6px;font-size:14px;text-align:center;background:#fffdf7}
+.star-pill{display:inline-flex;align-items:center;gap:4px;background:#fff3c4;border:2.5px solid var(--ink);border-radius:20px;padding:2px 10px;font-weight:700;font-size:15px}
+.redeem-log{font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:9px}
+.shop-item{
+  border:3px solid var(--ink);border-radius:16px;background:linear-gradient(180deg,#fffdf4,#f7f0df);
+  padding:10px;display:flex;flex-direction:column;gap:5px;align-items:center;text-align:center;
+  box-shadow:0 4px 0 rgba(43,43,51,.18);
+}
+.shop-item .semoji{font-size:28px}
+.shop-item .sname{font-size:15.5px;font-weight:700;line-height:1.25}
+.shop-item .scost{font-size:14px;font-weight:700;color:#b8860b}
+.shop-item .btn{width:100%}
+.shop-item.locked{opacity:.62}
+.shop-item.locked .btn{background:#eee6d8}
+
+/* ---------- 토스트 ---------- */
+.toast-wrap{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:min(520px,92vw)}
+.toast{
+  background:var(--ink);color:#fff;border:3px solid #fff;border-radius:16px;
+  padding:10px 16px;font-size:15px;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.28);
+  animation:toastIn .25s ease, toastOut .3s ease 2.2s forwards;text-align:center;max-width:100%;
+}
+.toast.gold{background:linear-gradient(170deg,#ffcf3f,#f5a623);color:#4a3200;border-color:#4a3200}
+@keyframes toastIn{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+@keyframes toastOut{to{transform:translateY(-8px);opacity:0}}
+
+/* ---------- 진화 연출 ---------- */
+.evo-stage-anim{
+  position:fixed;inset:0;z-index:180;display:grid;place-items:center;
+  background:radial-gradient(circle,#fff,#ffe7b8 55%,#ffd27a);animation:evoflash 1.9s ease forwards;
+}
+@keyframes evoflash{0%{opacity:0}12%{opacity:1}82%{opacity:1}100%{opacity:0}}
+.evo-stage-anim img{width:200px;height:200px;image-rendering:pixelated;animation:evopulse .9s ease-in-out infinite alternate}
+@keyframes evopulse{from{transform:scale(.94);filter:brightness(1.4)}to{transform:scale(1.06);filter:brightness(2.2)}}
+.evo-stage-anim .evo-txt{font-size:20px;font-weight:700;color:#8a4b00;margin-top:6px;text-align:center}
+
+/* ---------- 유틸 ---------- */
+.hide{display:none !important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:600px){
+  .app{padding:10px 10px 60px}
+  .dex-header{padding:11px 12px 13px;border-radius:20px}
+  .qbtn{min-height:46px;padding:0 11px;font-size:14.5px}
+  .card{padding:12px 12px 14px}
+  .partner-sprite-wrap{width:104px;height:104px;border-radius:18px}
+  .partner-sprite{width:88px;height:88px}
+  .partner-name{font-size:23px}
+  .tasks{grid-template-columns:1fr}
+  .modal{border-radius:20px;margin:0 auto 24px}
+  .detail-sprite-box{width:132px;height:132px}
+  .detail-sprite{width:112px;height:112px}
+  .box-grid{grid-template-columns:repeat(auto-fill,minmax(74px,1fr))}
+  .cday{min-height:46px;font-size:14px}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ============ 상단 : 포켓덱스 헤더 ============ -->
+  <header class="dex-header">
+    <div class="dex-lights">
+      <span class="light blue"></span>
+      <span class="light red"></span>
+      <span class="light yellow"></span>
+      <span class="light green"></span>
+      <span class="light-line"></span>
+    </div>
+
+    <div class="dex-top">
+      <div class="brand">
+        <div class="pokeball-logo" aria-hidden="true"></div>
+        <div class="brand-text">
+          <h1 id="dashTitle">건률네 포켓몬 대시보드</h1>
+          <div class="brand-sub">
+            <span id="liveDate">날짜</span>
+            <span class="dot-sep">·</span>
+            <span id="liveClock">--:--</span>
+            <span class="dot-sep wx-inline">·</span>
+            <span class="now-temp wx-inline" id="nowTemp">날씨 불러오는 중</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="quick-actions">
+        <button class="qbtn" id="btnFocus" type="button" title="할 일을 크게 보여줘요">🔎 할 일 크게</button>
+        <button class="qbtn on" id="btnSound" type="button" title="효과음 켜기/끄기">🔊 소리</button>
+        <button class="qbtn gacha" id="btnGacha" type="button" title="포켓몬 뽑기">
+          <span class="ball-mini" aria-hidden="true"></span>
+          <span>포켓몬 뽑기</span>
+          <b class="chip" id="ballChip">0</b>
+        </button>
+        <button class="qbtn" id="btnSettings" type="button" title="부모 설정">⚙️ 부모 설정</button>
+      </nav>
+    </div>
+
+    <div class="weather-strip" id="weatherStrip">
+      <div class="wx-state">🌤️ 날씨를 불러오는 중이에요...</div>
+    </div>
+  </header>
+
+  <!-- ============ 본문 ============ -->
+  <main class="board">
+
+    <!-- ---------- 왼쪽 : 가족 캘린더 ---------- -->
+    <section class="col cal-col card" aria-label="가족 캘린더">
+      <div class="card-head">
+        <div class="card-title">📅 가족 캘린더</div>
+        <div class="cal-nav">
+          <button class="mini-btn" id="calPrev" type="button" aria-label="이전 달">‹</button>
+          <div class="cal-month" id="calMonth">----년 --월</div>
+          <button class="mini-btn" id="calNext" type="button" aria-label="다음 달">›</button>
+          <button class="mini-btn today-btn" id="calToday" type="button">오늘</button>
+        </div>
+      </div>
+
+      <div class="cal-filters" id="calFilters">
+        <button class="fchip active" data-m="all" type="button">전체</button>
+        <button class="fchip" data-m="geonryul" type="button">건률</button>
+        <button class="fchip" data-m="mom" type="button">엄마</button>
+        <button class="fchip" data-m="dad" type="button">아빠</button>
+        <button class="fchip" data-m="family" type="button">가족</button>
+      </div>
+
+      <div class="cal-grid-head">
+        <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div class="sat">금</div><div class="sat">토</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+
+      <div class="day-panel">
+        <div class="day-title">
+          <strong id="dayTitle">오늘</strong>
+          <button class="btn sm" id="btnIcs" type="button" title="네이버·구글·애플 캘린더에서 내보낸 .ics 파일을 불러와요">📅 일정(.ics) 불러오기</button>
+          <input type="file" id="icsInput" accept=".ics,text/calendar" class="hide">
+        </div>
+        <div class="ev-list" id="dayEvents"></div>
+        <div class="add-ev">
+          <input type="text" id="evTitle" placeholder="일정을 적어주세요 (예: 태권도)" maxlength="60">
+          <select id="evMember">
+            <option value="geonryul">건률</option>
+            <option value="mom">엄마</option>
+            <option value="dad">아빠</option>
+            <option value="family" selected>가족</option>
+          </select>
+          <button id="evAdd" type="button">추가</button>
+        </div>
+        <div class="empty-note" id="icsNote" style="display:none"></div>
+      </div>
+    </section>
+
+    <!-- ---------- 오른쪽 : 파트너 + 오늘의 할 일 ---------- -->
+    <section class="col task-col">
+
+      <div class="card partner-card" id="partnerCard" aria-label="건률이 파트너 포켓몬">
+        <div class="partner-top">
+          <div class="partner-sprite-wrap">
+            <div class="lv-badge" id="partnerLv">Lv.1</div>
+            <img class="partner-sprite" id="partnerSprite" alt="파트너 포켓몬" src="" />
+          </div>
+          <div class="partner-info">
+            <div class="partner-name-row">
+              <div class="partner-name" id="partnerName">불러오는 중...</div>
+              <div class="partner-no" id="partnerNo"></div>
+            </div>
+            <div class="partner-genus" id="partnerGenus">포켓몬 도감을 준비하고 있어요</div>
+            <div class="type-badges" id="partnerTypes"></div>
+            <div class="xp-wrap">
+              <div class="xp-label"><span id="xpText">XP 0 / 40</span><span id="xpToNext">다음 레벨까지 40</span></div>
+              <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
+            </div>
+            <div class="evo-dots" id="partnerEvo"></div>
+          </div>
+        </div>
+
+        <div class="partner-stats">
+          <div class="pstat" id="statStars">⭐ 0</div>
+          <div class="pstat" id="statBalls">⚪ 0</div>
+          <div class="pstat" id="statBox">📦 0 / 1025</div>
+          <div class="pstat" id="statStreak">🔥 0일</div>
+        </div>
+
+        <div class="partner-actions">
+          <button class="pbtn primary" id="btnDetail" type="button">📖 도감 보기</button>
+          <button class="pbtn" id="btnBox" type="button">📦 포켓몬 박스</button>
+          <button class="pbtn evolve hide" id="btnEvolve" type="button">✨ 진화시키기!</button>
+          <button class="pbtn" id="btnRewardShop" type="button">🎁 보상 상점</button>
+        </div>
+      </div>
+
+      <div class="card tasks-card" aria-label="오늘의 할 일">
+        <div class="tasks-head">
+          <div>
+            <div class="tasks-title">✅ 오늘의 할 일 <span id="weekdayBadge"></span></div>
+            <div class="tasks-sub" id="tasksSub">할 일을 하나 끝내면 +10 XP, 별 +1개!</div>
+          </div>
+          <div class="today-ring" id="todayRing"><span id="todayRingText">0%</span></div>
+        </div>
+        <div class="sections" id="sections"></div>
+        <div class="tasks-foot">
+          <span id="tasksFootLeft">오늘도 화이팅! 💪</span>
+          <span id="tasksFootRight"></span>
+        </div>
+      </div>
+
+    </section>
+  </main>
+</div>
+
+<button class="focus-exit" id="btnFocusExit" type="button">↩︎ 원래 화면으로</button>
+
+<div class="modal-backdrop" id="modalRoot" role="dialog" aria-modal="true"></div>
+<div class="toast-wrap" id="toastWrap"></div>
+<script>
+/* ================= 건률네 포켓몬 대시보드 — 앱 ================= */
+(function () {
+  'use strict';
+
+  /* ---------------------------------------------------------------
+     0. 상수
+  --------------------------------------------------------------- */
+  var STORAGE_KEY = 'gr_dashboard_v3';
+  var CACHE_KEY = 'gr_poke_cache_v1';
+  var API = 'https://pokeapi.co/api/v2/';
+  var SPRITE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+  var MAX_DEX = 1025;
+  var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+  var WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
+  var EVO_LEVELS = [5, 10, 15, 20];
+
+  var MEMBERS = {
+    all: { name: '전체', color: '#2b2b33' },
+    geonryul: { name: '건률', color: '#ff8a5b' },
+    mom: { name: '엄마', color: '#ff8fb1' },
+    dad: { name: '아빠', color: '#6aa9ff' },
+    family: { name: '가족', color: '#56b96f' }
+  };
+
+  var TYPE_KO = {
+    normal: '노말', fire: '불꽃', water: '물', electric: '전기', grass: '풀', ice: '얼음',
+    fighting: '격투', poison: '독', ground: '땅', flying: '비행', psychic: '에스퍼',
+    bug: '벌레', rock: '바위', ghost: '고스트', dragon: '드래곤', dark: '악', steel: '강철', fairy: '페어리'
+  };
+  var TYPE_COLOR = {
+    normal: '#A8A77A', fire: '#EE8130', water: '#6390F0', electric: '#F7D02C', grass: '#7AC74C',
+    ice: '#96D9D6', fighting: '#C22E28', poison: '#A33EA1', ground: '#E2BF65', flying: '#A98FF3',
+    psychic: '#F95587', bug: '#A6B91A', rock: '#B6A136', ghost: '#735797', dragon: '#6F35FC',
+    dark: '#705746', steel: '#B7B7CE', fairy: '#D685AD'
+  };
+  var STAT_KO = {
+    hp: 'HP', attack: '공격', defense: '방어', 'special-attack': '특수공격',
+    'special-defense': '특수방어', speed: '스피드'
+  };
+  var CITIES = [
+    { name: '서울 상도동', lat: 37.5034, lon: 126.9477 },
+    { name: '서울', lat: 37.5665, lon: 126.9780 },
+    { name: '부산', lat: 35.1796, lon: 129.0756 },
+    { name: '대구', lat: 35.8714, lon: 128.6014 },
+    { name: '인천', lat: 37.4563, lon: 126.7052 },
+    { name: '광주', lat: 35.1595, lon: 126.8526 },
+    { name: '대전', lat: 36.3504, lon: 127.3845 },
+    { name: '울산', lat: 35.5384, lon: 129.3114 },
+    { name: '수원', lat: 37.2636, lon: 127.0286 },
+    { name: '성남 분당', lat: 37.3595, lon: 127.1052 },
+    { name: '제주', lat: 33.4996, lon: 126.5312 },
+    { name: '춘천', lat: 37.8813, lon: 127.7300 },
+    { name: '전주', lat: 35.8242, lon: 127.1480 },
+    { name: '청주', lat: 36.6424, lon: 127.4890 },
+    { name: '포항', lat: 36.0190, lon: 129.3435 },
+    { name: '창원', lat: 35.2280, lon: 128.6811 }
+  ];
+  var STARTERS = [
+    { id: 25, tag: '전기' }, { id: 4, tag: '불꽃' }, { id: 7, tag: '물' },
+    { id: 1, tag: '풀' }, { id: 501, tag: '물' }, { id: 133, tag: '노말' }
+  ];
+
+  var DEFAULT_SECTIONS = [
+    {
+      id: 'morning', name: '아침 준비', emoji: '🌅', weekendOnly: false, tasks: [
+        { id: 'm1', text: '간식 먹기', emoji: '🍪' },
+        { id: 'm2', text: '양치하기', emoji: '🪥' },
+        { id: 'm3', text: '세수하기', emoji: '🧼' },
+        { id: 'm4', text: '옷 입기', emoji: '👕' },
+        { id: 'm5', text: '가방 챙기기', emoji: '🎒' }
+      ]
+    },
+    {
+      id: 'afterschool', name: '하교 후 루틴', emoji: '🏫', weekendOnly: false, tasks: [
+        { id: 'a1', text: '가방 정리', emoji: '🎒' },
+        { id: 'a2', text: '손 씻기', emoji: '🧴' },
+        { id: 'a3', text: '숟가락·물통 넣기', emoji: '🥄' }
+      ]
+    },
+    {
+      id: 'homework', name: '매일 숙제', emoji: '📚', weekendOnly: false, tasks: [
+        { id: 'h1', text: '눈높이 문제집', emoji: '✏️' },
+        { id: 'h2', text: '책 소리내서 읽기 & 풀기', emoji: '📖' },
+        { id: 'h3', text: '기탄수학', emoji: '🔢' },
+        { id: 'h4', text: '독서', emoji: '📚' }
+      ]
+    },
+    {
+      id: 'weekend', name: '주말 할 일', emoji: '🎉', weekendOnly: true, tasks: [
+        { id: 'w1', text: '영어 숙제하기', emoji: '🔤' }
+      ]
+    }
+  ];
+
+  var DEFAULT_REWARDS = [
+    { id: 'r1', name: '간식 고르기', emoji: '🍪', cost: 5 },
+    { id: 'r2', name: 'TV·게임 20분', emoji: '📺', cost: 8 },
+    { id: 'r3', name: '주말 나들이 코스 정하기', emoji: '🚗', cost: 15 },
+    { id: 'r4', name: '칭찬 스티커 1장', emoji: '🌟', cost: 3 }
+  ];
+
+  /* ---------------------------------------------------------------
+     1. 유틸
+  --------------------------------------------------------------- */
+  function $(id) { return document.getElementById(id); }
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function dateKey(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+  function todayKey() { return dateKey(new Date()); }
+  function parseDay(s) {
+    var p = String(s || '').split('-');
+    return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]), 12, 0, 0);
+  }
+  function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n, 12, 0, 0); }
+  function uid(prefix) {
+    return (prefix || 'x') + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+  function clamp(n, a, b) { return Math.min(b, Math.max(a, n)); }
+  function readJSON(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return fallback;
+      var v = JSON.parse(raw);
+      return v == null ? fallback : v;
+    } catch (e) { return fallback; }
+  }
+  function writeJSON(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); return true; }
+    catch (e) { return false; }
+  }
+  function pickRandomInt(n) {
+    try {
+      if (window.crypto && window.crypto.getRandomValues) {
+        var buf = new Uint32Array(1);
+        window.crypto.getRandomValues(buf);
+        return (buf[0] % n) + 1;
+      }
+    } catch (e) { /* ignore */ }
+    return Math.floor(Math.random() * n) + 1;
+  }
+  function idFromUrl(url) {
+    var m = String(url || '').match(/\/(\d+)\/?$/);
+    return m ? Number(m[1]) : 0;
+  }
+  function cleanText(t) {
+    return String(t || '').replace(/[\n\r\f\u000c\u00ad]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function dexNo(id) { return 'No.' + String(id).padStart(4, '0'); }
+
+  /* ---------------------------------------------------------------
+     2. 상태
+  --------------------------------------------------------------- */
+  function defaultState() {
+    var t = todayKey();
+    return {
+      version: 3,
+      settings: {
+        title: '건률네 포켓몬 대시보드',
+        sound: true,
+        location: { name: '서울 상도동', lat: 37.5034, lon: 126.9477 }
+      },
+      sections: JSON.parse(JSON.stringify(DEFAULT_SECTIONS)),
+      done: { date: t, ids: {} },
+      progress: {
+        date: t, level: 1, xp: 0, stars: 0, balls: 1, streak: 0,
+        lastCompleteDate: '', ballsAwardedToday: 0, sectionsToday: []
+      },
+      partner: { id: 25 },
+      starterPicked: false,
+      box: {},
+      events: [],
+      synced: [],
+      rewards: JSON.parse(JSON.stringify(DEFAULT_REWARDS)),
+      redeemed: []
+    };
+  }
+
+  var S = null;
+
+  function loadState() {
+    var raw = readJSON(STORAGE_KEY, null);
+    if (!raw || typeof raw !== 'object') return defaultState();
+    var d = defaultState();
+    // 누락된 키 보충
+    raw.settings = Object.assign({}, d.settings, raw.settings || {});
+    if (!raw.settings.location || typeof raw.settings.location.lat !== 'number') {
+      raw.settings.location = d.settings.location;
+    }
+    if (!Array.isArray(raw.sections) || !raw.sections.length) raw.sections = d.sections;
+    raw.sections.forEach(function (sec, i) {
+      if (!sec.id) sec.id = 'sec' + i;
+      if (!Array.isArray(sec.tasks)) sec.tasks = [];
+      sec.tasks.forEach(function (t, j) { if (!t.id) t.id = sec.id + '_' + j; });
+    });
+    raw.progress = Object.assign({}, d.progress, raw.progress || {});
+    if (!raw.partner || !raw.partner.id) raw.partner = d.partner;
+    if (!raw.box || typeof raw.box !== 'object') raw.box = {};
+    if (!Array.isArray(raw.events)) raw.events = [];
+    if (!Array.isArray(raw.synced)) raw.synced = [];
+    if (!Array.isArray(raw.rewards)) raw.rewards = d.rewards;
+    if (!Array.isArray(raw.redeemed)) raw.redeemed = [];
+    if (!raw.done || typeof raw.done !== 'object') raw.done = d.done;
+    if (!raw.done.ids || typeof raw.done.ids !== 'object') raw.done.ids = {};
+    if (!Array.isArray(raw.progress.sectionsToday)) raw.progress.sectionsToday = [];
+    return raw;
+  }
+
+  function save() { writeJSON(STORAGE_KEY, S); }
+
+  /* ---------------------------------------------------------------
+     3. 효과음 (Web Audio)
+  --------------------------------------------------------------- */
+  var actx = null;
+  function audioCtx() {
+    if (!S.settings.sound) return null;
+    if (actx) return actx;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    try { actx = new AC(); } catch (e) { actx = null; }
+    return actx;
+  }
+  function tone(freq, start, dur, type, vol) {
+    var ac = audioCtx();
+    if (!ac) return;
+    try {
+      var o = ac.createOscillator();
+      var g = ac.createGain();
+      o.type = type || 'sine';
+      o.frequency.value = freq;
+      o.connect(g);
+      g.connect(ac.destination);
+      var t0 = ac.currentTime + (start || 0);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol || 0.16, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.start(t0);
+      o.stop(t0 + dur + 0.03);
+    } catch (e) { /* ignore */ }
+  }
+  function sndCheck() { tone(880, 0, 0.12, 'sine', 0.14); tone(1320, 0.09, 0.16, 'triangle', 0.11); }
+  function sndUncheck() { tone(420, 0, 0.1, 'sine', 0.09); }
+  function sndFanfare() {
+    var notes = [523.25, 659.25, 783.99, 1046.5];
+    notes.forEach(function (f, i) { tone(f, i * 0.11, 0.22, 'triangle', 0.15); });
+    tone(1567.98, 0.5, 0.3, 'sine', 0.1);
+  }
+  function sndBall() { tone(660, 0, 0.08, 'square', 0.07); tone(990, 0.12, 0.1, 'square', 0.06); }
+  function sndCatch() {
+    [784, 988, 1175, 1568].forEach(function (f, i) { tone(f, i * 0.1, 0.25, 'triangle', 0.14); });
+  }
+  function sndEvolve() {
+    for (var i = 0; i < 8; i++) { tone(400 + i * 110, i * 0.13, 0.2, 'sine', 0.1); }
+    tone(1568, 1.1, 0.45, 'triangle', 0.13);
+  }
+
+  /* ---------------------------------------------------------------
+     4. PokeAPI (캐시 포함)
+  --------------------------------------------------------------- */
+  var diskCache = readJSON(CACHE_KEY, {});
+  var memCache = {};
+  var cacheKeys = Object.keys(diskCache);
+
+  function cacheGet(k) {
+    if (memCache[k]) return memCache[k];
+    if (diskCache[k]) { memCache[k] = diskCache[k]; return diskCache[k]; }
+    return null;
+  }
+  function cachePut(k, v) {
+    memCache[k] = v;
+    diskCache[k] = v;
+    cacheKeys.push(k);
+    while (cacheKeys.length > 320) {
+      var old = cacheKeys.shift();
+      delete diskCache[old];
+    }
+    writeJSON(CACHE_KEY, diskCache);
+  }
+
+  function fetchJSON(url) {
+    return fetch(url, { mode: 'cors', cache: 'force-cache' }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    });
+  }
+
+  function slimMoves(list) {
+    var out = [];
+    (list || []).forEach(function (m) {
+      var lv = null;
+      (m.version_group_details || []).forEach(function (v) {
+        if (v.move_learn_method && v.move_learn_method.name === 'level-up') {
+          var l = v.level_learned_at || 0;
+          if (lv === null || l < lv) lv = l;
+        }
+      });
+      out.push({ name: m.move.name, lv: lv });
+    });
+    out.sort(function (a, b) {
+      var av = a.lv === null ? 999 : a.lv;
+      var bv = b.lv === null ? 999 : b.lv;
+      if (av !== bv) return av - bv;
+      return a.name < b.name ? -1 : 1;
+    });
+    return out.slice(0, 18);
+  }
+
+  function getPokemon(idOrName) {
+    var key = 'p:' + idOrName;
+    var hit = cacheGet(key);
+    if (hit) return Promise.resolve(hit);
+    return fetchJSON(API + 'pokemon/' + idOrName).then(function (d) {
+      var sprites = d.sprites || {};
+      var art = '';
+      if (sprites.other && sprites.other['official-artwork']) {
+        art = sprites.other['official-artwork'].front_default || '';
+      }
+      var slim = {
+        id: d.id,
+        name: d.name,
+        sprite: sprites.front_default || art || '',
+        artwork: art,
+        types: (d.types || []).map(function (t) { return t.type.name; }),
+        height: d.height,
+        weight: d.weight,
+        stats: (d.stats || []).map(function (s) { return { name: s.stat.name, value: s.base_stat }; }),
+        moves: slimMoves(d.moves),
+        speciesId: d.species ? idFromUrl(d.species.url) : d.id
+      };
+      cachePut(key, slim);
+      return slim;
+    });
+  }
+
+  function getSpecies(idOrName) {
+    var key = 's:' + idOrName;
+    var hit = cacheGet(key);
+    if (hit) return Promise.resolve(hit);
+    return fetchJSON(API + 'pokemon-species/' + idOrName).then(function (d) {
+      var koName = (d.names || []).filter(function (n) { return n.language && n.language.name === 'ko'; })[0];
+      var enName = (d.names || []).filter(function (n) { return n.language && n.language.name === 'en'; })[0];
+      var jaName = (d.names || []).filter(function (n) { return n.language && n.language.name === 'ja'; })[0];
+      var koGenus = (d.genera || []).filter(function (g) { return g.language && g.language.name === 'ko'; })[0];
+      var enGenus = (d.genera || []).filter(function (g) { return g.language && g.language.name === 'en'; })[0];
+      var koFlavor = (d.flavor_text_entries || []).filter(function (f) { return f.language && f.language.name === 'ko'; });
+      var enFlavor = (d.flavor_text_entries || []).filter(function (f) { return f.language && f.language.name === 'en'; });
+      var flavor = '';
+      var flavorLang = '';
+      if (koFlavor.length) { flavor = cleanText(koFlavor[koFlavor.length - 1].flavor_text); flavorLang = 'ko'; }
+      else if (enFlavor.length) { flavor = cleanText(enFlavor[enFlavor.length - 1].flavor_text); flavorLang = 'en'; }
+      var slim = {
+        id: d.id,
+        nameKo: (koName && koName.name) || (enName && enName.name) || (jaName && jaName.name) || d.name,
+        nameEn: (enName && enName.name) || d.name,
+        genusKo: (koGenus && koGenus.genus) || (enGenus && enGenus.genus) || '포켓몬',
+        flavor: flavor,
+        flavorLang: flavorLang,
+        evoUrl: d.evolution_chain ? d.evolution_chain.url : '',
+        isLegendary: !!d.is_legendary,
+        isMythical: !!d.is_mythical
+      };
+      cachePut(key, slim);
+      return slim;
+    });
+  }
+
+  function getEvoInfo(speciesId) {
+    var key = 'e:' + speciesId;
+    var hit = cacheGet(key);
+    if (hit) return Promise.resolve(hit);
+    return getSpecies(speciesId).then(function (sp) {
+      if (!sp.evoUrl) return { ids: [speciesId], index: 0, total: 1, next: null };
+      return fetchJSON(sp.evoUrl).then(function (chain) {
+        var path = null;
+        function walk(node, trail) {
+          if (idFromUrl(node.species && node.species.url) === Number(speciesId)) {
+            return trail.concat([node]);
+          }
+          var kids = node.evolves_to || [];
+          for (var i = 0; i < kids.length; i++) {
+            var r = walk(kids[i], trail.concat([node]));
+            if (r) return r;
+          }
+          return null;
+        }
+        path = walk(chain.chain, []);
+        if (!path) return { ids: [speciesId], index: 0, total: 1, next: null };
+        var ids = path.map(function (n) { return idFromUrl(n.species && n.species.url); });
+        var last = path[path.length - 1];
+        var trackIds = ids.slice();
+        var probe = last;
+        while (probe.evolves_to && probe.evolves_to.length) {
+          probe = probe.evolves_to[0];
+          trackIds.push(idFromUrl(probe.species && probe.species.url));
+        }
+        var next = (last.evolves_to && last.evolves_to.length)
+          ? idFromUrl(last.evolves_to[0].species && last.evolves_to[0].species.url) : null;
+        var info = { ids: ids, track: trackIds, index: ids.length - 1, total: trackIds.length, next: next };
+        cachePut(key, info);
+        return info;
+      });
+    });
+  }
+
+  function getMove(name) {
+    var key = 'm:' + name;
+    var hit = cacheGet(key);
+    if (hit) return Promise.resolve(hit);
+    return fetchJSON(API + 'move/' + name).then(function (d) {
+      var ko = (d.names || []).filter(function (n) { return n.language && n.language.name === 'ko'; })[0];
+      var en = (d.names || []).filter(function (n) { return n.language && n.language.name === 'en'; })[0];
+      var koF = (d.flavor_text_entries || []).filter(function (f) { return f.language && f.language.name === 'ko'; });
+      var enF = (d.flavor_text_entries || []).filter(function (f) { return f.language && f.language.name === 'en'; });
+      var desc = '';
+      if (koF.length) desc = cleanText(koF[koF.length - 1].flavor_text);
+      else if (enF.length) desc = cleanText(enF[enF.length - 1].flavor_text);
+      var slim = {
+        name: d.name,
+        nameKo: (ko && ko.name) || (en && en.name) || d.name.replace(/-/g, ' '),
+        type: d.type ? d.type.name : '',
+        power: d.power,
+        pp: d.pp,
+        accuracy: d.accuracy,
+        damageClass: d.damage_class ? d.damage_class.name : '',
+        desc: desc
+      };
+      cachePut(key, slim);
+      return slim;
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     5. 시계 · 날짜
+  --------------------------------------------------------------- */
+  function renderClock() {
+    var now = new Date();
+    var y = now.getFullYear(), m = now.getMonth() + 1, d = now.getDate();
+    var h = now.getHours(), mi = now.getMinutes(), se = now.getSeconds();
+    var ampm = h < 12 ? '오전' : '오후';
+    var h12 = h % 12; if (h12 === 0) h12 = 12;
+    $('liveDate').textContent = y + '년 ' + m + '월 ' + d + '일 ' + WEEKDAYS[now.getDay()] + '요일';
+    $('liveClock').textContent = ampm + ' ' + h12 + ':' + pad2(mi) + ':' + pad2(se);
+    var isWeekend = now.getDay() === 0 || now.getDay() === 6;
+    var badge = $('weekdayBadge');
+    if (badge) badge.textContent = isWeekend ? '🎉 주말' : '';
+  }
+
+  /* ---------------------------------------------------------------
+     6. 날씨 (Open-Meteo)
+  --------------------------------------------------------------- */
+  function wmoInfo(code) {
+    var c = Number(code);
+    if (c === 0) return { e: '☀️', t: '맑음' };
+    if (c === 1) return { e: '🌤️', t: '대체로 맑음' };
+    if (c === 2) return { e: '⛅', t: '구름 조금' };
+    if (c === 3) return { e: '☁️', t: '흐림' };
+    if (c === 45 || c === 48) return { e: '🌫️', t: '안개' };
+    if (c >= 51 && c <= 57) return { e: '🌦️', t: '이슬비' };
+    if (c >= 61 && c <= 65) return { e: '🌧️', t: '비' };
+    if (c === 66 || c === 67) return { e: '🌧️', t: '어는 비' };
+    if (c >= 71 && c <= 75) return { e: '🌨️', t: '눈' };
+    if (c === 77) return { e: '🌨️', t: '눈날림' };
+    if (c >= 80 && c <= 82) return { e: '🌦️', t: '소나기' };
+    if (c === 85 || c === 86) return { e: '🌨️', t: '눈 소나기' };
+    if (c === 95) return { e: '⛈️', t: '천둥번개' };
+    if (c === 96 || c === 99) return { e: '⛈️', t: '우박' };
+    return { e: '🌥️', t: '구름' };
+  }
+
+  function weatherURL() {
+    var loc = S.settings.location;
+    return 'https://api.open-meteo.com/v1/forecast?latitude=' + loc.lat +
+      '&longitude=' + loc.lon +
+      '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max' +
+      '&current=temperature_2m,weather_code&timezone=Asia%2FSeoul&forecast_days=7';
+  }
+
+  function renderWeather(data) {
+    var strip = $('weatherStrip');
+    var daily = data && data.daily;
+    if (!daily || !daily.time || !daily.time.length) {
+      strip.innerHTML = '<div class="wx-state">🌥️ 날씨 정보를 찾지 못했어요</div>';
+      return;
+    }
+    var today = todayKey();
+    var html = '';
+    for (var i = 0; i < Math.min(5, daily.time.length); i++) {
+      var dk = daily.time[i];
+      var info = wmoInfo(daily.weather_code[i]);
+      var label;
+      if (i === 0 || dk === today) label = '오늘';
+      else {
+        var dd = parseDay(dk);
+        label = (i === 1) ? '내일' : WEEKDAYS[dd.getDay()] + '요일';
+      }
+      var hi = Math.round(daily.temperature_2m_max[i]);
+      var lo = Math.round(daily.temperature_2m_min[i]);
+      var pop = daily.precipitation_probability_max ? daily.precipitation_probability_max[i] : null;
+      html += '<div class="wx' + (i === 0 ? ' today' : '') + '">' +
+        '<div class="day">' + esc(label) + '</div>' +
+        '<div class="emo" title="' + esc(info.t) + '">' + info.e + '</div>' +
+        '<div class="tmp">' + hi + '° <span class="lo">/ ' + lo + '°</span></div>' +
+        '<div class="pop">' + (pop == null ? '&nbsp;' : '☔ ' + pop + '%') + '</div>' +
+        '</div>';
+    }
+    strip.innerHTML = html;
+
+    var cur = data.current || {};
+    var loc = S.settings.location.name || '우리 동네';
+    if (typeof cur.temperature_2m === 'number') {
+      $('nowTemp').textContent = '🌡️ ' + Math.round(cur.temperature_2m * 10) / 10 + '°C · ' + loc;
+    } else {
+      $('nowTemp').textContent = '🌡️ ' + loc;
+    }
+  }
+
+  function loadWeather() {
+    return fetchJSON(weatherURL()).then(function (data) {
+      renderWeather(data);
+    }).catch(function () {
+      $('weatherStrip').innerHTML = '<div class="wx-state">🌥️ 날씨를 불러오지 못했어요 · 인터넷 연결을 확인해 주세요</div>';
+      $('nowTemp').textContent = '🌡️ ' + (S.settings.location.name || '우리 동네');
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     7. 할 일 · XP · 몬스터볼
+  --------------------------------------------------------------- */
+  function findSection(id) {
+    for (var i = 0; i < S.sections.length; i++) if (S.sections[i].id === id) return S.sections[i];
+    return null;
+  }
+  function allTasks() {
+    var out = [];
+    S.sections.forEach(function (sec) {
+      sec.tasks.forEach(function (t) { out.push({ sec: sec, task: t }); });
+    });
+    return out;
+  }
+  function isDone(taskId) { return !!(S.done && S.done.ids && S.done.ids[taskId]); }
+  function isWeekend(d) {
+    var w = (d || new Date()).getDay();
+    return w === 0 || w === 6;
+  }
+  function xpNeed(level) { return 40 + (level - 1) * 20; }
+
+  function addXp(amount) {
+    var leveled = false;
+    S.progress.xp += amount;
+    var guard = 0;
+    while (S.progress.xp >= xpNeed(S.progress.level) && guard < 50) {
+      S.progress.xp -= xpNeed(S.progress.level);
+      S.progress.level += 1;
+      leveled = true;
+      guard++;
+    }
+    return leveled;
+  }
+
+  function markDayComplete() {
+    var t = todayKey();
+    if (S.progress.lastCompleteDate === t) return;
+    var y = new Date();
+    y.setDate(y.getDate() - 1);
+    var yKey = dateKey(y);
+    if (S.progress.lastCompleteDate === yKey) S.progress.streak = (S.progress.streak || 0) + 1;
+    else S.progress.streak = 1;
+    S.progress.lastCompleteDate = t;
+  }
+
+  function doneCountAll() {
+    var n = 0;
+    allTasks().forEach(function (x) { if (isDone(x.task.id)) n++; });
+    return n;
+  }
+
+  function evaluateAwards(secId) {
+    var messages = [];
+    // 1) 섹션 완료 보너스
+    var sec = findSection(secId);
+    if (sec && sec.tasks.length) {
+      var allDone = sec.tasks.every(function (t) { return isDone(t.id); });
+      if (allDone && S.progress.sectionsToday.indexOf(sec.id) === -1) {
+        S.progress.sectionsToday.push(sec.id);
+        S.progress.balls += 1;
+        messages.push('🎉 ' + sec.name + ' 완료! 몬스터볼 +1');
+      }
+    }
+    // 2) 30 XP 마다 몬스터볼
+    var want = Math.floor(doneCountAll() * 10 / 30);
+    var given = 0;
+    while (S.progress.ballsAwardedToday < want && given < 20) {
+      S.progress.ballsAwardedToday += 1;
+      S.progress.balls += 1;
+      given++;
+    }
+    if (given > 0) messages.push('⚪ 몬스터볼 ' + given + '개를 받았어요!');
+    return messages;
+  }
+
+  function toggleTask(secId, taskId) {
+    var sec = findSection(secId);
+    if (!sec) return;
+    var exists = false;
+    sec.tasks.forEach(function (t) { if (t.id === taskId) exists = true; });
+    if (!exists) return;
+
+    var wasDone = isDone(taskId);
+    var leveled = false;
+    if (wasDone) {
+      delete S.done.ids[taskId];
+      S.progress.stars = Math.max(0, S.progress.stars - 1);
+      S.progress.xp = Math.max(0, S.progress.xp - 10);
+      sndUncheck();
+    } else {
+      S.done.ids[taskId] = true;
+      S.progress.stars += 1;
+      leveled = addXp(10);
+      markDayComplete();
+      sndCheck();
+    }
+    var msgs = wasDone ? [] : evaluateAwards(secId);
+    save();
+    renderTasks();
+    paintPartnerProgress();
+    renderPartnerStats();
+
+    if (!wasDone) {
+      msgs.forEach(function (m, i) {
+        setTimeout(function () { toast(m, 'gold'); sndBall(); }, 260 + i * 700);
+      });
+      if (msgs.length) sndFanfare();
+      if (leveled) {
+        setTimeout(function () {
+          toast('✨ 레벨 업! Lv.' + S.progress.level, 'gold');
+          sndFanfare();
+          paintPartnerProgress();
+          refreshEvolveButton();
+        }, 180);
+      }
+    }
+    flushHeader();
+  }
+
+  function renderTasks() {
+    var wrap = $('sections');
+    var weekend = isWeekend();
+    var html = '';
+    var totalDone = 0, totalAll = 0;
+
+    S.sections.forEach(function (sec) {
+      var isWeek = !!sec.weekendOnly;
+      var appliesToday = !isWeek || weekend;
+      var tasks = sec.tasks;
+      var done = tasks.filter(function (t) { return isDone(t.id); }).length;
+      if (appliesToday) { totalDone += done; totalAll += tasks.length; }
+      var complete = tasks.length > 0 && done === tasks.length;
+      var cls = 'section';
+      if (isWeek) cls += ' weekend';
+      if (isWeek && weekend) cls += ' hot';
+      if (complete) cls += ' done';
+
+      html += '<div class="' + cls + '" data-sec="' + esc(sec.id) + '">';
+      html += '<div class="sec-head">';
+      html += '<span class="sec-emoji">' + esc(sec.emoji || '📌') + '</span>';
+      html += '<span class="sec-name">' + esc(sec.name) +
+        '<small>' + (isWeek ? (weekend ? '오늘은 주말! 🎉' : '주말에 해요') : tasks.length + '개') + '</small></span>';
+      if (complete) html += '<span class="sec-badge">🎉</span>';
+      html += '<span class="sec-count">' + done + '/' + tasks.length + '</span>';
+      html += '</div>';
+      var pct = tasks.length ? Math.round(done * 100 / tasks.length) : 0;
+      html += '<div class="sec-progress"><i style="width:' + pct + '%"></i></div>';
+      html += '<div class="tasks">';
+      if (!tasks.length) {
+        html += '<div class="task-empty">할 일이 없어요. 부모 설정에서 추가할 수 있어요.</div>';
+      }
+      tasks.forEach(function (t) {
+        var d = isDone(t.id);
+        html += '<button type="button" class="task' + (d ? ' done' : '') + '" data-sec="' + esc(sec.id) +
+          '" data-task="' + esc(t.id) + '" aria-pressed="' + (d ? 'true' : 'false') + '">' +
+          '<span class="temoji">' + esc(t.emoji || '✔️') + '</span>' +
+          '<span class="ttext">' + esc(t.text) + '</span>' +
+          '<span class="tcheck">' + (d ? '✓' : '') + '</span>' +
+          '</button>';
+      });
+      html += '</div></div>';
+    });
+
+    wrap.innerHTML = html;
+
+    var ring = $('todayRing');
+    var pctAll = totalAll ? Math.round(totalDone * 100 / totalAll) : 0;
+    if (ring) {
+      ring.style.setProperty('--p', String(pctAll));
+      $('todayRingText').textContent = pctAll + '%';
+    }
+    $('tasksFootRight').textContent = totalAll ? totalDone + ' / ' + totalAll + ' 완료' : '';
+
+    var left = $('tasksFootLeft');
+    if (pctAll === 100 && totalAll > 0) left.textContent = '🏆 오늘 할 일을 모두 끝냈어요! 최고!';
+    else if (totalDone > 0) left.textContent = '👍 ' + (totalAll - totalDone) + '개만 더 하면 끝나요!';
+    else left.textContent = '오늘도 화이팅! 💪';
+  }
+  /* ---------------------------------------------------------------
+     8. 파트너 포켓몬
+  --------------------------------------------------------------- */
+  var partnerData = { id: 0, pokemon: null, species: null, evo: null };
+
+  function partnerLevel() { return S.progress.level; }
+
+  function paintPartnerProgress() {
+    var lv = partnerLevel();
+    var need = xpNeed(lv);
+    var xp = clamp(S.progress.xp, 0, need);
+    $('partnerLv').textContent = 'Lv.' + lv;
+    $('xpText').textContent = 'XP ' + xp + ' / ' + need;
+    $('xpToNext').textContent = '다음 레벨까지 ' + Math.max(0, need - xp);
+    $('xpFill').style.width = Math.round(xp * 100 / need) + '%';
+  }
+
+  function renderPartnerStats() {
+    $('statStars').textContent = '⭐ ' + S.progress.stars;
+    $('statBalls').textContent = '⚪ ' + S.progress.balls;
+    $('statBox').textContent = '📦 ' + Object.keys(S.box).length + ' / ' + MAX_DEX;
+    $('statStreak').textContent = '🔥 ' + (S.progress.streak || 0) + '일';
+    $('ballChip').textContent = String(S.progress.balls);
+  }
+
+  function paintTypes(el, types) {
+    el.innerHTML = (types || []).map(function (t) {
+      return '<span class="tbadge" style="background:' + (TYPE_COLOR[t] || '#999') + '">' + esc(TYPE_KO[t] || t) + '</span>';
+    }).join('');
+  }
+
+  function paintPartner() {
+    var p = partnerData.pokemon;
+    var s = partnerData.species;
+    if (!p) return;
+    var img = $('partnerSprite');
+    if (p.sprite) img.src = p.sprite;
+    img.alt = (s && s.nameKo) || p.name;
+    $('partnerName').textContent = (s && s.nameKo) || p.name;
+    $('partnerNo').textContent = dexNo(p.id);
+    $('partnerGenus').textContent = (s && s.genusKo) || '포켓몬';
+    paintTypes($('partnerTypes'), p.types);
+    paintPartnerProgress();
+    renderPartnerStats();
+    paintEvoDots();
+  }
+
+  function refreshPartner(force) {
+    var id = S.partner.id;
+    if (!force && partnerData.pokemon && partnerData.id === id) { paintPartner(); return Promise.resolve(); }
+    $('partnerGenus').textContent = '도감을 불러오는 중...';
+    return getPokemon(id).then(function (p) {
+      partnerData.pokemon = p;
+      partnerData.id = p.id;
+      paintPartner();
+      return getSpecies(p.speciesId).then(function (s) {
+        partnerData.species = s;
+        paintPartner();
+        return getEvoInfo(p.speciesId).then(function (evo) {
+          partnerData.evo = evo;
+          paintEvoDots();
+          refreshEvolveButton();
+        }).catch(function () { });
+      });
+    }).catch(function () {
+      $('partnerGenus').textContent = '포켓몬 정보를 불러오지 못했어요 (인터넷 연결 확인)';
+      var img = $('partnerSprite');
+      if (!img.getAttribute('src') || img.getAttribute('src') === BLANK) img.src = SPRITE + id + '.png';
+      paintPartnerProgress();
+      renderPartnerStats();
+    });
+  }
+
+  function evoNeedLevel() {
+    var evo = partnerData.evo;
+    if (!evo || !evo.next) return null;
+    return EVO_LEVELS[Math.min(evo.index, EVO_LEVELS.length - 1)];
+  }
+
+  function paintEvoDots() {
+    var el = $('partnerEvo');
+    var evo = partnerData.evo;
+    if (!evo) { el.innerHTML = ''; return; }
+    var total = Math.max(evo.total || 1, evo.index + 1);
+    var html = '';
+    for (var i = 0; i < total; i++) {
+      if (i > 0) html += '<span class="lnk"></span>';
+      html += '<span class="dot' + (i <= evo.index ? ' on' : '') + '"></span>';
+    }
+    var need = evoNeedLevel();
+    var tail = '';
+    if (evo.next && need != null) {
+      tail = ' <span style="margin-left:6px">' +
+        (S.progress.level >= need ? '✨ 진화할 수 있어요!' : 'Lv.' + need + '에 진화!') + '</span>';
+    } else if (!evo.next) {
+      tail = ' <span style="margin-left:6px">최종 진화 🌟</span>';
+    }
+    el.innerHTML = html + tail;
+  }
+
+  function refreshEvolveButton() {
+    var btn = $('btnEvolve');
+    var need = evoNeedLevel();
+    var evo = partnerData.evo;
+    if (evo && evo.next && need != null && S.progress.level >= need) btn.classList.remove('hide');
+    else btn.classList.add('hide');
+  }
+
+  function doEvolve() {
+    var evo = partnerData.evo;
+    var need = evoNeedLevel();
+    if (!evo || !evo.next || need == null || S.progress.level < need) return;
+    var nextId = evo.next;
+    closeModal();
+    Promise.all([getPokemon(nextId), getSpecies(nextId)]).then(function (res) {
+      var p = res[0], s = res[1];
+      var overlay = document.createElement('div');
+      overlay.className = 'evo-stage-anim';
+      overlay.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center">' +
+        '<img src="' + esc(p.sprite || SPRITE + nextId + '.png') + '" alt="">' +
+        '<div class="evo-txt">진화 중...</div></div>';
+      document.body.appendChild(overlay);
+      sndEvolve();
+      setTimeout(function () {
+        var txt = overlay.querySelector('.evo-txt');
+        if (txt) txt.textContent = '축하해요! ' + s.nameKo + '(으)로 진화!';
+      }, 1100);
+      setTimeout(function () {
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        S.partner.id = nextId;
+        S.box[nextId] = S.box[nextId] || { id: nextId, caughtAt: Date.now(), from: 'evolve' };
+        partnerData.id = 0;
+        save();
+        refreshPartner(true);
+        toast('✨ ' + s.nameKo + '(으)로 진화했어요!', 'gold');
+      }, 2000);
+    }).catch(function () {
+      toast('진화 정보를 불러오지 못했어요. 다시 시도해 주세요.');
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     9. 도감 상세 모달
+  --------------------------------------------------------------- */
+  function modalShell(title, bodyHtml, opts) {
+    var o = opts || {};
+    var cls = o.wide ? 'modal wide' : 'modal';
+    return '<div class="' + cls + '" data-modal="1">' +
+      '<div class="modal-head"><h3>' + esc(title) + '</h3>' +
+      '<button class="modal-x" type="button" data-close="1" aria-label="닫기">✕</button></div>' +
+      '<div class="modal-body">' + bodyHtml + '</div>' +
+      (o.foot ? '<div class="modal-foot">' + o.foot + '</div>' : '') +
+      '</div>';
+  }
+
+  function openModal(html, dismissible) {
+    var root = $('modalRoot');
+    root.innerHTML = html;
+    root.classList.add('open');
+    root.setAttribute('data-dismissible', dismissible === false ? '0' : '1');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    var root = $('modalRoot');
+    root.classList.remove('open');
+    root.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  function openDetail(id) {
+    var isPartner = Number(id) === Number(S.partner.id);
+    openModal(modalShell('📖 포켓몬 도감',
+      '<div class="detail-loading"><div class="spinner"></div>도감을 불러오는 중이에요...</div>',
+      { wide: true }));
+
+    Promise.all([
+      getPokemon(id),
+      getSpecies(id).catch(function () { return null; }),
+      getEvoInfo(id).catch(function () { return null; })
+    ]).then(function (res) {
+      var p = res[0], s = res[1], evo = res[2];
+      var name = (s && s.nameKo) || p.name;
+      var html = '<div class="detail-top">' +
+        '<div class="detail-sprite-box"><img class="detail-sprite" src="' + esc(p.sprite || p.artwork) + '" alt="' + esc(name) + '"></div>' +
+        '<div class="detail-main">' +
+        '<div class="detail-name">' + esc(name) +
+        (isPartner ? ' <span class="tbadge" style="background:#3fae64">파트너</span>' : '') +
+        '</div>' +
+        '<div class="detail-no">' + dexNo(p.id) + '</div>' +
+        '<div class="detail-genus">' + esc((s && s.genusKo) || '포켓몬') + '</div>' +
+        '<div class="detail-types"></div>' +
+        (isPartner
+          ? '<div class="xp-wrap"><div class="xp-label"><span>Lv.' + S.progress.level + '</span><span>XP ' +
+          S.progress.xp + ' / ' + xpNeed(S.progress.level) + '</span></div>' +
+          '<div class="xp-bar"><div class="xp-fill" style="width:' +
+          Math.round(clamp(S.progress.xp, 0, xpNeed(S.progress.level)) * 100 / xpNeed(S.progress.level)) + '%"></div></div></div>'
+          : '') +
+        '<div class="detail-meta">' +
+        '<span>키 <b>' + (p.height / 10).toFixed(1) + 'm</b></span>' +
+        '<span>몸무게 <b>' + (p.weight / 10).toFixed(1) + 'kg</b></span>' +
+        (evo ? '<span>진화 <b>' + (evo.index + 1) + '단계 / ' + Math.max(evo.total, evo.index + 1) + '단계</b></span>' : '') +
+        '</div>' +
+        '</div></div>';
+
+      html += '<div class="flavor">' + esc((s && s.flavor) || '아직 도감 설명이 없어요.') + '</div>';
+
+      if (evo && (evo.track || evo.ids) && (evo.track || evo.ids).length > 1) html += '<div class="evo-track" id="evoTrack"></div>';
+
+      html += '<div class="stats-list">';
+      p.stats.forEach(function (st) {
+        var label = STAT_KO[st.name] || st.name;
+        var pct = clamp(Math.round(st.value * 100 / 180), 3, 100);
+        html += '<div class="stat-row"><span class="sname">' + esc(label) + '</span>' +
+          '<span class="stat-bar"><i style="width:' + pct + '%"></i></span>' +
+          '<span class="sval">' + st.value + '</span></div>';
+      });
+      html += '</div>';
+
+      html += '<div class="moves-wrap"><div class="moves-title">🥊 기술 <span style="font-size:13px;color:#5d5a66;font-weight:400">(눌러서 설명 보기)</span></div><div class="moves" id="movesList"></div><div id="moveDetail"></div></div>';
+
+      var foot = '<button class="btn" type="button" data-close="1">닫기</button>';
+      if (!isPartner) foot = '<button class="btn primary" type="button" data-act="set-partner" data-id="' + p.id + '">⭐ 파트너로 설정</button>' + foot;
+
+      openModal(modalShell('📖 ' + name, html, { wide: true, foot: foot }));
+      paintTypes(document.querySelector('#modalRoot .detail-types'), p.types);
+
+      // 기술 목록
+      var movesEl = $('movesList');
+      if (!p.moves || !p.moves.length) {
+        movesEl.innerHTML = '<div class="empty-note">기술 정보가 없어요.</div>';
+      } else {
+        movesEl.innerHTML = p.moves.map(function (m) {
+          return '<button class="move-btn" type="button" data-act="move" data-move="' + esc(m.name) + '">' +
+            '<span class="mt" style="background:#cbb99d"></span>' +
+            '<span class="tname" style="flex:1;text-align:left">' + esc(korMoveGuess(m.name)) + '</span>' +
+            (m.lv ? '<span style="font-size:11px;color:#8a7f70">Lv.' + m.lv + '</span>' : '') +
+            '</button>';
+        }).join('');
+        fillMoveNames(p.moves.slice(0, 8));
+      }
+
+      // 진화 트랙
+      if (evo && (evo.track || evo.ids) && (evo.track || evo.ids).length > 1) renderEvoTrack(evo);
+    }).catch(function () {
+      openModal(modalShell('📖 포켓몬 도감',
+        '<div class="detail-loading">도감을 불러오지 못했어요.<br>인터넷 연결을 확인하고 다시 열어 주세요.</div>',
+        { foot: '<button class="btn" type="button" data-close="1">닫기</button>' }));
+    });
+  }
+
+  // 기술 이름 영문 → 한글은 API 호출 후 바뀌므로 우선 영문 표기를 정리해 보여준다.
+  function korMoveGuess(name) {
+    return String(name || '').replace(/-/g, ' ');
+  }
+
+  // 앞쪽 기술 몇 개의 한글 이름을 차례로 채워 넣는다.
+  function fillMoveNames(list) {
+    var chain = Promise.resolve();
+    (list || []).forEach(function (m) {
+      chain = chain.then(function () {
+        return getMove(m.name).then(function (mv) {
+          var nodes = document.querySelectorAll('#movesList .move-btn[data-move="' + m.name + '"]');
+          for (var i = 0; i < nodes.length; i++) {
+            var el = nodes[i].querySelector('.tname');
+            if (el) el.textContent = mv.nameKo;
+            var mark = nodes[i].querySelector('.mt');
+            if (mark) mark.style.background = TYPE_COLOR[mv.type] || '#cbb99d';
+          }
+        }).catch(function () { });
+      });
+    });
+  }
+
+  function renderEvoTrack(evo) {
+    var box = $('evoTrack');
+    if (!box) return;
+    var track = evo.track || evo.ids || [];
+    box.innerHTML = '<div class="empty-note" style="width:100%">진화 정보를 불러오는 중...</div>';
+    Promise.all(track.map(function (id) {
+      return Promise.all([
+        getPokemon(id).catch(function () { return null; }),
+        getSpecies(id).catch(function () { return null; })
+      ]);
+    })).then(function (rows) {
+      var html = '';
+      rows.forEach(function (pair, i) {
+        var p = pair[0], s = pair[1];
+        if (!p) return;
+        if (i > 0) html += '<span class="evo-arrow">➜</span>';
+        html += '<div class="evo-stage' + (i === evo.index ? ' on' : '') + '">' +
+          '<img src="' + esc(p.sprite || SPRITE + p.id + '.png') + '" alt="">' +
+          '<span>' + esc((s && s.nameKo) || p.name) + '</span>' +
+          '<span style="color:#8a7f70;font-weight:400">' +
+          (i === 0 ? '시작' : 'Lv.' + (EVO_LEVELS[i - 1] || '-')) + '</span>' +
+          '</div>';
+      });
+      box.innerHTML = html;
+    }).catch(function () { box.innerHTML = ''; });
+  }
+
+  function showMoveDetail(name, btn) {
+    var holder = $('moveDetail');
+    if (!holder) return;
+    holder.innerHTML = '<div class="empty-note">기술을 불러오는 중...</div>';
+    getMove(name).then(function (m) {
+      var color = TYPE_COLOR[m.type] || '#999';
+      holder.innerHTML = '<div class="move-detail">' +
+        '<h4><span class="tbadge" style="background:' + color + ';margin-right:6px">' + esc(TYPE_KO[m.type] || m.type) + '</span>' + esc(m.nameKo) + '</h4>' +
+        '<div class="move-kv">' +
+        '<span>위력 ' + (m.power == null ? '—' : m.power) + '</span>' +
+        '<span>명중 ' + (m.accuracy == null ? '—' : m.accuracy) + '</span>' +
+        '<span>PP ' + (m.pp == null ? '—' : m.pp) + '</span>' +
+        '<span>분류 ' + esc(m.damageClass === 'physical' ? '물리' : m.damageClass === 'special' ? '특수' : '변화') + '</span>' +
+        '</div>' +
+        '<div>' + esc(m.desc || '설명이 없어요.') + '</div>' +
+        '</div>';
+      var buttons = document.querySelectorAll('#movesList .move-btn');
+      for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('on');
+      if (btn) btn.style.boxShadow = '0 0 0 3px #ffd23f inset';
+    }).catch(function () {
+      holder.innerHTML = '<div class="empty-note">기술 정보를 불러오지 못했어요.</div>';
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     10. 포켓몬 박스
+  --------------------------------------------------------------- */
+  var boxSort = 'dex';
+
+  function openBox() {
+    renderBox();
+  }
+
+  function renderBox() {
+    var ids = Object.keys(S.box).map(Number);
+    if (boxSort === 'caught') {
+      ids.sort(function (a, b) { return (S.box[a].caughtAt || 0) - (S.box[b].caughtAt || 0); });
+    } else {
+      ids.sort(function (a, b) { return a - b; });
+    }
+    var total = ids.length;
+    var pages = Math.max(1, Math.ceil(total / 30));
+
+    var cells = '';
+    if (!total) {
+      cells = '<div class="box-empty" style="grid-column:1/-1">아직 잡은 포켓몬이 없어요.<br>몬스터볼을 써서 첫 포켓몬을 잡아 보세요! ⚪</div>';
+    } else {
+      ids.forEach(function (id) {
+        var caught = S.box[id] && S.box[id].caughtAt ? new Date(S.box[id].caughtAt) : null;
+        var label = ((caught ? (caught.getMonth() + 1) + '/' + caught.getDate() : '') || '');
+        cells += '<button class="box-cell' + (id === S.partner.id ? ' on' : '') + '" type="button" data-act="box-open" data-id="' + id + '" title="' + dexNo(id) + '">' +
+          '<span class="bno">' + String(id).padStart(3, '0') + '</span>' +
+          '<img src="' + SPRITE + id + '.png" alt="" loading="lazy">' +
+          '<span class="bname">' + esc(S.box[id].nameKo || ('#' + id)) + '</span>' +
+          '</button>';
+      });
+    }
+
+    var body = '<div class="box-toolbar">' +
+      '<div class="seg">' +
+      '<button type="button" data-act="box-sort" data-sort="dex" class="' + (boxSort === 'dex' ? 'active' : '') + '">도감순</button>' +
+      '<button type="button" data-act="box-sort" data-sort="caught" class="' + (boxSort === 'caught' ? 'active' : '') + '">잡은순</button>' +
+      '</div>' +
+      '<span class="box-count">' + total + ' / ' + MAX_DEX + ' 종류</span>' +
+      '</div>' +
+      '<div class="box-screen"><div class="box-label"><span>BOX 1</span><span>' + total + ' / ' + MAX_DEX + '</span></div>' +
+      '<div class="box-grid">' + cells + '</div></div>' +
+      '<div class="box-actions"><span class="empty-note">포켓몬을 누르면 도감을 볼 수 있어요. 파트너로 바꾸려면 도감에서 설정하세요.</span></div>';
+
+    openModal(modalShell('📦 포켓몬 박스', body, {
+      wide: true,
+      foot: '<button class="btn" type="button" data-close="1">닫기</button>'
+    }));
+    fillBoxNames();
+  }
+
+  // 박스 이름을 한글로 채우기 (캐시/네트워크)
+  function fillBoxNames() {
+    var ids = Object.keys(S.box).map(Number);
+    ids.forEach(function (id) {
+      if (S.box[id].nameKo) return;
+      getSpecies(id).then(function (s) {
+        S.box[id].nameKo = s.nameKo;
+        save();
+        var cell = document.querySelector('.box-cell[data-id="' + id + '"] .bname');
+        if (cell) cell.textContent = s.nameKo;
+      }).catch(function () { });
+    });
+  }
+
+  function setPartner(id) {
+    id = Number(id);
+    if (!id) return;
+    S.partner.id = id;
+    S.box[id] = S.box[id] || { id: id, caughtAt: Date.now(), from: 'pick' };
+    partnerData.id = 0;
+    save();
+    closeModal();
+    refreshPartner(true);
+    renderPartnerStats();
+    toast('⭐ ' + (S.box[id].nameKo || ('No.' + id)) + ' 파트너로 설정!', 'gold');
+  }
+
+  /* ---------------------------------------------------------------
+     11. 포켓몬 뽑기 (가챠)
+  --------------------------------------------------------------- */
+  var catching = false;
+
+  function openGacha() {
+    if (S.progress.balls <= 0) {
+      openModal(modalShell('⚪ 몬스터볼이 없어요',
+        '<div class="gacha-stage">' +
+        '<div class="big-ball" style="filter:grayscale(.6)"></div>' +
+        '<div class="gacha-msg">몬스터볼이 ' + S.progress.balls + '개 있어요</div>' +
+        '<div class="gacha-hint">할 일을 3개 끝내면 몬스터볼 1개!<br>한 루틴을 모두 끝내면 몬스터볼 1개를 더 받아요.</div>' +
+        '</div>',
+        { foot: '<button class="btn" type="button" data-close="1">알겠어요</button>' }));
+      return;
+    }
+    openModal(modalShell('⚪ 포켓몬 뽑기',
+      '<div class="gacha-stage" id="gachaStage">' +
+      '<div class="big-ball shaking" id="gachaBall"></div>' +
+      '<div class="gacha-msg">몬스터볼이 흔들리고 있어요...</div>' +
+      '<div class="gacha-hint">어떤 포켓몬이 나올까요?</div>' +
+      '</div>'));
+    sndBall();
+    setTimeout(function () { startCatch(); }, 900);
+  }
+
+  function pickCatchId() {
+    var pool = [];
+    for (var i = 1; i <= MAX_DEX; i++) if (!S.box[i]) pool.push(i);
+    if (!pool.length) return pickRandomInt(MAX_DEX);
+    return pool[pickRandomInt(pool.length) - 1];
+  }
+
+  function startCatch() {
+    if (catching) return;
+    catching = true;
+    var id = pickCatchId();
+    Promise.all([getPokemon(id), getSpecies(id).catch(function () { return null; })])
+      .then(function (res) {
+        catching = false;
+        var p = res[0], s = res[1];
+        S.progress.balls = Math.max(0, S.progress.balls - 1);
+        var nameKo = (s && s.nameKo) || p.name;
+        S.box[p.id] = { id: p.id, caughtAt: Date.now(), nameKo: nameKo, from: 'gacha' };
+        save();
+        renderPartnerStats();
+        showCatch(p, s, nameKo);
+      })
+      .catch(function () {
+        catching = false;
+        var stage = $('gachaStage');
+        if (stage) {
+          stage.innerHTML = '<div class="gacha-msg">앗, 포켓몬을 부르지 못했어요</div>' +
+            '<div class="gacha-hint">인터넷 연결을 확인하고 다시 시도해 주세요.<br>몬스터볼은 그대로 있어요!</div>';
+        }
+      });
+  }
+
+  function showCatch(p, s, nameKo) {
+    var stage = $('gachaStage');
+    if (!stage) return;
+    var burst = document.createElement('div');
+    burst.className = 'gacha-burst';
+    stage.appendChild(burst);
+    sndCatch();
+    setTimeout(function () {
+      var typeHtml = (p.types || []).map(function (t) {
+        return '<span class="tbadge" style="background:' + (TYPE_COLOR[t] || '#999') + ';font-size:11.5px">' + esc(TYPE_KO[t] || t) + '</span>';
+      }).join(' ');
+      stage.innerHTML = '<div class="catch-card">' +
+        '<img class="catch-sprite" src="' + esc(p.sprite || p.artwork) + '" alt="' + esc(nameKo) + '">' +
+        '<div class="catch-name">' + esc(nameKo) + ' 획득!</div>' +
+        '<div class="catch-sub">' + dexNo(p.id) + ' · ' + esc((s && s.genusKo) || '포켓몬') + '</div>' +
+        '<div class="detail-types" style="justify-content:center">' + typeHtml + '</div>' +
+        '<div class="catch-sub" style="margin-top:8px">📦 포켓몬 박스에 넣었어요</div>' +
+        '</div>' +
+        '<div class="modal-foot" style="padding:10px 0 0">' +
+        '<button class="btn" type="button" data-act="gacha-again">또 뽑기</button>' +
+        '<button class="btn primary" type="button" data-act="set-partner" data-id="' + p.id + '">⭐ 파트너로</button>' +
+        '<button class="btn" type="button" data-close="1">확인</button>' +
+        '</div>';
+    }, 520);
+  }
+
+  /* ---------------------------------------------------------------
+     12. 스타터 선택
+  --------------------------------------------------------------- */
+  function openStarter() {
+    openModal(modalShell('🎉 첫 파트너 포켓몬',
+      '<div class="detail-loading"><div class="spinner"></div>포켓몬을 불러오는 중이에요...</div>', {}), false);
+    Promise.all(STARTERS.map(function (st) {
+      return Promise.all([
+        getPokemon(st.id).catch(function () { return null; }),
+        getSpecies(st.id).catch(function () { return null; })
+      ]);
+    })).then(function (rows) {
+      var grid = rows.map(function (pair) {
+        var p = pair[0], s = pair[1];
+        if (!p) return '';
+        var name = (s && s.nameKo) || p.name;
+        return '<button class="starter-pick" type="button" data-act="starter" data-id="' + p.id + '">' +
+          '<img src="' + esc(p.sprite || p.artwork) + '" alt="' + esc(name) + '">' +
+          '<strong>' + esc(name) + '</strong>' +
+          '<small>' + esc((s && s.genusKo) || '포켓몬') + '</small></button>';
+      }).join('');
+      openModal(modalShell('🎉 첫 파트너 포켓몬',
+        '<div class="starter-intro"><h3>건률이의 첫 파트너를 골라 주세요!</h3>' +
+        '<p>함께 아침을 시작할 포켓몬이에요. 할 일을 끝낼수록 함께 자라요.</p></div>' +
+        '<div class="starter-grid">' + grid + '</div>', {}), false);
+    }).catch(function () {
+      openModal(modalShell('🎉 첫 파트너 포켓몬',
+        '<div class="detail-loading">포켓몬을 불러오지 못했어요.<br>부모 설정에서 파트너를 다시 고를 수 있어요.</div>' +
+        '<div class="modal-foot"><button class="btn" type="button" data-act="starter-skip">피카츄로 시작하기</button></div>', {}), false);
+    });
+  }
+
+  function pickStarter(id) {
+    S.partner.id = Number(id);
+    S.box[id] = { id: Number(id), caughtAt: Date.now(), from: 'starter' };
+    S.starterPicked = true;
+    partnerData.id = 0;
+    save();
+    closeModal();
+    refreshPartner(true);
+    renderPartnerStats();
+    toast('🎉 파트너가 정해졌어요!', 'gold');
+    sndFanfare();
+  }
+
+  /* ---------------------------------------------------------------
+     13. 가족 캘린더
+  --------------------------------------------------------------- */
+  var calCursor = { y: new Date().getFullYear(), m: new Date().getMonth() };
+  var calFilter = 'all';
+  var selectedDate = todayKey();
+
+  function allEvents() {
+    var local = (S.events || []).map(function (e) { return e; });
+    var seen = {};
+    local.forEach(function (e) { seen[e.date + '|' + e.title + '|' + e.member] = true; });
+    var synced = (S.synced || []).filter(function (e) {
+      return !seen[e.date + '|' + e.title + '|' + e.member];
+    });
+    return local.concat(synced);
+  }
+
+  function eventsOn(dateStr) {
+    return allEvents().filter(function (e) {
+      if (e.date !== dateStr) return false;
+      if (calFilter !== 'all' && e.member !== calFilter) return false;
+      return true;
+    }).sort(function (a, b) {
+      var at = a.time || '99:99', bt = b.time || '99:99';
+      return at < bt ? -1 : at > bt ? 1 : 0;
+    });
+  }
+
+  function renderCalendar() {
+    var y = calCursor.y, m = calCursor.m;
+    $('calMonth').textContent = y + '년 ' + (m + 1) + '월';
+    var first = new Date(y, m, 1, 12, 0, 0);
+    var startOffset = first.getDay();
+    var start = new Date(y, m, 1 - startOffset, 12, 0, 0);
+    var today = todayKey();
+    var html = '';
+    for (var i = 0; i < 42; i++) {
+      var d = addDays(start, i);
+      var key = dateKey(d);
+      var inMonth = d.getMonth() === m;
+      var dow = d.getDay();
+      var cls = 'cday';
+      if (!inMonth) cls += ' other';
+      if (dow === 0) cls += ' sun';
+      if (dow === 6) cls += ' sat';
+      if (key === today) cls += ' today';
+      if (key === selectedDate) cls += ' selected';
+      var evs = eventsOn(key);
+      var dots = evs.slice(0, 4).map(function (e) {
+        var c = MEMBERS[e.member] ? MEMBERS[e.member].color : '#f0a92c';
+        return '<span class="evdot" style="background:' + c + '"></span>';
+      }).join('');
+      html += '<button type="button" class="' + cls + '" data-date="' + key + '">' +
+        '<span>' + d.getDate() + '</span><span class="cdots">' + dots + '</span></button>';
+    }
+    $('calGrid').innerHTML = html;
+  }
+
+  function renderDayPanel() {
+    var d = parseDay(selectedDate);
+    var isToday = selectedDate === todayKey();
+    $('dayTitle').textContent = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' +
+      WEEKDAYS[d.getDay()] + ')' + (isToday ? ' · 오늘' : '');
+    var evs = eventsOn(selectedDate);
+    var wrap = $('dayEvents');
+    if (!evs.length) {
+      wrap.innerHTML = '<div class="empty-note">이 날은 일정이 없어요. 아래에서 추가해 보세요 😊</div>';
+    } else {
+      wrap.innerHTML = evs.map(function (e) {
+        var mem = MEMBERS[e.member] || MEMBERS.family;
+        var canDelete = !String(e.id || '').startsWith('sync-') && e.source !== 'calendar.json';
+        return '<div class="ev-item">' +
+          '<span class="evbar" style="background:' + mem.color + '"></span>' +
+          '<span class="evtxt">' + (e.time ? '<b>' + esc(e.time) + '</b> ' : '') + esc(e.title) + '</span>' +
+          '<span class="evwho" style="background:' + mem.color + '22">' + esc(mem.name) + '</span>' +
+          (canDelete ? '<button class="ev-del" type="button" data-act="ev-del" data-id="' + esc(e.id) + '" aria-label="일정 삭제">🗑</button>' : '') +
+          '</div>';
+      }).join('');
+    }
+    var note = $('icsNote');
+    if (S.synced && S.synced.length) {
+      note.style.display = 'block';
+      note.textContent = '🔄 가족 캘린더 파일에서 ' + S.synced.length + '개 일정을 함께 보여 주고 있어요.';
+    } else {
+      note.style.display = 'none';
+    }
+  }
+
+  function addEvent(title, member, dateStr, time) {
+    title = cleanText(title);
+    if (!title) return false;
+    var date = dateStr || selectedDate;
+    var dup = (S.events || []).some(function (e) {
+      return e.date === date && e.title === title && e.member === member;
+    });
+    if (dup) return false;
+    S.events.push({
+      id: uid('e'),
+      date: date,
+      title: title,
+      member: member || 'family',
+      time: time || '',
+      source: 'local'
+    });
+    save();
+    renderCalendar();
+    renderDayPanel();
+    return true;
+  }
+
+  function deleteEvent(id) {
+    var before = S.events.length;
+    S.events = S.events.filter(function (e) { return e.id !== id; });
+    if (S.events.length !== before) {
+      save();
+      renderCalendar();
+      renderDayPanel();
+      toast('일정을 지웠어요');
+    }
+  }
+
+  /* ---- .ics 가져오기 ---- */
+  function unescapeICS(v) {
+    return String(v || '')
+      .replace(/\\n/gi, ' ')
+      .replace(/\\N/g, ' ')
+      .replace(/\\,/g, ',')
+      .replace(/\\;/g, ';')
+      .replace(/\\\\/g, '\\')
+      .trim();
+  }
+
+  function parseICSDate(val, rawKey) {
+    var v = String(val || '').trim();
+    var m = /^(\d{4})(\d{2})(\d{2})$/.exec(v);
+    if (m) return { date: m[1] + '-' + m[2] + '-' + m[3], time: '' };
+    m = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/.exec(v);
+    if (m) {
+      var Y = +m[1], Mo = +m[2], D = +m[3], h = +m[4], mi = +m[5], se = +(m[6] || 0);
+      var d;
+      if (m[7]) d = new Date(Date.UTC(Y, Mo - 1, D, h, mi, se));
+      else d = new Date(Y, Mo - 1, D, h, mi, se);
+      return {
+        date: dateKey(d),
+        time: pad2(d.getHours()) + ':' + pad2(d.getMinutes())
+      };
+    }
+    return null;
+  }
+
+  function parseICS(text) {
+    var raw = String(text || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    var lines = raw.split('\n');
+    var unfolded = [];
+    for (var i = 0; i < lines.length; i++) {
+      var ln = lines[i];
+      if ((ln.charAt(0) === ' ' || ln.charAt(0) === '\t') && unfolded.length) {
+        unfolded[unfolded.length - 1] += ln.slice(1);
+      } else {
+        unfolded.push(ln);
+      }
+    }
+    var events = [];
+    var cur = null;
+    for (var j = 0; j < unfolded.length; j++) {
+      var line = unfolded[j];
+      if (line === 'BEGIN:VEVENT') { cur = { summary: '', dtstart: null, dtend: null }; continue; }
+      if (line === 'END:VEVENT') {
+        if (cur && cur.summary && cur.dtstart) events.push(cur);
+        cur = null;
+        continue;
+      }
+      if (!cur) continue;
+      var idx = line.indexOf(':');
+      if (idx < 0) continue;
+      var rawKey = line.slice(0, idx);
+      var val = line.slice(idx + 1);
+      var key = rawKey.split(';')[0].toUpperCase();
+      if (key === 'SUMMARY') cur.summary = unescapeICS(val);
+      else if (key === 'DTSTART') cur.dtstart = parseICSDate(val, rawKey);
+      else if (key === 'DTEND') cur.dtend = parseICSDate(val, rawKey);
+    }
+    return events;
+  }
+
+  function importICS(text, member) {
+    var evs = parseICS(text);
+    var added = 0, skipped = 0;
+    evs.forEach(function (e) {
+      if (!e.dtstart) { skipped++; return; }
+      var startD = parseDay(e.dtstart.date);
+      var days = [e.dtstart.date];
+      if (e.dtend && e.dtend.date) {
+        var endD = parseDay(e.dtend.date);
+        var diff = Math.round((endD.getTime() - startD.getTime()) / 86400000);
+        var span = e.dtend.time ? diff : diff - 1;
+        if (span > 0) {
+          for (var i = 1; i <= Math.min(span, 14); i++) days.push(dateKey(addDays(startD, i)));
+        }
+      }
+      days.forEach(function (ds, di) {
+        var ok = addEvent(e.summary, member, ds, di === 0 ? (e.dtstart.time || '') : '');
+        if (ok) added++; else skipped++;
+      });
+    });
+    return { added: added, skipped: skipped };
+  }
+
+  function openICSImport() {
+    var opts = ['geonryul', 'mom', 'dad', 'family'].map(function (k) {
+      return '<option value="' + k + '">' + MEMBERS[k].name + '</option>';
+    }).join('');
+    var body = '<div class="set-group">' +
+      '<h4>📅 일정(.ics) 불러오기</h4>' +
+      '<p class="empty-note" style="padding:0 0 8px">네이버 캘린더·구글 캘린더·애플 캘린더에서 내보낸 <b>.ics</b> 파일을 고르면, 그 안의 일정(제목·시작일·종료일)을 이 달력에 추가해요.</p>' +
+      '<div class="field"><label>누구 일정?</label><select id="icsMember">' + opts + '</select></div>' +
+      '<div class="field"><label>파일</label><input type="file" id="icsFilePick" accept=".ics,text/calendar"></div>' +
+      '<div class="empty-note" id="icsResult" style="display:none"></div>' +
+      '</div>' +
+      '<div class="set-group"><h4>💡 내보내는 방법</h4>' +
+      '<div class="redeem-log">· 네이버 캘린더(PC): 캘린더 설정 → 내 캘린더 관리 → <b>내보내기(.ics)</b><br>' +
+      '· 구글 캘린더: 설정 → 캘린더 내보내기 → .ics 파일 다운로드<br>' +
+      '· 애플 캘린더(iPhone): 캘린더 앱에서 공유 → .ics로 내보내기<br>같은 일정이 이미 있으면 두 번 들어가지 않아요.</div></div>';
+    openModal(modalShell('📅 일정(.ics) 불러오기', body, {
+      foot: '<button class="btn" type="button" data-close="1">닫기</button>'
+    }));
+    var pick = $('icsFilePick');
+    if (pick) {
+      pick.addEventListener('change', function () {
+        var f = pick.files && pick.files[0];
+        if (!f) return;
+        var member = $('icsMember').value || 'family';
+        var reader = new FileReader();
+        reader.onload = function () {
+          var r = importICS(String(reader.result || ''), member);
+          var out = $('icsResult');
+          if (out) {
+            out.style.display = 'block';
+            out.textContent = '✅ ' + r.added + '개 일정을 추가했어요.' + (r.skipped ? ' (' + r.skipped + '개는 이미 있거나 날짜가 없어 건너뜀)' : '');
+          }
+          toast('📅 일정 ' + r.added + '개를 가져왔어요', 'gold');
+        };
+        reader.onerror = function () {
+          var out = $('icsResult');
+          if (out) { out.style.display = 'block'; out.textContent = '파일을 읽지 못했어요. 다시 시도해 주세요.'; }
+        };
+        reader.readAsText(f, 'utf-8');
+      });
+    }
+  }
+
+  /* ---- calendar.json 자동 동기화 ---- */
+  function syncCalendarFile() {
+    var url = './calendar.json?t=' + Date.now();
+    return fetch(url, { cache: 'no-store' }).then(function (res) {
+      if (!res.ok) return null; // 404 등은 조용히 무시
+      return res.json();
+    }).then(function (data) {
+      if (!Array.isArray(data)) return;
+      var cleaned = [];
+      data.forEach(function (it, idx) {
+        if (!it || !it.title) return;
+        var dt = String(it.date || '').slice(0, 10);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(dt)) return;
+        cleaned.push({
+          id: 'sync-' + (it.id || idx),
+          date: dt,
+          title: cleanText(it.title),
+          member: MEMBERS[it.member] ? it.member : 'family',
+          time: it.time ? String(it.time).slice(0, 5) : '',
+          source: 'calendar.json'
+        });
+      });
+      S.synced = cleaned;
+      save();
+      renderCalendar();
+      renderDayPanel();
+    }).catch(function () {
+      /* 파일이 없거나 file:// 에서 열린 경우 — 그냥 넘어감 */
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     14. 보상 상점
+  --------------------------------------------------------------- */
+  function openShop() {
+    var body = '<div class="field" style="justify-content:space-between">' +
+      '<span class="star-pill">⭐ ' + S.progress.stars + '개</span>' +
+      '<span class="empty-note">별을 모아 실제 보상으로 바꿔요!</span></div>';
+    body += '<div class="shop-grid">';
+    S.rewards.forEach(function (r) {
+      var can = S.progress.stars >= r.cost;
+      body += '<div class="shop-item' + (can ? '' : ' locked') + '">' +
+        '<div class="semoji">' + esc(r.emoji || '🎁') + '</div>' +
+        '<div class="sname">' + esc(r.name) + '</div>' +
+        '<div class="scost">⭐ ' + r.cost + '개</div>' +
+        '<button class="btn sm ' + (can ? 'green' : '') + '" type="button" data-act="redeem" data-id="' + esc(r.id) + '"' +
+        (can ? '' : ' disabled') + '>' + (can ? '교환하기' : '별이 모자라요') + '</button>' +
+        '</div>';
+    });
+    body += '</div>';
+    if (S.redeemed.length) {
+      body += '<div class="set-group" style="margin-top:12px"><h4>🎫 교환 기록</h4><div class="redeem-log">' +
+        S.redeemed.slice(-6).reverse().map(function (r) {
+          var d = new Date(r.at);
+          return esc((d.getMonth() + 1) + '/' + d.getDate()) + ' · ' + esc(r.name) + ' (⭐' + r.cost + ')';
+        }).join('<br>') + '</div></div>';
+    }
+    openModal(modalShell('🎁 보상 상점', body, {
+      foot: '<button class="btn" type="button" data-act="edit-rewards">보상 편집</button>' +
+        '<button class="btn" type="button" data-close="1">닫기</button>'
+    }));
+  }
+
+  function redeem(id) {
+    var r = null;
+    S.rewards.forEach(function (x) { if (x.id === id) r = x; });
+    if (!r) return;
+    if (S.progress.stars < r.cost) { toast('별이 모자라요 ⭐'); return; }
+    var body = '<div style="text-align:center;padding:8px 0 4px">' +
+      '<div style="font-size:44px">' + esc(r.emoji || '🎁') + '</div>' +
+      '<h4 style="font-size:20px;margin:6px 0">' + esc(r.name) + '</h4>' +
+      '<p class="empty-note">⭐ ' + r.cost + '개를 쓸까요?<br>남는 별: ' + (S.progress.stars - r.cost) + '개</p></div>';
+    openModal(modalShell('보상 교환', body, {
+      foot: '<button class="btn" type="button" data-close="1">취소</button>' +
+        '<button class="btn green" type="button" data-act="redeem-yes" data-id="' + esc(r.id) + '">교환하기</button>'
+    }));
+  }
+
+  function redeemYes(id) {
+    var r = null;
+    S.rewards.forEach(function (x) { if (x.id === id) r = x; });
+    if (!r || S.progress.stars < r.cost) return;
+    S.progress.stars -= r.cost;
+    S.redeemed.push({ name: r.name, cost: r.cost, at: Date.now() });
+    if (S.redeemed.length > 40) S.redeemed = S.redeemed.slice(-40);
+    save();
+    renderPartnerStats();
+    sndFanfare();
+    openModal(modalShell('🎉 교환 완료!',
+      '<div style="text-align:center;padding:10px 0">' +
+      '<div style="font-size:52px">🎫</div>' +
+      '<h4 style="font-size:20px;margin:8px 0">' + esc(r.name) + '</h4>' +
+      '<p class="empty-note">부모님께 이 화면을 보여 주세요!<br>남은 별: ⭐ ' + S.progress.stars + '개</p></div>',
+      { foot: '<button class="btn primary" type="button" data-close="1">확인</button>' }));
+  }
+
+  /* ---------------------------------------------------------------
+     15. 부모 설정
+  --------------------------------------------------------------- */
+  var setTab = 'basic';
+  var SET_TABS = [
+    { id: 'basic', label: '🏠 기본' },
+    { id: 'tasks', label: '📋 할 일 관리' },
+    { id: 'rewards', label: '🎁 보상' },
+    { id: 'data', label: '💾 데이터' }
+  ];
+
+  function settingsBody() {
+    var html = '<div class="tabs">';
+    SET_TABS.forEach(function (t) {
+      html += '<button class="tab' + (setTab === t.id ? ' active' : '') + '" type="button" data-act="tab" data-tab="' + t.id + '">' + t.label + '</button>';
+    });
+    html += '</div>';
+
+    if (setTab === 'basic') html += basicTab();
+    else if (setTab === 'tasks') html += tasksTab();
+    else if (setTab === 'rewards') html += rewardsTab();
+    else html += dataTab();
+    return html;
+  }
+
+  function basicTab() {
+    var loc = S.settings.location;
+    var cityOpts = CITIES.map(function (c) {
+      var sel = (c.name === loc.name && Math.abs(c.lat - loc.lat) < 0.0005 && Math.abs(c.lon - loc.lon) < 0.0005) ? ' selected' : '';
+      return '<option value="' + c.name + '"' + sel + '>' + esc(c.name) + '</option>';
+    }).join('');
+    return '<div class="set-group"><h4>🏷️ 대시보드</h4>' +
+      '<div class="field"><label>제목</label><input type="text" id="setTitle" maxlength="40" value="' + esc(S.settings.title) + '"></div>' +
+      '<div class="field"><label>효과음</label><div class="switch ' + (S.settings.sound ? 'on' : '') + '" id="setSound" role="switch" aria-checked="' + (S.settings.sound ? 'true' : 'false') + '"></div>' +
+      '<span class="hint">할 일 완료·레벨업·뽑기 효과음을 켜고 꺼요.</span></div>' +
+      '</div>' +
+
+      '<div class="set-group"><h4>🌤️ 날씨 지역</h4>' +
+      '<div class="field"><label>도시</label><select id="setCity">' + cityOpts + '<option value="custom"' + (CITIES.some(function (c) { return c.name === loc.name; }) ? '' : ' selected') + '>직접 입력</option></select></div>' +
+      '<div class="field"><label>이름</label><input type="text" id="setLocName" maxlength="20" value="' + esc(loc.name) + '"></div>' +
+      '<div class="field"><label>위도</label><input type="number" step="0.0001" id="setLat" value="' + loc.lat + '"></div>' +
+      '<div class="field"><label>경도</label><input type="number" step="0.0001" id="setLon" value="' + loc.lon + '"></div>' +
+      '<span class="hint">기본값은 서울 상도동이에요. 날씨는 Open-Meteo에서 가져와요.</span></div>' +
+
+      '<div class="set-group"><h4>⭐ 파트너</h4>' +
+      '<div class="field"><label>현재 파트너</label><span class="star-pill">' +
+      esc((partnerData.species && partnerData.species.nameKo) || ('No.' + S.partner.id)) + ' · Lv.' + S.progress.level + '</span></div>' +
+      '<div class="row-btns"><button class="btn" type="button" data-act="restart-starter">첫 파트너 다시 고르기</button>' +
+      '<button class="btn" type="button" data-act="open-box">포켓몬 박스 열기</button></div>' +
+      '<span class="hint">레벨과 XP는 파트너를 바꿔도 그대로 이어져요.</span></div>' +
+
+      '<div class="row-btns"><button class="btn primary" type="button" data-act="save-basic">저장하기</button></div>';
+  }
+
+  function tasksTab() {
+    var html = '<div class="set-group"><h4>📋 루틴과 할 일</h4>' +
+      '<div class="empty-note" style="padding:0 0 8px">이름과 내용을 고치고, 순서를 바꾸고, 지우고, 새로 추가할 수 있어요.</div>' +
+      '<div class="task-edit-list">';
+    S.sections.forEach(function (sec) {
+      html += '<div class="te-sec" data-sec="' + esc(sec.id) + '">' +
+        '<div class="te-head">' +
+        '<input type="text" class="sec-name-input" data-sec="' + esc(sec.id) + '" value="' + esc(sec.name) + '" maxlength="20">' +
+        '<button class="mini-btn" type="button" data-act="sec-up" data-sec="' + esc(sec.id) + '" aria-label="위로">↑</button>' +
+        '<button class="mini-btn" type="button" data-act="sec-down" data-sec="' + esc(sec.id) + '" aria-label="아래로">↓</button>' +
+        '<button class="mini-btn" type="button" data-act="sec-del" data-sec="' + esc(sec.id) + '" aria-label="루틴 삭제">🗑</button>' +
+        '</div>';
+      sec.tasks.forEach(function (t) {
+        html += '<div class="te-row" data-sec="' + esc(sec.id) + '" data-task="' + esc(t.id) + '">' +
+          '<input type="text" class="emo task-emo" value="' + esc(t.emoji || '') + '" maxlength="4" aria-label="이모지">' +
+          '<input type="text" class="task-text" value="' + esc(t.text) + '" maxlength="40" aria-label="할 일">' +
+          '<button class="mini-btn" type="button" data-act="task-up" data-sec="' + esc(sec.id) + '" data-task="' + esc(t.id) + '">↑</button>' +
+          '<button class="mini-btn" type="button" data-act="task-down" data-sec="' + esc(sec.id) + '" data-task="' + esc(t.id) + '">↓</button>' +
+          '<button class="mini-btn" type="button" data-act="task-del" data-sec="' + esc(sec.id) + '" data-task="' + esc(t.id) + '">🗑</button>' +
+          '</div>';
+      });
+      html += '<button class="btn sm te-add" type="button" data-act="task-add" data-sec="' + esc(sec.id) + '">+ 할 일 추가</button>';
+      html += '</div>';
+    });
+    html += '</div><div class="row-btns" style="margin-top:10px">' +
+      '<button class="btn" type="button" data-act="sec-add">+ 루틴 추가</button>' +
+      '</div></div>';
+    html += '<div class="set-group"><h4>🔄 오늘 상태</h4><div class="row-btns">' +
+      '<button class="btn warn" type="button" data-act="reset-today">오늘 완료 표시 초기화</button>' +
+      '<button class="btn" type="button" data-act="close">닫기</button>' +
+      '</div><span class="hint">XP·별·잡은 포켓몬·일정은 그대로 남아요. 완료 표시만 지워져요.</span></div>';
+    return html;
+  }
+
+  function rewardsTab() {
+    var html = '<div class="set-group"><h4>🎁 보상 상점</h4>' +
+      '<div class="field" style="justify-content:space-between"><span class="star-pill">⭐ ' + S.progress.stars + '개</span>' +
+      '<button class="btn sm" type="button" data-act="open-shop">아이 화면으로 보기</button></div>' +
+      '<div class="empty-note" style="padding:0 0 6px">이름과 필요한 별 개수를 고쳐 주세요.</div>' +
+      '<div class="reward-list">';
+    S.rewards.forEach(function (r) {
+      html += '<div class="reward-row" data-id="' + esc(r.id) + '">' +
+        '<span class="remoji">' + esc(r.emoji || '🎁') + '</span>' +
+        '<input class="rname-input" type="text" data-field="name" value="' + esc(r.name) + '" maxlength="30">' +
+        '<span class="rcost">⭐<input class="rcost-input" type="number" min="1" max="999" data-field="cost" value="' + r.cost + '"></span>' +
+        '<button class="mini-btn" type="button" data-act="reward-del" data-id="' + esc(r.id) + '">🗑</button>' +
+        '</div>';
+    });
+    html += '</div><button class="btn sm te-add" type="button" data-act="reward-add">+ 보상 추가</button></div>';
+    if (S.redeemed.length) {
+      html += '<div class="set-group"><h4>🎫 교환 기록</h4><div class="redeem-log">' +
+        S.redeemed.slice(-10).reverse().map(function (r) {
+          var d = new Date(r.at);
+          return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes()) +
+            ' · ' + esc(r.name) + ' (⭐' + r.cost + ')';
+        }).join('<br>') + '</div>' +
+        '<div class="row-btns" style="margin-top:8px"><button class="btn sm warn" type="button" data-act="clear-redeemed">기록 지우기</button></div></div>';
+    }
+    return html;
+  }
+
+  function dataTab() {
+    return '<div class="set-group"><h4>💾 백업 · 옮기기</h4>' +
+      '<div class="empty-note" style="padding:0 0 8px">JSON 파일로 내보내면 다른 기기(태블릿↔웹)에서 그대로 불러올 수 있어요.</div>' +
+      '<div class="row-btns"><button class="btn primary" type="button" data-act="export">JSON 내보내기</button>' +
+      '<button class="btn" type="button" data-act="import">JSON 불러오기</button></div>' +
+      '<input type="file" id="jsonImportInput" accept=".json,application/json" class="hide">' +
+      '</div>' +
+      '<div class="set-group"><h4>📅 가족 캘린더 가져오기</h4>' +
+      '<div class="empty-note" style="padding:0 0 8px">네이버·구글·애플 캘린더에서 내보낸 .ics 파일을 불러올 수 있어요.</div>' +
+      '<div class="row-btns"><button class="btn" type="button" data-act="ics">📅 일정(.ics) 불러오기</button></div></div>' +
+      '<div class="set-group"><h4>📊 기록</h4><div class="redeem-log">' +
+      '· 할 일 완료: ' + doneCountAll() + '개 (오늘)<br>' +
+      '· 레벨: Lv.' + S.progress.level + ' · XP ' + S.progress.xp + '/' + xpNeed(S.progress.level) + '<br>' +
+      '· 별: ⭐' + S.progress.stars + ' · 몬스터볼: ⚪' + S.progress.balls + '<br>' +
+      '· 잡은 포켓몬: ' + Object.keys(S.box).length + '종류<br>' +
+      '· 연속 기록: 🔥' + (S.progress.streak || 0) + '일<br>' +
+      '· 일정: ' + S.events.length + '개 (직접 추가)' + (S.synced.length ? ' + ' + S.synced.length + '개 (불러옴)' : '') +
+      '</div></div>' +
+      '<div class="set-group"><h4>⚠️ 초기화</h4>' +
+      '<div class="row-btns"><button class="btn warn" type="button" data-act="reset-all">모두 처음으로</button></div>' +
+      '<span class="hint">XP·별·포켓몬·일정이 모두 지워져요. 필요하면 먼저 JSON으로 백업하세요.</span></div>';
+  }
+
+  function openSettings(tab) {
+    if (tab) setTab = tab;
+    openModal(modalShell('⚙️ 부모 설정', settingsBody(), {
+      wide: true,
+      foot: '<button class="btn" type="button" data-close="1">닫기</button>'
+    }));
+  }
+
+  function rerenderSettings() {
+    var body = document.querySelector('#modalRoot .modal-body');
+    if (!body) return;
+    body.innerHTML = settingsBody();
+  }
+
+  /* 이동 도우미 */
+  function moveItem(arr, index, dir) {
+    var j = index + dir;
+    if (j < 0 || j >= arr.length) return false;
+    var tmp = arr[index];
+    arr[index] = arr[j];
+    arr[j] = tmp;
+    return true;
+  }
+
+  /* ---------------------------------------------------------------
+     16. 데이터 내보내기 / 불러오기
+  --------------------------------------------------------------- */
+  function exportJSON() {
+    var data = JSON.parse(JSON.stringify(S));
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var d = new Date();
+    a.href = url;
+    a.download = '건률네-포켓몬-대시보드-' + dateKey(d) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      if (a.parentNode) a.parentNode.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 800);
+    toast('💾 JSON 파일로 내보냈어요');
+  }
+
+  function importJSONFile(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var data = null;
+      try { data = JSON.parse(String(reader.result || '')); } catch (e) { data = null; }
+      if (!data || !Array.isArray(data.sections)) {
+        toast('파일을 읽지 못했어요. 백업 파일이 맞는지 확인해 주세요.');
+        return;
+      }
+      if (!window.confirm('지금 화면의 내용을 불러온 파일로 바꿀까요?\n(현재 내용은 사라져요)')) return;
+      writeJSON(STORAGE_KEY, data);
+      S = loadState();
+      partnerData = { id: 0, pokemon: null, species: null, evo: null };
+      closeModal();
+      renderAll();
+      toast('✅ 데이터를 불러왔어요', 'gold');
+    };
+    reader.readAsText(file, 'utf-8');
+  }
+
+  /* ---------------------------------------------------------------
+     17. 토스트 · 헤더
+  --------------------------------------------------------------- */
+  function toast(msg, kind) {
+    var wrap = $('toastWrap');
+    if (!wrap) return;
+    var el = document.createElement('div');
+    el.className = 'toast' + (kind === 'gold' ? ' gold' : '');
+    el.textContent = msg;
+    wrap.appendChild(el);
+    setTimeout(function () {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }, 2700);
+  }
+
+  function flushHeader() {
+    $('dashTitle').textContent = S.settings.title;
+    document.title = S.settings.title;
+    updateSoundBtn();
+  }
+
+  function updateSoundBtn() {
+    var b = $('btnSound');
+    b.textContent = S.settings.sound ? '🔊 소리' : '🔇 소리';
+    b.classList.toggle('on', !!S.settings.sound);
+  }
+
+  /* ---------------------------------------------------------------
+     18. 오늘 초기화 / 자정 리셋
+  --------------------------------------------------------------- */
+  function resetToday(silent) {
+    var t = todayKey();
+    S.done = { date: t, ids: {} };
+    S.progress.date = t;
+    S.progress.ballsAwardedToday = 0;
+    S.progress.sectionsToday = [];
+    save();
+    renderTasks();
+    paintPartnerProgress();
+    renderPartnerStats();
+    if (!silent) toast('오늘 완료 표시를 초기화했어요');
+  }
+
+  function checkRollover() {
+    var t = todayKey();
+    if (S.progress.date !== t) {
+      resetToday(true);
+      // 연속 기록: 어제 완료했으면 유지, 아니면 0
+      var y = new Date(); y.setDate(y.getDate() - 1);
+      if (S.progress.lastCompleteDate && S.progress.lastCompleteDate !== dateKey(y) && S.progress.lastCompleteDate !== t) {
+        S.progress.streak = 0;
+      }
+      save();
+      renderPartnerStats();
+      renderCalendar();
+      renderDayPanel();
+      loadWeather();
+      toast('🌅 새로운 하루! 오늘의 할 일이 시작됐어요');
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     19. 전체 렌더 & 이벤트 연결
+  --------------------------------------------------------------- */
+  function renderAll() {
+    flushHeader();
+    renderTasks();
+    renderPartnerStats();
+    paintPartnerProgress();
+    renderCalendar();
+    renderDayPanel();
+    refreshPartner(false);
+  }
+
+  function toggleFocus(on) {
+    var willOn = typeof on === 'boolean' ? on : !document.body.classList.contains('focus-mode');
+    document.body.classList.toggle('focus-mode', willOn);
+    $('btnFocus').textContent = willOn ? '↩︎ 돌아가기' : '🔎 할 일 크게';
+    $('btnFocus').classList.toggle('on', willOn);
+    if (willOn) toast('🔎 할 일 크게 보기');
+  }
+
+  function bindStatic() {
+    $('btnFocus').addEventListener('click', function () { toggleFocus(); });
+    $('btnFocusExit').addEventListener('click', function () { toggleFocus(false); });
+    $('btnSound').addEventListener('click', function () {
+      S.settings.sound = !S.settings.sound;
+      save();
+      updateSoundBtn();
+      if (S.settings.sound) sndCheck();
+    });
+    $('btnGacha').addEventListener('click', function () { openGacha(); });
+    $('btnSettings').addEventListener('click', function () { openSettings('basic'); });
+    $('btnDetail').addEventListener('click', function () {
+      openDetail(partnerData.pokemon ? partnerData.pokemon.id : S.partner.id);
+    });
+    $('btnBox').addEventListener('click', function () { openBox(); });
+    $('btnEvolve').addEventListener('click', function () { doEvolve(); });
+    $('btnRewardShop').addEventListener('click', function () { openShop(); });
+
+    // 할 일 토글
+    $('sections').addEventListener('click', function (ev) {
+      var btn = ev.target.closest ? ev.target.closest('.task') : null;
+      if (!btn) return;
+      toggleTask(btn.getAttribute('data-sec'), btn.getAttribute('data-task'));
+      btn.classList.add('reward-pop');
+    });
+
+    // 달력
+    $('calPrev').addEventListener('click', function () {
+      calCursor.m -= 1;
+      if (calCursor.m < 0) { calCursor.m = 11; calCursor.y -= 1; }
+      renderCalendar();
+    });
+    $('calNext').addEventListener('click', function () {
+      calCursor.m += 1;
+      if (calCursor.m > 11) { calCursor.m = 0; calCursor.y += 1; }
+      renderCalendar();
+    });
+    $('calToday').addEventListener('click', function () {
+      var now = new Date();
+      calCursor.y = now.getFullYear();
+      calCursor.m = now.getMonth();
+      selectedDate = todayKey();
+      renderCalendar();
+      renderDayPanel();
+    });
+    $('calGrid').addEventListener('click', function (ev) {
+      var cell = ev.target.closest ? ev.target.closest('.cday') : null;
+      if (!cell) return;
+      selectedDate = cell.getAttribute('data-date');
+      renderCalendar();
+      renderDayPanel();
+    });
+    $('calFilters').addEventListener('click', function (ev) {
+      var chip = ev.target.closest ? ev.target.closest('.fchip') : null;
+      if (!chip) return;
+      calFilter = chip.getAttribute('data-m');
+      var chips = $('calFilters').querySelectorAll('.fchip');
+      for (var i = 0; i < chips.length; i++) chips[i].classList.toggle('active', chips[i] === chip);
+      renderCalendar();
+      renderDayPanel();
+    });
+    $('evAdd').addEventListener('click', function () {
+      var input = $('evTitle');
+      var member = $('evMember').value;
+      if (!input.value.trim()) { input.focus(); return; }
+      var ok = addEvent(input.value, member, selectedDate, '');
+      if (ok) { input.value = ''; toast('📌 일정을 추가했어요'); }
+      else toast('같은 일정이 이미 있어요');
+    });
+    $('evTitle').addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter') $('evAdd').click();
+    });
+    $('dayEvents').addEventListener('click', function (ev) {
+      var btn = ev.target.closest ? ev.target.closest('[data-act="ev-del"]') : null;
+      if (!btn) return;
+      if (window.confirm('이 일정을 지울까요?')) deleteEvent(btn.getAttribute('data-id'));
+    });
+    $('btnIcs').addEventListener('click', function () { openICSImport(); });
+
+    // 모달 공통
+    $('modalRoot').addEventListener('click', onModalClick);
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') closeModal();
+    });
+  }
+
+  function onModalClick(ev) {
+    var root = $('modalRoot');
+    var t = ev.target;
+
+    if (t === root) {
+      if (root.getAttribute('data-dismissible') !== '0') closeModal();
+      return;
+    }
+    var closeBtn = t.closest ? t.closest('[data-close]') : null;
+    if (closeBtn) { closeModal(); return; }
+
+    var actEl = t.closest ? t.closest('[data-act]') : null;
+    if (!actEl) return;
+    var act = actEl.getAttribute('data-act');
+    var secId = actEl.getAttribute('data-sec');
+    var taskId = actEl.getAttribute('data-task');
+    var id = actEl.getAttribute('data-id');
+
+    if (act === 'move') { showMoveDetail(actEl.getAttribute('data-move'), actEl); return; }
+    if (act === 'set-partner') { setPartner(id); return; }
+    if (act === 'box-open') { openDetail(id); return; }
+    if (act === 'box-sort') {
+      boxSort = actEl.getAttribute('data-sort');
+      renderBox();
+      return;
+    }
+    if (act === 'starter') { pickStarter(id); return; }
+    if (act === 'starter-skip') { pickStarter(25); return; }
+    if (act === 'gacha-again') { openGacha(); return; }
+    if (act === 'redeem') { redeem(id); return; }
+    if (act === 'redeem-yes') { redeemYes(id); return; }
+    if (act === 'edit-rewards') { openSettings('rewards'); return; }
+    if (act === 'open-shop') { openShop(); return; }
+    if (act === 'open-box') { openBox(); return; }
+    if (act === 'restart-starter') { openStarter(); return; }
+    if (act === 'tab') { setTab = actEl.getAttribute('data-tab'); rerenderSettings(); return; }
+
+    if (act === 'save-basic') {
+      var title = $('setTitle').value.trim() || '건률네 포켓몬 대시보드';
+      S.settings.title = title;
+      S.settings.sound = $('setSound').classList.contains('on');
+      var cityName = $('setCity').value;
+      var lat = parseFloat($('setLat').value);
+      var lon = parseFloat($('setLon').value);
+      if (!isFinite(lat) || !isFinite(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+        toast('위도/경도를 확인해 주세요');
+        return;
+      }
+      S.settings.location = {
+        name: $('setLocName').value.trim() || cityName || '우리 동네',
+        lat: lat, lon: lon
+      };
+      save();
+      flushHeader();
+      loadWeather();
+      toast('✅ 설정을 저장했어요');
+      rerenderSettings();
+      return;
+    }
+
+    if (act === 'reset-today') {
+      if (window.confirm('오늘 완료 표시를 모두 지울까요?')) { resetToday(false); rerenderSettings(); }
+      return;
+    }
+    if (act === 'reset-all') {
+      if (!window.confirm('정말 모두 처음으로 돌아갈까요?\nXP·별·포켓몬·일정이 모두 지워져요.')) return;
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) { }
+      S = defaultState();
+      save();
+      partnerData = { id: 0, pokemon: null, species: null, evo: null };
+      closeModal();
+      renderAll();
+      openStarter();
+      return;
+    }
+
+    /* --- 할 일 관리 --- */
+    if (act === 'sec-add') {
+      var sec = { id: uid('sec'), name: '새 루틴', emoji: '📌', weekendOnly: false, tasks: [] };
+      S.sections.push(sec);
+      save(); rerenderSettings(); renderTasks();
+      return;
+    }
+    if (act === 'sec-up' || act === 'sec-down') {
+      var idx = -1;
+      S.sections.forEach(function (s2, i) { if (s2.id === secId) idx = i; });
+      if (idx >= 0 && moveItem(S.sections, idx, act === 'sec-up' ? -1 : 1)) {
+        save(); rerenderSettings(); renderTasks();
+      }
+      return;
+    }
+    if (act === 'sec-del') {
+      if (!window.confirm('이 루틴과 그 안의 할 일을 지울까요?')) return;
+      S.sections = S.sections.filter(function (s2) { return s2.id !== secId; });
+      save(); rerenderSettings(); renderTasks();
+      return;
+    }
+    if (act === 'task-add') {
+      var target = findSection(secId);
+      if (!target) return;
+      target.tasks.push({ id: uid('t'), text: '새 할 일', emoji: '✔️' });
+      save(); rerenderSettings(); renderTasks();
+      return;
+    }
+    if (act === 'task-up' || act === 'task-down') {
+      var ts = findSection(secId);
+      if (!ts) return;
+      var ti = -1;
+      ts.tasks.forEach(function (t2, i) { if (t2.id === taskId) ti = i; });
+      if (ti >= 0 && moveItem(ts.tasks, ti, act === 'task-up' ? -1 : 1)) {
+        save(); rerenderSettings(); renderTasks();
+      }
+      return;
+    }
+    if (act === 'task-del') {
+      var ts2 = findSection(secId);
+      if (!ts2) return;
+      ts2.tasks = ts2.tasks.filter(function (t2) { return t2.id !== taskId; });
+      delete S.done.ids[taskId];
+      save(); rerenderSettings(); renderTasks();
+      return;
+    }
+
+    /* --- 보상 --- */
+    if (act === 'reward-add') {
+      S.rewards.push({ id: uid('r'), name: '새 보상', emoji: '🎁', cost: 5 });
+      save(); rerenderSettings();
+      return;
+    }
+    if (act === 'reward-del') {
+      S.rewards = S.rewards.filter(function (r) { return r.id !== id; });
+      save(); rerenderSettings();
+      return;
+    }
+    if (act === 'clear-redeemed') {
+      S.redeemed = [];
+      save(); rerenderSettings();
+      return;
+    }
+
+    /* --- 데이터 --- */
+    if (act === 'export') { exportJSON(); return; }
+    if (act === 'import') {
+      var inp = $('jsonImportInput');
+      if (inp) inp.click();
+      return;
+    }
+    if (act === 'ics') { openICSImport(); return; }
+    if (act === 'close') { closeModal(); return; }
+  }
+
+  /* 모달 내부 입력 변경(할 일/보상 편집) */
+  function bindModalInputs() {
+    $('modalRoot').addEventListener('change', function (ev) {
+      var t = ev.target;
+      if (!t || !t.getAttribute) return;
+
+      if (t.id === 'jsonImportInput') {
+        var f = t.files && t.files[0];
+        if (f) importJSONFile(f);
+        return;
+      }
+      if (t.classList.contains('sec-name-input')) {
+        var s1 = findSection(t.getAttribute('data-sec'));
+        if (s1) { s1.name = t.value.trim() || '루틴'; save(); renderTasks(); }
+        return;
+      }
+      if (t.classList.contains('task-text') || t.classList.contains('task-emo')) {
+        var row = t.closest('.te-row');
+        if (!row) return;
+        var s2 = findSection(row.getAttribute('data-sec'));
+        if (!s2) return;
+        var tid = row.getAttribute('data-task');
+        s2.tasks.forEach(function (task) {
+          if (task.id !== tid) return;
+          if (t.classList.contains('task-emo')) task.emoji = t.value.trim();
+          else task.text = t.value.trim() || '할 일';
+        });
+        save(); renderTasks();
+        return;
+      }
+      if (t.getAttribute('data-field') === 'name' || t.getAttribute('data-field') === 'cost') {
+        var rrow = t.closest('.reward-row');
+        if (!rrow) return;
+        var rid = rrow.getAttribute('data-id');
+        S.rewards.forEach(function (r) {
+          if (r.id !== rid) return;
+          if (t.getAttribute('data-field') === 'name') r.name = t.value.trim() || '보상';
+          else r.cost = clamp(parseInt(t.value, 10) || 1, 1, 999);
+        });
+        save();
+        return;
+      }
+      if (t.id === 'setCity') {
+        var chosen = null;
+        CITIES.forEach(function (c) { if (c.name === t.value) chosen = c; });
+        if (chosen && $('setLocName') && $('setLat') && $('setLon')) {
+          $('setLocName').value = chosen.name;
+          $('setLat').value = chosen.lat;
+          $('setLon').value = chosen.lon;
+        }
+        return;
+      }
+    });
+
+    // 스위치(효과음) 클릭
+    $('modalRoot').addEventListener('click', function (ev) {
+      var t = ev.target;
+      if (t && t.classList && t.classList.contains('switch')) {
+        t.classList.toggle('on');
+        t.setAttribute('aria-checked', t.classList.contains('on') ? 'true' : 'false');
+      }
+    });
+  }
+
+  /* 이미지가 없을 때 포켓몬볼 그림으로 대체 */
+  function bindImageFallback() {
+    var FALLBACK = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
+      '<circle cx="32" cy="32" r="27" fill="#fff" stroke="#2b2b33" stroke-width="4"/>' +
+      '<path d="M5 32a27 27 0 0 1 54 0z" fill="#e8483c"/>' +
+      '<line x1="5" y1="32" x2="59" y2="32" stroke="#2b2b33" stroke-width="4"/>' +
+      '<circle cx="32" cy="32" r="8" fill="#fff" stroke="#2b2b33" stroke-width="4"/></svg>');
+    document.addEventListener('error', function (ev) {
+      var t = ev.target;
+      if (!t || t.tagName !== 'IMG') return;
+      if (t.getAttribute('data-fb') === '1') return;
+      t.setAttribute('data-fb', '1');
+      t.src = FALLBACK;
+      t.style.imageRendering = 'auto';
+    }, true);
+  }
+
+  /* ---------------------------------------------------------------
+     20. 시작
+  --------------------------------------------------------------- */
+  function init() {
+    S = loadState();
+
+    // 날짜가 바뀌었으면 오늘 상태 초기화
+    if (S.progress.date !== todayKey()) {
+      S.done = { date: todayKey(), ids: {} };
+      S.progress.date = todayKey();
+      S.progress.ballsAwardedToday = 0;
+      S.progress.sectionsToday = [];
+      var y = new Date(); y.setDate(y.getDate() - 1);
+      if (S.progress.lastCompleteDate && S.progress.lastCompleteDate !== dateKey(y) &&
+        S.progress.lastCompleteDate !== todayKey()) {
+        S.progress.streak = 0;
+      }
+      save();
+    }
+
+    $('partnerSprite').src = BLANK;
+    bindStatic();
+    bindModalInputs();
+    bindImageFallback();
+    flushHeader();
+    renderClock();
+    setInterval(renderClock, 1000);
+    renderAll();
+    loadWeather();
+    syncCalendarFile();
+    setInterval(checkRollover, 30000);
+    // 10분마다 가족 캘린더(calendar.json)를 조용히 다시 확인
+    setInterval(syncCalendarFile, 10 * 60 * 1000);
+
+    // 로그인(첫 방문) → 스타터 선택
+    if (!S.starterPicked) {
+      setTimeout(function () { openStarter(); }, 400);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
