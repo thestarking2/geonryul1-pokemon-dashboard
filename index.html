@@ -3166,16 +3166,21 @@ body.focus-mode .focus-exit{display:block}
     return '<div class="dict-note info">🎤 를 누르고 <b>' + esc((entry && entry.word) || '') +
       '</b> 를 큰 소리로 말해 보세요.<br>들은 그대로 비교해서 점수를 알려 줘요!</div>';
   }
+  function dictStopUI() {
+    dictResultArea('<div class="dict-note info">그만 들었어요. 🎤 를 다시 눌러 말해 보세요.</div>' +
+      '<div class="dict-replay" id="dictReplay"></div>');
+    dictShowReplay();
+  }
   function dictStartRecord() {
     var entry = dictState.entry;
     if (!entry || entry.pending) return;
-    if (dictRec.active) { dictStopRec(); return; }
+    if (dictRec.active) { dictStopRec(); dictStopUI(); return; }
     var SR = dictSRAvailable();
     if (!SR) { dictResultArea(dictUnsupportedHtml()); return; }
     dictStopAudio();
     dictRec.active = true;
     dictResultArea('<div class="dict-listen"><span class="dict-pulse"></span><span>듣고 있어요! 큰 소리로 말해 보세요!</span></div>' +
-      '<button class="dict-mic stop" type="button" data-dact="stop">⏹ 그만 듣기</button>');
+      '<div class="dict-note info" style="margin-top:8px">말을 마치면 저절로 멈춰요. 그만하려면 위의 <b>⏹ 그만 듣기</b>를 눌러요.</div>');
     var mic = $('dictMic');
     if (mic) { mic.classList.add('stop'); mic.textContent = '⏹ 그만 듣기'; }
 
@@ -3613,12 +3618,7 @@ body.focus-mode .focus-exit{display:block}
       return;
     }
     if (act === 'record') { dictStartRecord(); return; }
-    if (act === 'stop') {
-      dictStopRec();
-      dictResultArea('<div class="dict-note info">그만 들었어요. 🎤 를 다시 눌러 말해 보세요.</div><div class="dict-replay" id="dictReplay"></div>');
-      dictShowReplay();
-      return;
-    }
+    if (act === 'stop') { dictStopRec(); dictStopUI(); return; }
     if (act === 'replay') { dictPlayReplay(); return; }
   }
   function dictCleanup() {
