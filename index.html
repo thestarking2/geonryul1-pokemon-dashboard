@@ -151,7 +151,7 @@ ul{margin:0;padding:0;list-style:none}
 .wx-state{font-size:14px;opacity:.92;padding:8px 4px}
 
 /* ---------- 보드 ---------- */
-.board{display:grid;grid-template-columns:minmax(330px,410px) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
+.board{display:grid;grid-template-columns:minmax(360px,450px) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
 @media (max-width:1060px){
   .board{grid-template-columns:1fr}
   .task-col{order:1}
@@ -167,19 +167,19 @@ ul{margin:0;padding:0;list-style:none}
   box-shadow:var(--shadow);
   padding:14px 16px 16px;
 }
-.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-.card-title{font-size:19px;display:flex;align-items:center;gap:8px}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:8px 10px;margin-bottom:10px;flex-wrap:wrap}
+.card-title{font-size:19px;display:flex;align-items:center;gap:8px;white-space:nowrap}
 
 /* ---------- 가족 캘린더 ---------- */
-.cal-nav{display:flex;align-items:center;gap:6px}
+.cal-nav{display:flex;align-items:center;gap:5px;margin-left:auto}
 .mini-btn{
-  width:42px;height:42px;border-radius:12px;border:2.5px solid var(--ink);
+  width:40px;height:40px;border-radius:12px;border:2.5px solid var(--ink);
   background:#fff;font-size:18px;font-weight:700;display:grid;place-items:center;
-  box-shadow:0 3px 0 rgba(43,43,51,.3);
+  box-shadow:0 3px 0 rgba(43,43,51,.3);flex:none;
 }
 .mini-btn:active{transform:translateY(2px);box-shadow:none}
-.mini-btn.today-btn{width:auto;padding:0 12px;font-size:15px}
-.cal-month{font-size:18px;font-weight:700;min-width:118px;text-align:center}
+.mini-btn.today-btn{width:auto;padding:0 10px;font-size:15px;white-space:nowrap}
+.cal-month{font-size:17.5px;font-weight:700;min-width:104px;text-align:center;white-space:nowrap}
 
 .cal-filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .fchip{
@@ -258,7 +258,9 @@ ul{margin:0;padding:0;list-style:none}
   background:linear-gradient(180deg,#cfeeae,#b7e493);opacity:.65;
   border-top:3px dashed rgba(43,43,51,.12);
 }
-.partner-top{position:relative;display:flex;gap:14px;align-items:center}
+.partner-top{position:relative;display:flex;gap:14px;align-items:center;flex:1 1 460px;min-width:0}
+.partner-hero{position:relative;display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.partner-side{position:relative;flex:1 1 300px;max-width:370px;margin-left:auto;display:flex;flex-direction:column;gap:10px;justify-content:center}
 .partner-sprite-wrap{
   position:relative;flex:none;width:132px;height:132px;display:grid;place-items:center;
   background:rgba(255,255,255,.55);border:3px solid var(--ink);border-radius:24px;
@@ -270,7 +272,7 @@ ul{margin:0;padding:0;list-style:none}
   position:absolute;left:-8px;top:-10px;background:var(--yellow);border:3px solid var(--ink);
   border-radius:12px;padding:2px 8px;font-size:15px;font-weight:700;box-shadow:0 3px 0 rgba(43,43,51,.35);
 }
-.partner-info{position:relative;flex:1;min-width:0}
+.partner-info{position:relative;flex:1;min-width:0;max-width:620px}
 .partner-name-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .partner-name{font-size:27px;letter-spacing:-.5px}
 .partner-no{font-size:14px;font-weight:700;color:var(--ink-soft)}
@@ -288,13 +290,20 @@ ul{margin:0;padding:0;list-style:none}
 .evo-dots .dot{width:13px;height:13px;border-radius:50%;border:2.5px solid var(--ink);background:#fff}
 .evo-dots .dot.on{background:var(--yellow)}
 .evo-dots .lnk{width:14px;height:3px;background:rgba(43,43,51,.35);border-radius:3px}
-.partner-stats{display:flex;gap:8px;margin-top:12px;position:relative;flex-wrap:wrap}
+.partner-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;position:relative;margin-top:0}
 .pstat{
   background:#fffdf8;border:2.5px solid var(--ink);border-radius:14px;
   padding:5px 10px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:5px;
   box-shadow:0 3px 0 rgba(43,43,51,.16);
 }
-.partner-actions{display:flex;gap:8px;margin-top:12px;position:relative;flex-wrap:wrap}
+.partner-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:0;position:relative}
+.partner-actions .pbtn:first-of-type{grid-column:1 / -1}
+@media (max-width:1180px){
+  .partner-side{max-width:none;margin-left:0;flex:1 1 100%}
+  .partner-actions{grid-template-columns:repeat(auto-fit,minmax(132px,1fr))}
+  .partner-actions .pbtn:first-of-type{grid-column:auto}
+  .partner-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
 .pbtn{
   border:3px solid var(--ink);border-radius:14px;background:#fff;font-weight:700;font-size:15px;
   padding:9px 13px;min-height:46px;box-shadow:0 4px 0 rgba(43,43,51,.3);
@@ -376,7 +385,8 @@ body.focus-mode .sec-name small{display:none}
 body.focus-mode .board{grid-template-columns:1fr}
 body.focus-mode .dex-header{padding:10px 14px}
 body.focus-mode .dex-header h1{font-size:22px}
-body.focus-mode .partner-top{gap:10px}
+body.focus-mode .partner-top{gap:10px;flex:1 1 100%}
+body.focus-mode .partner-side{display:none}
 body.focus-mode .partner-card{padding:10px 14px}
 body.focus-mode .partner-sprite-wrap{width:96px;height:96px;border-radius:18px}
 body.focus-mode .partner-sprite{width:80px;height:80px}
@@ -762,7 +772,8 @@ body.focus-mode .focus-exit{display:block}
     <section class="col task-col">
 
       <div class="card partner-card" id="partnerCard" aria-label="건률이 파트너 포켓몬">
-        <div class="partner-top">
+        <div class="partner-hero">
+          <div class="partner-top">
           <div class="partner-sprite-wrap">
             <div class="lv-badge" id="partnerLv">Lv.1</div>
             <img class="partner-sprite" id="partnerSprite" alt="파트너 포켓몬" src="" />
@@ -782,18 +793,21 @@ body.focus-mode .focus-exit{display:block}
           </div>
         </div>
 
-        <div class="partner-stats">
-          <div class="pstat" id="statStars">⭐ 0</div>
-          <div class="pstat" id="statBalls">⚪ 0</div>
-          <div class="pstat" id="statBox">📦 0 / 1025</div>
-          <div class="pstat" id="statStreak">🔥 0일</div>
-        </div>
+        <div class="partner-side">
+          <div class="partner-stats">
+            <div class="pstat" id="statStars">⭐ 0</div>
+            <div class="pstat" id="statBalls">⚪ 0</div>
+            <div class="pstat" id="statBox">📦 0 / 1025</div>
+            <div class="pstat" id="statStreak">🔥 0일</div>
+          </div>
 
-        <div class="partner-actions">
-          <button class="pbtn primary" id="btnDetail" type="button">📖 도감 보기</button>
-          <button class="pbtn" id="btnBox" type="button">📦 포켓몬 박스</button>
-          <button class="pbtn evolve hide" id="btnEvolve" type="button">✨ 진화시키기!</button>
-          <button class="pbtn" id="btnRewardShop" type="button">🎁 보상 상점</button>
+          <div class="partner-actions">
+            <button class="pbtn primary" id="btnDetail" type="button">📖 도감 보기</button>
+            <button class="pbtn" id="btnBox" type="button">📦 포켓몬 박스</button>
+            <button class="pbtn evolve hide" id="btnEvolve" type="button">✨ 진화시키기!</button>
+            <button class="pbtn" id="btnRewardShop" type="button">🎁 보상 상점</button>
+          </div>
+        </div>
         </div>
       </div>
 
