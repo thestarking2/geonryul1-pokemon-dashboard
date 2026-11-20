@@ -4,7 +4,14 @@
 태블릿(가로·세로), 휴대폰, PC 브라우저 어디서든 같은 파일 하나로 열립니다.
 
 - **앱 열기**: https://thestarking2.github.io/geonryul1-pokemon-dashboard/
-- 파일: `index.html` (단일 파일, 설치 없음), `calendar.json` (가족 일정 동기화용)
+- 파일: `index.html` (단일 파일, 설치 없음), `calendar.json` (가족 일정 동기화용), `manifest.json` · `sw.js` · `icon-192.png` · `icon-512.png` (홈 화면 앱)
+
+## 태블릿 홈 화면에 앱처럼 두기 📱
+
+1. 태블릿 브라우저(Chrome·Samsung Internet)에서 위 주소를 엽니다.
+2. 주소창 옆 `⋮` → **홈 화면에 추가**(또는 **앱 설치**)를 누릅니다.
+3. 바탕화면의 **건률 포켓몬** 아이콘을 누르면 주소창 없는 전체 화면 앱으로 열립니다.
+   (한 번 열어 두면 인터넷이 잠깐 끊겨도 화면이 뜨고, 할 일·별 기록도 그대로 남아요.)
 
 ## 무엇을 할 수 있나요
 
