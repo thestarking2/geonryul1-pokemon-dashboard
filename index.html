@@ -536,6 +536,7 @@ ul{margin:0;padding:0;list-style:none}
   .task{min-height:56px;padding:8px 11px;font-size:16.5px;gap:9px;border-width:2.5px;border-radius:13px;box-shadow:0 3px 0 rgba(43,43,51,.18)}
   .task .temoji{font-size:21px}
   .task .tcheck{width:31px;height:31px;font-size:16px;border-width:2.5px}
+  .task .tspeak{width:29px;height:29px;font-size:13.5px;border-width:2.2px}
   .task-empty{font-size:13px}
   .tasks-foot{margin-top:8px;font-size:12px}
 }
@@ -599,6 +600,8 @@ body.focus-mode .partner-stats{display:none}
 body.focus-mode .task{min-height:84px;font-size:22px;padding:12px 14px}
 body.focus-mode .task .temoji{font-size:30px}
 body.focus-mode .task .tcheck{width:42px;height:42px;font-size:22px}
+body.focus-mode .task .tspeak{width:40px;height:40px;font-size:19px;border-width:3px}
+body.focus-mode .praise-banner{font-size:21px;padding:12px 22px}
 body.focus-mode .tasks{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
 body.focus-mode .sec-name{font-size:22px}
 .focus-exit{
@@ -860,6 +863,67 @@ body.focus-mode .focus-exit{display:block}
 @keyframes evopulse{from{transform:scale(.94);filter:brightness(1.4)}to{transform:scale(1.06);filter:brightness(2.2)}}
 .evo-stage-anim .evo-txt{font-size:20px;font-weight:700;color:#8a4b00;margin-top:6px;text-align:center}
 
+/* ---------- 연속 기록 프리패스(🛡️) 배지 ---------- */
+.pstat .shield{
+  display:inline-flex;align-items:center;gap:1px;margin-left:2px;padding:0 4px;
+  font-size:.86em;line-height:1.35;border:2px solid var(--ink);border-radius:8px;
+  background:#e8f1ff;white-space:nowrap;
+}
+
+/* ---------- 읽어주기(🔊) ---------- */
+.task .tspeak{
+  width:32px;height:32px;flex:none;display:grid;place-items:center;
+  border:2.5px solid var(--ink);border-radius:50%;background:#fff3c4;
+  font-size:15px;line-height:1;box-shadow:0 2px 0 rgba(43,43,51,.2);
+}
+.task .tspeak:active{transform:translateY(2px);box-shadow:none}
+
+/* ---------- 구간 완료 칭찬 배너 ---------- */
+.tasks-card{position:relative}
+.praise-banner{
+  display:none;position:absolute;left:50%;top:8px;transform:translateX(-50%);
+  z-index:6;max-width:calc(100% - 24px);text-align:center;
+  padding:9px 18px;border:3px solid var(--ink);border-radius:18px;
+  background:linear-gradient(170deg,#fff6c9,#ffd23f);color:#4a3200;
+  font-size:17px;font-weight:700;line-height:1.3;
+  box-shadow:0 6px 0 rgba(43,43,51,.3), 0 10px 24px rgba(0,0,0,.16);
+  pointer-events:none;
+}
+.praise-banner.show{display:block;animation:praiseIn .32s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes praiseIn{from{transform:translate(-50%,-14px) scale(.92);opacity:0}to{transform:translate(-50%,0) scale(1);opacity:1}}
+
+/* ---------- 날씨·API 오류 다시 불러오기 ---------- */
+.wx-state .wx-retry{margin-left:8px;vertical-align:middle}
+.link-btn{
+  border:none;background:none;padding:0;font:inherit;font-weight:700;
+  color:#2b6fd6;text-decoration:underline;cursor:pointer;
+}
+
+/* ---------- 주간 리포트 ---------- */
+.wk-chart{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;align-items:end;margin:6px 0 10px}
+.wk-col{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.wk-bar{
+  width:100%;height:94px;display:flex;align-items:flex-end;
+  border:2.5px solid var(--ink);border-radius:10px;background:#f3ead9;overflow:hidden;
+}
+.wk-bar i{display:block;width:100%;background:linear-gradient(180deg,#8ee06a,#3fae64);transition:height .3s ease}
+.wk-col.full .wk-bar i{background:linear-gradient(180deg,#ffd23f,#ff9a3f)}
+.wk-col.today .wk-bar{box-shadow:0 0 0 3px rgba(58,160,255,.5)}
+.wk-pct{font-size:12px;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+.wk-day{font-size:12.5px;font-weight:700;white-space:nowrap}
+.wk-headline{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;font-size:15px;margin-bottom:8px}
+.wk-headline b{font-size:22px}
+.wk-row{display:flex;gap:8px;font-size:14.5px;padding:5px 0;border-bottom:1.5px dashed #e6d9c4}
+.wk-row:last-child{border-bottom:none}
+.wk-row .k{min-width:104px;flex:none;color:var(--ink-soft);font-weight:700}
+.wk-row .v{flex:1 1 140px;min-width:0;font-weight:700}
+.wk-note{font-size:12.5px;color:var(--ink-soft);margin-top:8px;line-height:1.5}
+@media (max-width:600px){
+  .wk-bar{height:78px}
+  .wk-row{flex-wrap:wrap;gap:2px}
+  .wk-row .k{min-width:0;flex:1 1 100%}
+}
+
 /* ---------- 유틸 ---------- */
 .hide{display:none !important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -1023,7 +1087,8 @@ body.focus-mode .focus-exit{display:block}
         </div>
       </div>
 
-      <div class="card tasks-card" aria-label="오늘의 할 일">
+      <div class="card tasks-card" id="tasksCard" aria-label="오늘의 할 일">
+        <div class="praise-banner" id="praiseBanner" aria-live="polite"></div>
         <div class="tasks-head">
           <div>
             <div class="tasks-title">✅ 오늘의 할 일 <span id="weekdayBadge"></span></div>
@@ -1059,6 +1124,7 @@ body.focus-mode .focus-exit{display:block}
   var API = 'https://pokeapi.co/api/v2/';
   var SPRITE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
   var MAX_DEX = 1025;
+  var FETCH_TIMEOUT = 7000;   // 한 번의 요청을 기다리는 최대 시간(ms)
   var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
   var WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
@@ -1109,6 +1175,77 @@ body.focus-mode .focus-exit{display:block}
     { id: 25, tag: '전기' }, { id: 4, tag: '불꽃' }, { id: 7, tag: '물' },
     { id: 1, tag: '풀' }, { id: 501, tag: '물' }, { id: 133, tag: '노말' }
   ];
+
+  /* ---------------------------------------------------------------
+     오프라인 기본 도감
+     인터넷이 끊기거나 PokeAPI 가 느릴 때도 스타터 선택·파트너·기본 도감이
+     "불러오는 중"에 멈추지 않도록, 자주 보는 포켓몬 37마리를 앱 안에 담아둡니다.
+     형식: [도감번호, 한글이름, 영문이름, 분류, '타입', 키(dm), 몸무게(hg),
+             'HP,공격,방어,특공,특방,스피드', '도감 설명']
+  --------------------------------------------------------------- */
+  var OFFLINE_ROWS = [
+    [1, '이상해씨', 'bulbasaur', '씨앗포켓몬', 'grass,poison', 7, 69, '45,49,49,65,65,45', '태어났을 때부터 등에 씨앗이 붙어 있다. 몸이 자라면 씨앗도 함께 커진다.'],
+    [2, '이상해풀', 'ivysaur', '씨앗포켓몬', 'grass,poison', 10, 130, '60,62,63,80,80,60', '등의 봉오리가 점점 커져서 몸을 지탱하기 힘들어지자 네 발로 걷게 되었다.'],
+    [3, '이상해꽃', 'venusaur', '씨앗포켓몬', 'grass,poison', 20, 1000, '80,82,83,100,100,80', '등의 꽃이 피면 달콤한 향기가 퍼진다. 꽃잎은 햇빛을 받아 기운을 가득 모은다.'],
+    [4, '파이리', 'charmander', '도마뱀포켓몬', 'fire', 6, 85, '39,52,43,60,50,65', '꼬리 끝에 불꽃이 타오른다. 비를 맞으면 불꽃이 약해진다.'],
+    [5, '리자드', 'charmeleon', '불꽃포켓몬', 'fire', 11, 190, '58,64,58,80,65,80', '날카로운 발톱으로 상대를 할퀸다. 꼬리를 흔들어 위협한다.'],
+    [6, '리자몽', 'charizard', '불꽃포켓몬', 'fire,flying', 17, 905, '78,84,78,109,85,100', '입에서 내뿜는 불꽃은 3000도를 넘는다. 하늘 높이 날아오르며 싸운다.'],
+    [7, '꼬부기', 'squirtle', '꼬마거북포켓몬', 'water', 5, 90, '44,48,65,50,64,43', '등딱지에 숨어 몸을 지킨다. 물을 뿜어 상대를 공격하기도 한다.'],
+    [8, '어니부기', 'wartortle', '거북포켓몬', 'water', 10, 225, '59,63,80,65,80,58', '꼬리를 비틀어 물을 세게 내뿜는다. 성격이 온순하다.'],
+    [9, '거북왕', 'blastoise', '거북포켓몬', 'water', 16, 855, '79,83,100,85,105,78', '등의 물대포로 50미터 앞 표적도 맞힌다. 단단한 등딱지는 공격을 튕겨낸다.'],
+    [25, '피카츄', 'pikachu', '쥐포켓몬', 'electric', 4, 60, '35,55,40,50,50,90', '뺨의 주머니에 전기를 모은다. 기분이 좋으면 꼬리로 전기를 내뿜는다.'],
+    [26, '라이츄', 'raichu', '쥐포켓몬', 'electric', 8, 300, '60,90,55,90,80,110', '꼬리로 전기를 느낀다. 기분이 좋으면 꼬리를 살랑살랑 흔든다.'],
+    [172, '피츄', 'pichu', '아기쥐포켓몬', 'electric', 3, 20, '20,40,15,35,35,60', '뺨에 모은 전기가 적으면 기운이 없어진다. 여러 마리가 모이면 전기가 세진다.'],
+    [133, '이브이', 'eevee', '진화포켓몬', 'normal', 3, 65, '55,55,50,45,65,55', '여러 가지 모습으로 진화하는 포켓몬. 주인을 잘 따르고 성격이 온순하다.'],
+    [134, '샤미드', 'vaporeon', '거품포켓몬', 'water', 10, 290, '130,65,60,110,95,65', '몸을 물 분자로 바꿀 수 있다. 물속에 숨으면 눈에 보이지 않는다.'],
+    [135, '쥬피썬더', 'jolteon', '번개포켓몬', 'electric', 8, 245, '65,65,60,110,95,130', '온몸의 털이 뾰족하게 변해 전기를 내뿜는다. 가시 때문에 껴안을 수 없다.'],
+    [136, '부스터', 'flareon', '불꽃포켓몬', 'fire', 9, 250, '65,130,60,95,110,65', '몸의 털이 불꽃처럼 뜨겁다. 체온이 900도까지 올라간다.'],
+    [39, '푸린', 'jigglypuff', '풍선포켓몬', 'normal,fairy', 5, 55, '115,45,20,45,25,20', '동그란 몸으로 노래를 부르면 듣는 사람이 모두 잠이 든다.'],
+    [40, '푸크린', 'wigglytuff', '풍선포켓몬', 'normal,fairy', 10, 120, '140,70,45,85,50,45', '푹신푹신한 털로 덮여 있다. 노래로 상대를 잠들게 한다.'],
+    [143, '잠만보', 'snorlax', '잠만보포켓몬', 'normal', 21, 4600, '160,110,65,65,110,30', '하루 종일 먹고 자는 것을 반복한다. 배가 고프면 성격이 거칠어진다.'],
+    [150, '뮤츠', 'mewtwo', '유전자포켓몬', 'psychic', 20, 1220, '106,110,90,154,90,130', '유전자를 조작해 태어난 포켓몬. 냉정하고 잔인한 마음을 지녔다.'],
+    [151, '뮤', 'mew', '신종포켓몬', 'psychic', 4, 40, '100,100,100,100,100,100', '아주 희귀한 포켓몬. 자유롭게 모습을 바꿔 사람 눈에 띄지 않는다.'],
+    [447, '리오르', 'riolu', '파도포켓몬', 'fighting', 7, 202, '40,70,40,35,40,60', '상대의 기분을 파도로 읽는다. 은혜를 꼭 갚는 마음을 지녔다.'],
+    [448, '루카리오', 'lucario', '파도포켓몬', 'fighting,steel', 12, 540, '70,110,70,115,70,90', '파도의 힘을 자유자재로 다룬다. 1킬로미터 밖 상대의 기분도 읽는다.'],
+    [656, '개구마르', 'froakie', '거품개구리포켓몬', 'water', 3, 70, '41,56,40,62,44,71', '가슴과 등에서 거품을 내뿜어 상대의 움직임을 막는다.'],
+    [657, '개굴반장', 'frogadier', '거품개구리포켓몬', 'water', 6, 109, '54,63,52,83,56,97', '물속에서는 아주 빠르게 헤엄친다. 거품으로 상대를 감싸 공격한다.'],
+    [658, '개굴닌자', 'greninja', '닌자포켓몬', 'water,dark', 15, 400, '72,95,67,103,71,122', '물로 수리검을 만들어 던진다. 거품이 굳으면 날카로운 칼날이 된다.'],
+    [501, '수댕이', 'oshawott', '수달포켓몬', 'water', 5, 59, '55,55,45,63,45,45', '배의 가리비로 상대를 벤다. 가리비가 상하면 새로 만든다.'],
+    [502, '쌍검자비', 'dewott', '수련포켓몬', 'water', 8, 245, '75,75,60,83,60,60', '두 개의 가리비 칼을 능숙하게 다뤄 두 번 연속 공격한다.'],
+    [503, '대검귀', 'samurott', '대검포켓몬', 'water', 15, 946, '95,100,85,108,70,70', '앞발의 뿔로 상대를 찌른다. 성격이 냉철하고 판단이 빠르다.'],
+    [152, '치코리타', 'chikorita', '잎새포켓몬', 'grass', 9, 64, '45,49,65,49,65,45', '목의 잎사귀에서 달콤한 향기가 난다. 향기를 맡으면 마음이 편안해진다.'],
+    [155, '브케인', 'cyndaquil', '화염쥐포켓몬', 'fire', 5, 79, '39,52,43,60,50,65', '등에 타오르는 불꽃은 뜨겁지 않다. 기분이 나쁘면 불꽃이 세차게 탄다.'],
+    [158, '리아코', 'totodile', '큰턱포켓몬', 'water', 6, 95, '50,65,64,44,48,43', '날카로운 이빨로 무엇이든 물어뜯는다. 무는 힘이 아주 세다.'],
+    [255, '아차모', 'torchic', '병아리포켓몬', 'fire', 4, 25, '45,60,40,70,50,45', '뜨거운 모래 속에서 태어난다. 몸을 둥글게 말아 구르며 공격한다.'],
+    [258, '물짱이', 'mudkip', '진흙물고기포켓몬', 'water', 4, 76, '50,70,50,50,50,40', '머리의 큰 지느러미로 물살을 가른다. 물이 없는 곳에서도 오래 견딘다.'],
+    [387, '모부기', 'turtwig', '어린잎포켓몬', 'grass', 4, 102, '55,68,64,45,55,31', '등의 껍질로 흙을 덮는다. 햇빛을 받으면 몸이 쑥쑥 자란다.'],
+    [390, '불꽃숭이', 'chimchar', '꼬마원숭이포켓몬', 'fire', 5, 62, '44,58,44,58,44,61', '꼬리의 불꽃으로 상대를 놀라게 한다. 기분이 좋으면 불꽃이 커진다.'],
+    [778, '따라큐', 'mimikyu', '탈포켓몬', 'ghost,fairy', 2, 7, '55,90,80,50,105,96', '천을 뒤집어쓰고 숨어 있다. 안을 들여다보면 천이 바스라진다.']
+  ];
+  var OFFLINE_EVO_LINES = [
+    [172, 25, 26], [1, 2, 3], [4, 5, 6], [7, 8, 9],
+    [501, 502, 503], [133, 134], [133, 135], [133, 136],
+    [39, 40], [447, 448], [656, 657, 658]
+  ];
+  var STAT_ORDER = ['hp', 'attack', 'defense', 'special-attack', 'special-defense', 'speed'];
+  var OFFLINE_DEX = {};
+  var OFFLINE_BY_NAME = {};
+  OFFLINE_ROWS.forEach(function (row) {
+    var nums = String(row[7]).split(',');
+    var entry = {
+      id: row[0],
+      ko: row[1],
+      en: row[2],
+      genus: row[3],
+      types: String(row[4]).split(','),
+      height: row[5],
+      weight: row[6],
+      stats: STAT_ORDER.map(function (name, i) { return { name: name, value: Number(nums[i]) || 0 }; }),
+      flavor: row[8]
+    };
+    OFFLINE_DEX[row[0]] = entry;
+    OFFLINE_BY_NAME[row[2]] = entry;
+  });
 
   var DEFAULT_SECTIONS = [
     {
@@ -1216,7 +1353,7 @@ body.focus-mode .focus-exit{display:block}
       sections: JSON.parse(JSON.stringify(DEFAULT_SECTIONS)),
       done: { date: t, ids: {} },
       progress: {
-        date: t, level: 1, xp: 0, stars: 0, balls: 1, streak: 0,
+        date: t, level: 1, xp: 0, stars: 0, balls: 1, streak: 0, streakShield: 1,
         lastCompleteDate: '', ballsAwardedToday: 0, sectionsToday: []
       },
       partner: { id: 25 },
@@ -1225,7 +1362,8 @@ body.focus-mode .focus-exit{display:block}
       events: [],
       synced: [],
       rewards: JSON.parse(JSON.stringify(DEFAULT_REWARDS)),
-      redeemed: []
+      redeemed: [],
+      historyByDate: {}
     };
   }
 
@@ -1256,6 +1394,8 @@ body.focus-mode .focus-exit{display:block}
     if (!raw.done || typeof raw.done !== 'object') raw.done = d.done;
     if (!raw.done.ids || typeof raw.done.ids !== 'object') raw.done.ids = {};
     if (!Array.isArray(raw.progress.sectionsToday)) raw.progress.sectionsToday = [];
+    if (typeof raw.progress.streakShield !== 'number') raw.progress.streakShield = 1;
+    if (!raw.historyByDate || typeof raw.historyByDate !== 'object') raw.historyByDate = {};
     return raw;
   }
 
@@ -1308,6 +1448,34 @@ body.focus-mode .focus-exit{display:block}
   }
 
   /* ---------------------------------------------------------------
+     3-1. 읽어주기 (한국어 TTS) — 글을 아직 다 못 읽는 건률이를 위해
+  --------------------------------------------------------------- */
+  var TTS_OK = (function () {
+    try {
+      return typeof window !== 'undefined' && 'speechSynthesis' in window &&
+        typeof window.SpeechSynthesisUtterance === 'function';
+    } catch (e) { return false; }
+  })();
+
+  function speak(text) {
+    var msg = cleanText(text);
+    if (!msg) return false;
+    if (!TTS_OK) { toast('이 기기에서는 읽어주기를 쓸 수 없어요'); return false; }
+    try {
+      window.speechSynthesis.cancel();
+      var u = new window.SpeechSynthesisUtterance(msg);
+      u.lang = 'ko-KR';
+      u.rate = 0.92;
+      u.pitch = 1.05;
+      window.speechSynthesis.speak(u);
+      return true;
+    } catch (e) {
+      toast('읽어주기를 시작하지 못했어요');
+      return false;
+    }
+  }
+
+  /* ---------------------------------------------------------------
      4. PokeAPI (캐시 포함)
   --------------------------------------------------------------- */
   var diskCache = readJSON(CACHE_KEY, {});
@@ -1331,10 +1499,95 @@ body.focus-mode .focus-exit{display:block}
   }
 
   function fetchJSON(url) {
-    return fetch(url, { mode: 'cors', cache: 'force-cache' }).then(function (res) {
+    return fetchOnce(url).catch(function (err) {
+      // 한 번 더, 짧게 쉬었다가 다시 시도 (느린 공용 와이파이·잠깐 끊김 대비)
+      return delay(400).then(function () {
+        return fetchOnce(url);
+      }).catch(function () {
+        return delay(900).then(function () { return fetchOnce(url); });
+      });
+    });
+  }
+
+  function delay(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  }
+
+  /* 한 번의 요청: 너무 오래 매달려 "불러오는 중"에 멈추지 않도록 시간을 정해둡니다. */
+  function fetchOnce(url) {
+    if (typeof fetch !== 'function') return Promise.reject(new Error('no fetch'));
+    var opts = { mode: 'cors', cache: 'force-cache' };
+    var ctrl = null;
+    if (typeof AbortController === 'function') {
+      ctrl = new AbortController();
+      opts.signal = ctrl.signal;
+      setTimeout(function () { try { ctrl.abort(); } catch (e) { /* ignore */ } }, FETCH_TIMEOUT);
+    }
+    return fetch(url, opts).then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     });
+  }
+
+  /* ---- 오프라인 기본 도감 ---- */
+  function offlineEntry(idOrName) {
+    var key = String(idOrName == null ? '' : idOrName).toLowerCase();
+    if (OFFLINE_DEX[key]) return OFFLINE_DEX[key];
+    if (OFFLINE_BY_NAME[key]) return OFFLINE_BY_NAME[key];
+    return null;
+  }
+
+  function offlinePokemon(idOrName) {
+    var e = offlineEntry(idOrName);
+    if (!e) return null;
+    return {
+      id: e.id,
+      name: e.en,
+      sprite: SPRITE + e.id + '.png',
+      artwork: '',
+      types: e.types.slice(),
+      height: e.height,
+      weight: e.weight,
+      stats: e.stats.map(function (s) { return { name: s.name, value: s.value }; }),
+      moves: [],
+      speciesId: e.id,
+      offline: true
+    };
+  }
+
+  function offlineSpecies(idOrName) {
+    var e = offlineEntry(idOrName);
+    if (!e) return null;
+    return {
+      id: e.id,
+      nameKo: e.ko,
+      nameEn: e.en,
+      genusKo: e.genus,
+      flavor: e.flavor,
+      flavorLang: 'ko',
+      evoUrl: '',
+      isLegendary: false,
+      isMythical: false,
+      offline: true
+    };
+  }
+
+  function offlineEvo(id) {
+    var n = Number(id);
+    for (var i = 0; i < OFFLINE_EVO_LINES.length; i++) {
+      var line = OFFLINE_EVO_LINES[i];
+      var at = line.indexOf(n);
+      if (at < 0) continue;
+      return {
+        ids: line.slice(0, at + 1),
+        track: line.slice(),
+        index: at,
+        total: line.length,
+        next: (at + 1 < line.length) ? line[at + 1] : null,
+        offline: true
+      };
+    }
+    return null;
   }
 
   function slimMoves(list) {
@@ -1382,6 +1635,11 @@ body.focus-mode .focus-exit{display:block}
       };
       cachePut(key, slim);
       return slim;
+    }).catch(function (err) {
+      // 인터넷이 없거나 PokeAPI 가 응답하지 않으면 앱에 담아둔 기본 도감으로 이어갑니다.
+      var off = offlinePokemon(idOrName);
+      if (off) return off;
+      throw err;
     });
   }
 
@@ -1414,6 +1672,10 @@ body.focus-mode .focus-exit{display:block}
       };
       cachePut(key, slim);
       return slim;
+    }).catch(function (err) {
+      var off = offlineSpecies(idOrName);
+      if (off) return off;
+      throw err;
     });
   }
 
@@ -1422,7 +1684,10 @@ body.focus-mode .focus-exit{display:block}
     var hit = cacheGet(key);
     if (hit) return Promise.resolve(hit);
     return getSpecies(speciesId).then(function (sp) {
-      if (!sp.evoUrl) return { ids: [speciesId], index: 0, total: 1, next: null };
+      if (!sp.evoUrl) {
+        var off = offlineEvo(speciesId);
+        return off || { ids: [speciesId], index: 0, total: 1, next: null };
+      }
       return fetchJSON(sp.evoUrl).then(function (chain) {
         var path = null;
         function walk(node, trail) {
@@ -1451,6 +1716,10 @@ body.focus-mode .focus-exit{display:block}
         var info = { ids: ids, track: trackIds, index: ids.length - 1, total: trackIds.length, next: next };
         cachePut(key, info);
         return info;
+      }).catch(function (err) {
+        var off = offlineEvo(speciesId);
+        if (off) return off;
+        throw err;
       });
     });
   }
@@ -1479,6 +1748,10 @@ body.focus-mode .focus-exit{display:block}
       };
       cachePut(key, slim);
       return slim;
+    }).catch(function (err) {
+      // 기술 설명은 인터넷이 없으면 비워두고, 이름만 보여 줍니다.
+      var guess = String(name || '').replace(/-/g, ' ');
+      return { name: name, nameKo: guess, type: '', power: null, pp: null, accuracy: null, damageClass: '', desc: '', offline: true };
     });
   }
 
@@ -1532,7 +1805,7 @@ body.focus-mode .focus-exit{display:block}
     var strip = $('weatherStrip');
     var daily = data && data.daily;
     if (!daily || !daily.time || !daily.time.length) {
-      strip.innerHTML = '<div class="wx-state">🌥️ 날씨 정보를 찾지 못했어요</div>';
+      strip.innerHTML = weatherErrorHtml('🌥️ 날씨 정보를 찾지 못했어요');
       return;
     }
     var today = todayKey();
@@ -1567,11 +1840,18 @@ body.focus-mode .focus-exit{display:block}
     }
   }
 
+  function weatherErrorHtml(msg) {
+    return '<div class="wx-state">' + esc(msg) +
+      ' <button class="btn sm wx-retry" type="button" data-act="wx-retry">🔄 다시 불러오기</button></div>';
+  }
+
   function loadWeather() {
+    var strip = $('weatherStrip');
+    if (strip) strip.innerHTML = '<div class="wx-state">🌤️ 날씨를 불러오는 중이에요...</div>';
     return fetchJSON(weatherURL()).then(function (data) {
       renderWeather(data);
     }).catch(function () {
-      $('weatherStrip').innerHTML = '<div class="wx-state">🌥️ 날씨를 불러오지 못했어요 · 인터넷 연결을 확인해 주세요</div>';
+      $('weatherStrip').innerHTML = weatherErrorHtml('🌥️ 날씨를 불러오지 못했어요 · 인터넷 연결을 확인해 주세요');
       $('nowTemp').textContent = '🌡️ ' + (S.settings.location.name || '우리 동네');
     });
   }
@@ -1610,15 +1890,101 @@ body.focus-mode .focus-exit{display:block}
     return leveled;
   }
 
+  /* ---- 구간별 맞춤 칭찬 멘트 ---- */
+  var SECTION_PRAISE = {
+    morning: '☀️ 아침 준비 끝! 오늘도 씩씩하게 출발하자!',
+    afterschool: '🎒 하교 루틴 완벽! 이제 신나게 놀 준비 끝!',
+    homework: '📚 숙제까지 척척! 건률이는 진짜 포켓몬 마스터!',
+    weekend: '🌟 주말 할 일도 클리어! 최고야!'
+  };
+  var PRAISE_RULES = [
+    { re: /아침|등원|출발/, msg: SECTION_PRAISE.morning },
+    { re: /하교|하원|학교|방과/, msg: SECTION_PRAISE.afterschool },
+    { re: /숙제|공부|책|수학|독서/, msg: SECTION_PRAISE.homework },
+    { re: /주말|토요일|일요일/, msg: SECTION_PRAISE.weekend }
+  ];
+
+  function sectionPraise(sec) {
+    if (!sec) return '';
+    if (SECTION_PRAISE[sec.id]) return SECTION_PRAISE[sec.id];
+    var name = String(sec.name || '');
+    for (var i = 0; i < PRAISE_RULES.length; i++) {
+      if (PRAISE_RULES[i].re.test(name)) return PRAISE_RULES[i].msg;
+    }
+    return '🎉 ' + name + ' 완벽! 정말 잘했어요!';
+  }
+
   function markDayComplete() {
+    var msgs = [];
     var t = todayKey();
-    if (S.progress.lastCompleteDate === t) return;
+    if (S.progress.lastCompleteDate === t) return msgs;
     var y = new Date();
     y.setDate(y.getDate() - 1);
     var yKey = dateKey(y);
     if (S.progress.lastCompleteDate === yKey) S.progress.streak = (S.progress.streak || 0) + 1;
     else S.progress.streak = 1;
     S.progress.lastCompleteDate = t;
+    // 7일마다 프리패스(🛡️) 한 개 — 최대 2개까지 모을 수 있어요.
+    if (S.progress.streak > 0 && S.progress.streak % 7 === 0) {
+      if ((S.progress.streakShield || 0) < 2) {
+        S.progress.streakShield = (S.progress.streakShield || 0) + 1;
+        msgs.push('🛡️ 연속 ' + S.progress.streak + '일! 프리패스 ' + S.progress.streakShield + '개를 받았어요!');
+      } else {
+        msgs.push('🔥 연속 ' + S.progress.streak + '일 달성! 정말 대단해요!');
+      }
+    }
+    return msgs;
+  }
+
+  /* 날짜가 바뀌었을 때 연속 기록 점검 — 하루를 빠졌으면 프리패스로 한 번 지켜 줍니다. */
+  function rolloverStreak() {
+    var y = new Date(); y.setDate(y.getDate() - 1);
+    var yKey = dateKey(y);
+    var beforeKey = dateKey(addDays(y, -1));   // 어제의 전날
+    var t = todayKey();
+    var lc = S.progress.lastCompleteDate || '';
+    if (lc === t || lc === yKey) return '';            // 오늘·어제 했으면 그대로
+    if (!S.progress.streak) return '';                 // 지켜 줄 연속 기록이 없음
+    if (lc === beforeKey && (S.progress.streakShield || 0) > 0) {
+      // 딱 하루만 빠졌다 → 프리패스 1개를 써서 연속 기록 유지
+      S.progress.streakShield -= 1;
+      S.progress.lastCompleteDate = yKey;
+      return '🛡️ 프리패스 사용! 어제 하루 쉬었지만 연속 기록이 지켜졌어요!';
+    }
+    S.progress.streak = 0;
+    return '';
+  }
+
+  /* ---- 날짜별 완료 기록 (부모용 주간 리포트) ---- */
+  function applicableTaskList(d) {
+    var weekend = isWeekend(d);
+    var out = [];
+    S.sections.forEach(function (sec) {
+      if (sec.weekendOnly && !weekend) return;
+      (sec.tasks || []).forEach(function (t) { out.push(t); });
+    });
+    return out;
+  }
+
+  function pruneHistory() {
+    var keys = Object.keys(S.historyByDate || {}).sort();
+    while (keys.length > 60) delete S.historyByDate[keys.shift()];
+  }
+
+  function recordHistoryFor(dateStr, ids) {
+    if (!dateStr) return;
+    var day = parseDay(dateStr);
+    if (!day || isNaN(day.getTime())) return;
+    if (!S.historyByDate || typeof S.historyByDate !== 'object') S.historyByDate = {};
+    S.historyByDate[dateStr] = {
+      doneIds: Object.keys(ids || {}),
+      totalCount: applicableTaskList(day).length
+    };
+    pruneHistory();
+  }
+
+  function recordHistory() {
+    recordHistoryFor((S.done && S.done.date) || todayKey(), (S.done && S.done.ids) || {});
   }
 
   function doneCountAll() {
@@ -1628,15 +1994,16 @@ body.focus-mode .focus-exit{display:block}
   }
 
   function evaluateAwards(secId) {
-    var messages = [];
-    // 1) 섹션 완료 보너스
+    var out = { messages: [], praise: '' };
+    // 1) 섹션 완료 보너스 + 구간별 칭찬
     var sec = findSection(secId);
     if (sec && sec.tasks.length) {
       var allDone = sec.tasks.every(function (t) { return isDone(t.id); });
       if (allDone && S.progress.sectionsToday.indexOf(sec.id) === -1) {
         S.progress.sectionsToday.push(sec.id);
         S.progress.balls += 1;
-        messages.push('🎉 ' + sec.name + ' 완료! 몬스터볼 +1');
+        out.messages.push('🎉 ' + sec.name + ' 완료! 몬스터볼 +1');
+        out.praise = sectionPraise(sec);
       }
     }
     // 2) 30 XP 마다 몬스터볼
@@ -1647,8 +2014,8 @@ body.focus-mode .focus-exit{display:block}
       S.progress.balls += 1;
       given++;
     }
-    if (given > 0) messages.push('⚪ 몬스터볼 ' + given + '개를 받았어요!');
-    return messages;
+    if (given > 0) out.messages.push('⚪ 몬스터볼 ' + given + '개를 받았어요!');
+    return out;
   }
 
   function toggleTask(secId, taskId) {
@@ -1660,6 +2027,7 @@ body.focus-mode .focus-exit{display:block}
 
     var wasDone = isDone(taskId);
     var leveled = false;
+    var streakMsgs = [];
     if (wasDone) {
       delete S.done.ids[taskId];
       S.progress.stars = Math.max(0, S.progress.stars - 1);
@@ -1669,20 +2037,23 @@ body.focus-mode .focus-exit{display:block}
       S.done.ids[taskId] = true;
       S.progress.stars += 1;
       leveled = addXp(10);
-      markDayComplete();
+      streakMsgs = markDayComplete();
       sndCheck();
     }
-    var msgs = wasDone ? [] : evaluateAwards(secId);
+    var awards = wasDone ? { messages: [], praise: '' } : evaluateAwards(secId);
+    var msgs = awards.messages.concat(streakMsgs);
+    recordHistory();
     save();
     renderTasks();
     paintPartnerProgress();
     renderPartnerStats();
 
     if (!wasDone) {
+      if (awards.praise) showPraise(awards.praise);
       msgs.forEach(function (m, i) {
         setTimeout(function () { toast(m, 'gold'); sndBall(); }, 260 + i * 700);
       });
-      if (msgs.length) sndFanfare();
+      if (msgs.length || awards.praise) sndFanfare();
       if (leveled) {
         setTimeout(function () {
           toast('✨ 레벨 업! Lv.' + S.progress.level, 'gold');
@@ -1733,6 +2104,8 @@ body.focus-mode .focus-exit{display:block}
           '" data-task="' + esc(t.id) + '" aria-pressed="' + (d ? 'true' : 'false') + '">' +
           '<span class="temoji">' + esc(t.emoji || '✔️') + '</span>' +
           '<span class="ttext">' + esc(t.text) + '</span>' +
+          (TTS_OK ? '<span class="tspeak" role="button" aria-label="' + esc(t.text) + ' 읽어주기"' +
+            ' data-text="' + esc(t.text) + '">🔊</span>' : '') +
           '<span class="tcheck">' + (d ? '✓' : '') + '</span>' +
           '</button>';
       });
@@ -1775,7 +2148,9 @@ body.focus-mode .focus-exit{display:block}
     $('statStars').textContent = '⭐ ' + S.progress.stars;
     $('statBalls').textContent = '⚪ ' + S.progress.balls;
     $('statBox').textContent = '📦 ' + Object.keys(S.box).length + ' / ' + MAX_DEX;
-    $('statStreak').textContent = '🔥 ' + (S.progress.streak || 0) + '일';
+    var shield = Math.max(0, Number(S.progress.streakShield) || 0);
+    $('statStreak').innerHTML = '🔥 ' + (S.progress.streak || 0) + '일' +
+      (shield > 0 ? '<span class="shield" title="연속 기록 프리패스 ' + shield + '회">🛡️ ' + shield + '</span>' : '');
     $('ballChip').textContent = String(S.progress.balls);
   }
 
@@ -1819,7 +2194,8 @@ body.focus-mode .focus-exit{display:block}
         }).catch(function () { });
       });
     }).catch(function () {
-      $('partnerGenus').textContent = '포켓몬 정보를 불러오지 못했어요 (인터넷 연결 확인)';
+      $('partnerGenus').innerHTML = '포켓몬 정보를 불러오지 못했어요 · ' +
+        '<button class="link-btn" type="button" data-act="partner-retry">🔄 다시 불러오기</button>';
       var img = $('partnerSprite');
       if (!img.getAttribute('src') || img.getAttribute('src') === BLANK) img.src = SPRITE + id + '.png';
       paintPartnerProgress();
@@ -2000,7 +2376,8 @@ body.focus-mode .focus-exit{display:block}
     }).catch(function () {
       openModal(modalShell('📖 포켓몬 도감',
         '<div class="detail-loading">도감을 불러오지 못했어요.<br>인터넷 연결을 확인하고 다시 열어 주세요.</div>',
-        { foot: '<button class="btn" type="button" data-close="1">닫기</button>' }));
+        { foot: '<button class="btn primary" type="button" data-act="detail-retry" data-id="' + esc(id) + '">🔄 다시 불러오기</button>' +
+          '<button class="btn" type="button" data-close="1">닫기</button>' }));
     });
   }
 
@@ -2221,7 +2598,10 @@ body.focus-mode .focus-exit{display:block}
         var stage = $('gachaStage');
         if (stage) {
           stage.innerHTML = '<div class="gacha-msg">앗, 포켓몬을 부르지 못했어요</div>' +
-            '<div class="gacha-hint">인터넷 연결을 확인하고 다시 시도해 주세요.<br>몬스터볼은 그대로 있어요!</div>';
+            '<div class="gacha-hint">인터넷 연결을 확인하고 다시 시도해 주세요.<br>몬스터볼은 그대로 있어요!</div>' +
+            '<div class="modal-foot" style="padding:8px 0 0">' +
+            '<button class="btn primary" type="button" data-act="gacha-retry">🔄 다시 시도</button>' +
+            '<button class="btn" type="button" data-close="1">닫기</button></div>';
         }
       });
   }
@@ -2876,10 +3256,127 @@ body.focus-mode .focus-exit{display:block}
   var setTab = 'basic';
   var SET_TABS = [
     { id: 'basic', label: '🏠 기본' },
+    { id: 'report', label: '📊 주간 리포트' },
     { id: 'tasks', label: '📋 할 일 관리' },
     { id: 'rewards', label: '🎁 보상' },
     { id: 'data', label: '💾 데이터' }
   ];
+
+  function taskInfoById(id) {
+    for (var i = 0; i < S.sections.length; i++) {
+      var ts = S.sections[i].tasks || [];
+      for (var j = 0; j < ts.length; j++) {
+        if (ts[j].id === id) return { text: ts[j].text, emoji: ts[j].emoji || '✔️', sec: S.sections[i].name };
+      }
+    }
+    return null;
+  }
+
+  /* 최근 7일 완료 기록을 계산해 주간 리포트 숫자로 만든다 */
+  function buildWeeklyReport() {
+    var days = [];
+    var totalDone = 0, totalCount = 0;
+    var doneDaysOf = {};
+    var missDaysOf = {};
+    var startMs = addDays(new Date(), -6).getTime();
+    for (var i = 6; i >= 0; i--) {
+      var d = addDays(new Date(), -i);
+      var key = dateKey(d);
+      var rec = (S.historyByDate || {})[key] || null;
+      var doneIds = (rec && rec.doneIds) ? rec.doneIds : [];
+      var total = rec ? (Number(rec.totalCount) || 0) : 0;
+      var pct = total ? Math.round(doneIds.length * 100 / total) : 0;
+      days.push({
+        key: key,
+        weekday: WEEKDAYS[d.getDay()],
+        dayLabel: (d.getMonth() + 1) + '/' + d.getDate(),
+        done: doneIds.length,
+        total: total,
+        pct: pct,
+        has: !!rec
+      });
+      totalDone += doneIds.length;
+      totalCount += total;
+      if (rec) {
+        var doneSet = {};
+        doneIds.forEach(function (id) {
+          doneSet[id] = true;
+          doneDaysOf[id] = (doneDaysOf[id] || 0) + 1;
+        });
+        applicableTaskList(d).forEach(function (t) {
+          if (!doneSet[t.id]) missDaysOf[t.id] = (missDaysOf[t.id] || 0) + 1;
+        });
+      }
+    }
+
+    var best = null, missed = null;
+    Object.keys(doneDaysOf).forEach(function (id) {
+      if (!best || doneDaysOf[id] > best.n) best = { id: id, n: doneDaysOf[id] };
+    });
+    Object.keys(missDaysOf).forEach(function (id) {
+      var n = missDaysOf[id];
+      if (n > 0 && (!missed || n > missed.n)) missed = { id: id, n: n };
+    });
+
+    var caughtWeek = 0;
+    Object.keys(S.box || {}).forEach(function (id) {
+      var at = Number((S.box[id] || {}).caughtAt || 0);
+      if (at >= startMs) caughtWeek++;
+    });
+
+    return {
+      days: days,
+      totalDone: totalDone,
+      totalCount: totalCount,
+      overall: totalCount ? Math.round(totalDone * 100 / totalCount) : 0,
+      recorded: days.filter(function (d) { return d.has; }).length,
+      best: best ? { text: (taskInfoById(best.id) || { text: '지운 할 일' }).text, n: best.n } : null,
+      missed: missed ? { text: (taskInfoById(missed.id) || { text: '지운 할 일' }).text, n: missed.n } : null,
+      starsWeek: totalDone,
+      starsNow: S.progress.stars,
+      caughtWeek: caughtWeek,
+      caughtTotal: Object.keys(S.box || {}).length,
+      streak: S.progress.streak || 0,
+      shield: Math.max(0, Number(S.progress.streakShield) || 0)
+    };
+  }
+
+  function reportTab() {
+    var r = buildWeeklyReport();
+    var today = todayKey();
+    var bars = r.days.map(function (d) {
+      var h = d.has ? clamp(d.pct, 0, 100) : 0;
+      return '<div class="wk-col' + (d.pct === 100 && d.has ? ' full' : '') + (d.key === today ? ' today' : '') + '">' +
+        '<div class="wk-bar" title="' + esc(d.dayLabel + ' ' + d.done + '/' + d.total + '개') + '">' +
+        '<i style="height:' + h + '%"></i></div>' +
+        '<span class="wk-pct">' + (d.has ? d.pct + '%' : '—') + '</span>' +
+        '<span class="wk-day">' + esc(d.weekday) + '</span></div>';
+    }).join('');
+
+    var html = '<div class="set-group">' +
+      '<h4>📊 최근 7일 완료율</h4>' +
+      '<div class="wk-chart">' + bars + '</div>' +
+      '<div class="wk-headline">7일 완료율 <b>' + r.overall + '%</b>' +
+      '<span class="empty-note" style="padding:0">완료 ' + r.totalDone + ' / ' + r.totalCount + '개</span></div>' +
+      '<div class="row-btns"><button class="btn sm" type="button" data-act="report-refresh">🔄 새로 계산</button></div>' +
+      '<div class="wk-note">할 일을 체크하면 그날 기록이 바로 쌓여요. 기록이 있는 날 ' + r.recorded + '일.</div>' +
+      '</div>' +
+
+      '<div class="set-group"><h4>🏅 이번 주 요약</h4>' +
+      '<div class="wk-row"><span class="k">가장 잘한 할 일</span><span class="v">' +
+      (r.best ? esc(r.best.text) + ' <span class="empty-note" style="padding:0">(7일 중 ' + r.best.n + '번)</span>' : '아직 기록이 없어요') +
+      '</span></div>' +
+      '<div class="wk-row"><span class="k">조금 더 챙길 할 일</span><span class="v">' +
+      (r.missed ? esc(r.missed.text) + ' <span class="empty-note" style="padding:0">(' + r.missed.n + '번 놓쳤어요)</span>' : '놓친 할 일이 없어요 👍') +
+      '</span></div>' +
+      '<div class="wk-row"><span class="k">⭐ 이번 주 모은 별</span><span class="v">' + r.starsWeek + '개' +
+      ' <span class="empty-note" style="padding:0">(지금 ⭐ ' + r.starsNow + '개)</span></span></div>' +
+      '<div class="wk-row"><span class="k">📦 잡은 포켓몬</span><span class="v">이번 주 ' + r.caughtWeek + '마리' +
+      ' <span class="empty-note" style="padding:0">(전체 ' + r.caughtTotal + '종류)</span></span></div>' +
+      '<div class="wk-row"><span class="k">🔥 연속 기록</span><span class="v">' + r.streak + '일 · 🛡️ 프리패스 ' + r.shield + '개</span></div>' +
+      '</div>'; 
+    return html;
+  }
 
   function settingsBody() {
     var html = '<div class="tabs">';
@@ -2889,6 +3386,7 @@ body.focus-mode .focus-exit{display:block}
     html += '</div>';
 
     if (setTab === 'basic') html += basicTab();
+    else if (setTab === 'report') html += reportTab();
     else if (setTab === 'tasks') html += tasksTab();
     else if (setTab === 'rewards') html += rewardsTab();
     else html += dataTab();
@@ -3003,7 +3501,8 @@ body.focus-mode .focus-exit{display:block}
       '· 레벨: Lv.' + S.progress.level + ' · XP ' + S.progress.xp + '/' + xpNeed(S.progress.level) + '<br>' +
       '· 별: ⭐' + S.progress.stars + ' · 몬스터볼: ⚪' + S.progress.balls + '<br>' +
       '· 잡은 포켓몬: ' + Object.keys(S.box).length + '종류<br>' +
-      '· 연속 기록: 🔥' + (S.progress.streak || 0) + '일<br>' +
+      '· 연속 기록: 🔥' + (S.progress.streak || 0) + '일 · 🛡️ 프리패스 ' +
+      Math.max(0, Number(S.progress.streakShield) || 0) + '개<br>' +
       '· 일정: ' + S.events.length + '개 (직접 추가)' + (S.synced.length ? ' + ' + S.synced.length + '개 (불러옴)' : '') +
       '</div></div>' +
       '<div class="set-group"><h4>⚠️ 초기화</h4>' +
@@ -3090,6 +3589,20 @@ body.focus-mode .focus-exit{display:block}
     }, 2700);
   }
 
+  /* 구간을 모두 끝냈을 때 할 일 카드 위에 잠깐 뜨는 칭찬 배너 */
+  var praiseTimer = null;
+  function showPraise(text) {
+    var el = $('praiseBanner');
+    if (!el || !text) return;
+    el.textContent = text;
+    el.classList.add('show');
+    if (praiseTimer) clearTimeout(praiseTimer);
+    praiseTimer = setTimeout(function () {
+      el.classList.remove('show');
+      praiseTimer = null;
+    }, 4600);
+  }
+
   function flushHeader() {
     $('dashTitle').textContent = S.settings.title;
     document.title = S.settings.title;
@@ -3107,6 +3620,7 @@ body.focus-mode .focus-exit{display:block}
   --------------------------------------------------------------- */
   function resetToday(silent) {
     var t = todayKey();
+    recordHistory();                      // 지우기 전에 오늘 기록을 주간 리포트에 남깁니다
     S.done = { date: t, ids: {} };
     S.progress.date = t;
     S.progress.ballsAwardedToday = 0;
@@ -3120,20 +3634,19 @@ body.focus-mode .focus-exit{display:block}
 
   function checkRollover() {
     var t = todayKey();
-    if (S.progress.date !== t) {
-      resetToday(true);
-      // 연속 기록: 어제 완료했으면 유지, 아니면 0
-      var y = new Date(); y.setDate(y.getDate() - 1);
-      if (S.progress.lastCompleteDate && S.progress.lastCompleteDate !== dateKey(y) && S.progress.lastCompleteDate !== t) {
-        S.progress.streak = 0;
-      }
-      save();
-      renderPartnerStats();
-      renderCalendar();
-      renderDayPanel();
-      loadWeather();
-      toast('🌅 새로운 하루! 오늘의 할 일이 시작됐어요');
-    }
+    if (S.progress.date === t) return;
+    var prevDate = (S.done && S.done.date) || S.progress.date;
+    var prevIds = (S.done && S.done.ids) || {};
+    recordHistoryFor(prevDate, prevIds);      // 어제 기록을 주간 리포트에 남깁니다
+    resetToday(true);
+    var shieldMsg = rolloverStreak();         // 하루 빠졌어도 프리패스가 있으면 연속 기록 유지
+    save();
+    renderPartnerStats();
+    renderCalendar();
+    renderDayPanel();
+    loadWeather();
+    toast('🌅 새로운 하루! 오늘의 할 일이 시작됐어요');
+    if (shieldMsg) setTimeout(function () { toast(shieldMsg, 'gold'); }, 700);
   }
 
   /* ---------------------------------------------------------------
@@ -3175,12 +3688,33 @@ body.focus-mode .focus-exit{display:block}
     $('btnEvolve').addEventListener('click', function () { doEvolve(); });
     $('btnRewardShop').addEventListener('click', function () { openShop(); });
 
-    // 할 일 토글
+    // 할 일 토글 (🔊 를 누를 때는 체크가 바뀌지 않도록 먼저 처리)
     $('sections').addEventListener('click', function (ev) {
+      var sp = ev.target.closest ? ev.target.closest('.tspeak') : null;
+      if (sp) {
+        ev.stopPropagation();
+        if (ev.preventDefault) ev.preventDefault();
+        speak(sp.getAttribute('data-text'));
+        return;
+      }
       var btn = ev.target.closest ? ev.target.closest('.task') : null;
       if (!btn) return;
       toggleTask(btn.getAttribute('data-sec'), btn.getAttribute('data-task'));
       btn.classList.add('reward-pop');
+    });
+
+    // 날씨 오류 → 다시 불러오기
+    $('weatherStrip').addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-act="wx-retry"]') : null;
+      if (!b) return;
+      loadWeather();
+    });
+
+    // 파트너 정보 오류 → 다시 불러오기
+    $('partnerCard').addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-act="partner-retry"]') : null;
+      if (!b) return;
+      refreshPartner(true);
     });
 
     // 달력
@@ -3280,6 +3814,9 @@ body.focus-mode .focus-exit{display:block}
     if (act === 'move') { showMoveDetail(actEl.getAttribute('data-move'), actEl); return; }
     if (act === 'set-partner') { setPartner(id); return; }
     if (act === 'box-open') { openDetail(id); return; }
+    if (act === 'detail-retry') { openDetail(Number(id) || S.partner.id); return; }
+    if (act === 'gacha-retry') { openGacha(); return; }
+    if (act === 'report-refresh') { rerenderSettings(); return; }
     if (act === 'box-sort') {
       boxSort = actEl.getAttribute('data-sort');
       renderBox();
@@ -3524,17 +4061,15 @@ body.focus-mode .focus-exit{display:block}
   function init() {
     S = loadState();
 
-    // 날짜가 바뀌었으면 오늘 상태 초기화
+    // 날짜가 바뀌었으면 오늘 상태 초기화 + 어제 기록 저장 + 연속 기록 점검
+    var shieldMsg = '';
     if (S.progress.date !== todayKey()) {
+      recordHistoryFor((S.done && S.done.date) || S.progress.date, (S.done && S.done.ids) || {});
       S.done = { date: todayKey(), ids: {} };
       S.progress.date = todayKey();
       S.progress.ballsAwardedToday = 0;
       S.progress.sectionsToday = [];
-      var y = new Date(); y.setDate(y.getDate() - 1);
-      if (S.progress.lastCompleteDate && S.progress.lastCompleteDate !== dateKey(y) &&
-        S.progress.lastCompleteDate !== todayKey()) {
-        S.progress.streak = 0;
-      }
+      shieldMsg = rolloverStreak();
       save();
     }
 
@@ -3551,6 +4086,7 @@ body.focus-mode .focus-exit{display:block}
     setInterval(checkRollover, 30000);
     // 10분마다 가족 캘린더(calendar.json)를 조용히 다시 확인
     setInterval(syncCalendarFile, 10 * 60 * 1000);
+    if (shieldMsg) setTimeout(function () { toast(shieldMsg, 'gold'); }, 900);
 
     // 홈 화면 앱(PWA) — HTTPS 에서만 동작
     if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
