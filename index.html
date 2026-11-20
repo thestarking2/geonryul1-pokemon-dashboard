@@ -1780,7 +1780,7 @@ body.focus-mode .focus-exit{display:block}
             (m.lv ? '<span style="font-size:11px;color:#8a7f70">Lv.' + m.lv + '</span>' : '') +
             '</button>';
         }).join('');
-        fillMoveNames(p.moves.slice(0, 8));
+        fillMoveNames(p.moves);
       }
 
       // 진화 트랙
@@ -1797,22 +1797,27 @@ body.focus-mode .focus-exit{display:block}
     return String(name || '').replace(/-/g, ' ');
   }
 
-  // 앞쪽 기술 몇 개의 한글 이름을 차례로 채워 넣는다.
+  // 기술 이름을 한글로 채워 넣는다 (한 번에 3개씩).
   function fillMoveNames(list) {
-    var chain = Promise.resolve();
-    (list || []).forEach(function (m) {
-      chain = chain.then(function () {
+    var items = list || [];
+    var i = 0;
+    function round() {
+      if (i >= items.length) return Promise.resolve();
+      var chunk = items.slice(i, i + 3);
+      i += 3;
+      return Promise.all(chunk.map(function (m) {
         return getMove(m.name).then(function (mv) {
           var nodes = document.querySelectorAll('#movesList .move-btn[data-move="' + m.name + '"]');
-          for (var i = 0; i < nodes.length; i++) {
-            var el = nodes[i].querySelector('.tname');
+          for (var j = 0; j < nodes.length; j++) {
+            var el = nodes[j].querySelector('.tname');
             if (el) el.textContent = mv.nameKo;
-            var mark = nodes[i].querySelector('.mt');
+            var mark = nodes[j].querySelector('.mt');
             if (mark) mark.style.background = TYPE_COLOR[mv.type] || '#cbb99d';
           }
         }).catch(function () { });
-      });
-    });
+      })).then(round);
+    }
+    round();
   }
 
   function renderEvoTrack(evo) {
