@@ -471,10 +471,20 @@ ul{margin:0;padding:0;list-style:none}
   .board{gap:12px;margin-top:10px}
   .task-col{gap:10px}
   .card{padding:10px 12px 12px;border-radius:18px}
-  .cday{min-height:44px;font-size:15px}
-  .cal-filters{gap:5px;margin-bottom:8px}
-  .fchip{padding:3px 9px;font-size:13px;border-width:2.5px}
-  .day-panel{margin-top:8px;padding-top:8px}
+  .cal-col .card{padding:9px 10px 10px}
+  .cal-col .card-title{font-size:17px}
+  .cday{min-height:38px;font-size:14.5px}
+  .cal-month{font-size:15.5px;min-width:92px}
+  .mini-btn{width:34px;height:34px;border-radius:10px;font-size:16px}
+  .mini-btn.today-btn{font-size:13.5px;padding:0 8px}
+  .cal-filters{gap:4px;margin-bottom:7px}
+  .fchip{padding:2px 8px;font-size:12.5px;border-width:2.5px}
+  .day-panel{margin-top:7px;padding-top:7px}
+  .day-title strong{font-size:15px}
+  .day-title .btn.sm{font-size:12px;min-height:32px;padding:4px 8px}
+  .ev-item{font-size:14px;padding:6px 8px;border-width:2px}
+  .add-ev input[type=text],.add-ev select,.add-ev button{height:38px;font-size:13.5px}
+  .ics-note,.empty-note{font-size:12.5px}
 
   /* --- 파트너 카드 : 한 줄 납작하게 --- */
   .partner-card{padding:8px 12px}
@@ -510,33 +520,35 @@ ul{margin:0;padding:0;list-style:none}
   .today-ring{width:50px;height:50px;border-width:2.5px}
   .today-ring span{width:40px;height:40px;font-size:12.5px}
   body:not(.focus-mode) .sections{
-    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
     gap:9px;margin-top:9px;align-items:start;
   }
   .section{padding:7px 8px 8px;border-width:2.5px;border-radius:14px;box-shadow:0 3px 0 rgba(43,43,51,.14)}
   .sec-head{gap:6px;margin-bottom:5px}
-  .sec-emoji{font-size:18px}
-  .sec-name{font-size:15px}
-  .sec-name small{font-size:11px;margin-left:4px}
-  .sec-count{font-size:12px;padding:0 6px;border-width:2px;border-radius:9px}
+  .sec-emoji{font-size:20px}
+  .sec-name{font-size:16.5px}
+  .sec-name small{font-size:11.5px;margin-left:4px}
+  .sec-count{font-size:13px;padding:1px 7px;border-width:2px;border-radius:9px}
   .sec-badge{font-size:13px}
   .sec-progress{height:6px;border-width:1.5px;margin-bottom:6px}
-  .tasks{grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:6px}
-  .task{min-height:44px;padding:5px 8px;font-size:14.5px;gap:7px;border-width:2.5px;border-radius:11px;box-shadow:0 3px 0 rgba(43,43,51,.16)}
-  .task .temoji{font-size:17px}
-  .task .tcheck{width:24px;height:24px;font-size:13px;border-width:2.5px}
-  .task-empty{font-size:12.5px}
+  .tasks{grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:8px}
+  .task{min-height:56px;padding:8px 11px;font-size:16.5px;gap:9px;border-width:2.5px;border-radius:13px;box-shadow:0 3px 0 rgba(43,43,51,.18)}
+  .task .temoji{font-size:21px}
+  .task .tcheck{width:31px;height:31px;font-size:16px;border-width:2.5px}
+  .task-empty{font-size:13px}
   .tasks-foot{margin-top:8px;font-size:12px}
 }
 
-/* 달력과 할 일을 나란히 두는 넓은 화면 */
+/* 달력과 할 일을 나란히 두는 넓은 화면 — 달력은 작게, 할 일은 넓게 */
 @media (min-width:1061px){
-  .board{grid-template-columns:minmax(330px,400px) minmax(0,1fr)}
+  .board{grid-template-columns:minmax(260px,320px) minmax(0,1fr)}
 }
 
 /* 넓은 화면에서는 태블릿 세로처럼 할 일이 더 크게 보이도록 */
 @media (min-width:1360px){
-  .tasks{grid-template-columns:repeat(auto-fill,minmax(152px,1fr))}
+  .tasks{grid-template-columns:repeat(auto-fill,minmax(215px,1fr))}
+  .task{min-height:58px;font-size:17px}
+  .task .tcheck{width:33px;height:33px}
 }
 
 /* ---------- 집중 모드 ---------- */
