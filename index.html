@@ -1674,17 +1674,76 @@ body.focus-mode .focus-exit{display:block}
     } catch (e) { return false; }
   })();
 
+  /* 기기의 목소리 목록 — 항상 새로 읽고, 비어 있으면 사전 쪽에 받아 둔 목록을 씁니다.
+     (크롬·안드로이드는 처음에는 getVoices()가 비어 있다가 voiceschanged 뒤에 채워집니다) */
+  function voiceList() {
+    var list = [];
+    try { list = (window.speechSynthesis && window.speechSynthesis.getVoices()) || []; }
+    catch (e) { list = []; }
+    if ((!list || !list.length) && dictVoices && dictVoices.length) list = dictVoices;
+    return list || [];
+  }
+  /* 안드로이드는 ko_KR 처럼 밑줄을 쓰기도 해서 ko-kr 로 맞춥니다 */
+  function voiceLangOf(v) {
+    return String((v && v.lang) || '').replace(/_/g, '-').toLowerCase();
+  }
+  /* 한국인이 읽는 듯한 목소리 이름 — 구글·삼성·유나·서라 등 */
+  var KO_VOICE_NAME = /google|samsung|yuna|sora|heami|injoon|sunhi|natural|neural|korean|한국/i;
+  /* 한국어 목소리 고르기: 기기 기본 목소리가 영어여도 반드시 한국어 목소리를 씁니다.
+     1) ko-KR + 자연스러운 이름  2) 아무 ko-KR  3) 아무 ko*  4) 없으면 null */
+  function pickKoreanVoice() {
+    var voices = voiceList();
+    if (!voices.length) return null;
+    var exact = [], near = [];
+    voices.forEach(function (v) {
+      var l = voiceLangOf(v);
+      if (l === 'ko-kr') exact.push(v);
+      else if (l.indexOf('ko') === 0) near.push(v);
+    });
+    var i;
+    for (i = 0; i < exact.length; i++) {          // 1) ko-KR + 자연스러운 목소리
+      if (KO_VOICE_NAME.test(String(exact[i].name || ''))) return exact[i];
+    }
+    if (exact.length) return exact[0];             // 2) 아무 ko-KR
+    for (i = 0; i < near.length; i++) {            // 3) ko 로 시작(ko · ko-KP) 중 자연스러운 목소리
+      if (KO_VOICE_NAME.test(String(near[i].name || ''))) return near[i];
+    }
+    return near.length ? near[0] : null;           // 4) 나머지 ko 목소리
+  }
+  var koVoiceMissNoticed = false;   // 한국어 음성이 없다는 안내는 한 번만
+
+  /* 읽어 줄 글을 한국어로 자연스럽게 — 기호와 그림문자는 소리내지 않게 */
+  function koSpeakText(t) {
+    var s = cleanText(t)
+      .replace(/[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE00}-\u{FE0F}\u{200D}]/gu, ' ')
+      .replace(/\s*[·ㆍ]\s*/g, ', ')
+      .replace(/\s*&\s*/g, ' 그리고 ')
+      .replace(/\s*\|+\s*/g, ', ')
+      .replace(/\s+/g, ' ')
+      .replace(/\s+([,.!?])/g, '$1')
+      .trim();
+    return s || cleanText(t);
+  }
+
   function speak(text) {
-    var msg = cleanText(text);
+    var msg = koSpeakText(text);
     if (!msg) return false;
     if (!TTS_OK) { toast('이 기기에서는 읽어주기를 쓸 수 없어요'); return false; }
     try {
+      var koVoice = pickKoreanVoice();
       window.speechSynthesis.cancel();
       var u = new window.SpeechSynthesisUtterance(msg);
-      u.lang = 'ko-KR';
-      u.rate = 0.92;
-      u.pitch = 1.05;
+      /* 목소리를 직접 지정해야 기기 기본(영어) 목소리로 읽지 않습니다 */
+      if (koVoice) u.voice = koVoice;
+      /* lang 은 표준 표기(ko-KR)로 — 안드로이드의 ko_KR 을 그대로 쓰지 않습니다 */
+      u.lang = (koVoice && koVoice.lang) ? String(koVoice.lang).replace(/_/g, '-') : 'ko-KR';
+      u.rate = 0.95;      // 또박또박하되 늘어지지 않게
+      u.pitch = 1;        // 음을 올리면 외국인 억양처럼 들려서 그대로
       window.speechSynthesis.speak(u);
+      if (!koVoice && voiceList().length && !koVoiceMissNoticed) {
+        koVoiceMissNoticed = true;
+        toast('이 기기에 한국어 음성이 없어 기본 목소리로 읽어요');
+      }
       return true;
     } catch (e) {
       toast('읽어주기를 시작하지 못했어요');
@@ -3333,10 +3392,10 @@ body.focus-mode .focus-exit{display:block}
   }
   function dictPickVoice(lang) {
     if (!dictVoices.length) dictLoadVoices();
-    var want = String(lang || '').toLowerCase();
+    var want = String(lang || '').replace(/_/g, '-').toLowerCase();
     var exact = [], near = [];
     dictVoices.forEach(function (v) {
-      var l = String(v.lang || '').replace('_', '-').toLowerCase();
+      var l = voiceLangOf(v);   // ko_KR · en_US 같은 밑줄 표기도 -로 맞춤
       if (l === want) exact.push(v);
       else if (want && l.indexOf(want.split('-')[0]) === 0) near.push(v);
     });
