@@ -1,7 +1,7 @@
 /* 건률네 포켓몬 대시보드 — 홈 화면 앱(PWA) 서비스 워커
    · 화면(index.html)·아이콘·매니페스트만 캐시하고,
    · calendar.json 과 PokeAPI/날씨 요청은 항상 네트워크로 보냅니다. */
-const CACHE = 'geonryul-dashboard-v11';
+const CACHE = 'geonryul-dashboard-v12';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (event) => {
