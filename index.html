@@ -1465,7 +1465,7 @@ body.focus-mode .focus-exit{display:block}
       done: { date: t, ids: {} },
       progress: {
         date: t, level: 1, xp: 0, stars: 0, balls: 1, streak: 0, streakShield: 1,
-        lastCompleteDate: '', ballsAwardedToday: 0, sectionsToday: []
+        lastCompleteDate: '', ballsAwardedToday: 0, sectionsToday: [], carriedWeekendIds: []
       },
       partner: { id: 25 },
       starterPicked: false,
@@ -1505,6 +1505,7 @@ body.focus-mode .focus-exit{display:block}
     if (!raw.done || typeof raw.done !== 'object') raw.done = d.done;
     if (!raw.done.ids || typeof raw.done.ids !== 'object') raw.done.ids = {};
     if (!Array.isArray(raw.progress.sectionsToday)) raw.progress.sectionsToday = [];
+    if (!Array.isArray(raw.progress.carriedWeekendIds)) raw.progress.carriedWeekendIds = [];
     if (typeof raw.progress.streakShield !== 'number') raw.progress.streakShield = 1;
     if (!raw.historyByDate || typeof raw.historyByDate !== 'object') raw.historyByDate = {};
     return raw;
@@ -2117,8 +2118,8 @@ body.focus-mode .focus-exit{display:block}
         out.praise = sectionPraise(sec);
       }
     }
-    // 2) 30 XP 마다 몬스터볼
-    var want = Math.floor(doneCountAll() * 10 / 30);
+    // 2) 30 XP 마다 몬스터볼 (토요일에서 넘어온 주말 체크는 오늘 몫으로 세지 않아요)
+    var want = Math.floor(doneCountForBalls() * 10 / 30);
     var given = 0;
     while (S.progress.ballsAwardedToday < want && given < 20) {
       S.progress.ballsAwardedToday += 1;
@@ -2199,7 +2200,7 @@ body.focus-mode .focus-exit{display:block}
       html += '<div class="sec-head">';
       html += '<span class="sec-emoji">' + esc(sec.emoji || '📌') + '</span>';
       html += '<span class="sec-name">' + esc(sec.name) +
-        '<small>' + (isWeek ? (weekend ? '오늘은 주말! 🎉' : '주말에 해요') : tasks.length + '개') + '</small></span>';
+        '<small>' + (isWeek ? (weekend ? '토·일 연속 체크 🎉' : '주말에 해요') : tasks.length + '개') + '</small></span>';
       if (complete) html += '<span class="sec-badge">🎉</span>';
       html += '<span class="sec-count">' + done + '/' + tasks.length + '</span>';
       html += '</div>';
@@ -4790,6 +4791,65 @@ body.focus-mode .focus-exit{display:block}
   /* ---------------------------------------------------------------
      18. 오늘 초기화 / 자정 리셋
   --------------------------------------------------------------- */
+  /* 주말(토·일)은 한 번의 숙제 기간으로 봅니다 —
+     토요일에 체크한 '주말 할 일'은 일요일로 넘어가도 그대로 이어집니다. */
+  function sameWeekendRollover(prevDate, today) {
+    if (!prevDate || !today) return false;
+    var p = parseDay(prevDate);
+    var t = parseDay(today);
+    if (isNaN(p.getTime()) || isNaN(t.getTime())) return false;
+    if (p.getDay() !== 6) return false;              // 어제가 토요일
+    if (t.getDay() !== 0) return false;              // 오늘이 일요일
+    return dateKey(addDays(p, 1)) === today;         // 바로 다음 날 = 같은 주말
+  }
+
+  function weekendTaskIds() {
+    var ids = [];
+    (S.sections || []).forEach(function (sec) {
+      if (!sec.weekendOnly) return;
+      (sec.tasks || []).forEach(function (t) { ids.push(t.id); });
+    });
+    return ids;
+  }
+
+  /* 오늘 새로 체크한 개수 — 토요일에서 넘어온 주말 체크는 빼고 셉니다(볼 중복 지급 방지) */
+  function doneCountForBalls() {
+    var carried = (S.progress && S.progress.carriedWeekendIds) || [];
+    var n = 0;
+    allTasks().forEach(function (x) {
+      if (!isDone(x.task.id)) return;
+      if (carried.indexOf(x.task.id) !== -1) return;
+      n++;
+    });
+    return n;
+  }
+
+  /* 날짜가 바뀌었을 때 오늘 상태로 넘깁니다. 토→일이면 주말 할 일 체크를 이어서 가져갑니다. */
+  function rolloverToToday(prevDate, prevIds) {
+    var t = todayKey();
+    recordHistoryFor(prevDate, prevIds);      // 지난 날 기록은 주간 리포트에 남깁니다
+    var carry = sameWeekendRollover(prevDate, t);
+    S.done = { date: t, ids: {} };
+    S.progress.date = t;
+    S.progress.ballsAwardedToday = 0;
+    S.progress.sectionsToday = [];
+    S.progress.carriedWeekendIds = [];
+    S.dict = { date: t, words: {} };
+    if (carry) {
+      weekendTaskIds().forEach(function (id) {
+        if (prevIds && prevIds[id]) S.done.ids[id] = true;
+      });
+      // 토요일에 이미 끝낸 주말 루틴은 일요일에 몬스터볼을 또 주지 않아요
+      (S.sections || []).forEach(function (sec) {
+        if (!sec.weekendOnly || !sec.tasks || !sec.tasks.length) return;
+        var allDone = sec.tasks.every(function (x) { return !!S.done.ids[x.id]; });
+        if (allDone) S.progress.sectionsToday.push(sec.id);
+      });
+      S.progress.carriedWeekendIds = Object.keys(S.done.ids);
+    }
+    return carry;
+  }
+
   function resetToday(silent) {
     var t = todayKey();
     recordHistory();                      // 지우기 전에 오늘 기록을 주간 리포트에 남깁니다
@@ -4797,6 +4857,7 @@ body.focus-mode .focus-exit{display:block}
     S.progress.date = t;
     S.progress.ballsAwardedToday = 0;
     S.progress.sectionsToday = [];
+    S.progress.carriedWeekendIds = [];
     S.dict = { date: t, words: {} };
     save();
     renderTasks();
@@ -4810,16 +4871,18 @@ body.focus-mode .focus-exit{display:block}
     if (S.progress.date === t) return;
     var prevDate = (S.done && S.done.date) || S.progress.date;
     var prevIds = (S.done && S.done.ids) || {};
-    recordHistoryFor(prevDate, prevIds);      // 어제 기록을 주간 리포트에 남깁니다
-    resetToday(true);
+    var carried = rolloverToToday(prevDate, prevIds);
     var shieldMsg = rolloverStreak();         // 하루 빠졌어도 프리패스가 있으면 연속 기록 유지
     save();
+    renderTasks();
+    paintPartnerProgress();
     renderPartnerStats();
     renderCalendar();
     renderDayPanel();
     loadWeather();
     toast('🌅 새로운 하루! 오늘의 할 일이 시작됐어요');
-    if (shieldMsg) setTimeout(function () { toast(shieldMsg, 'gold'); }, 700);
+    if (carried) setTimeout(function () { toast('🎉 주말 할 일은 토·일 연속! 어제 체크한 그대로 이어져요', 'gold'); }, 350);
+    if (shieldMsg) setTimeout(function () { toast(shieldMsg, 'gold'); }, 900);
   }
 
   /* ---------------------------------------------------------------
@@ -5255,11 +5318,8 @@ body.focus-mode .focus-exit{display:block}
     // 날짜가 바뀌었으면 오늘 상태 초기화 + 어제 기록 저장 + 연속 기록 점검
     var shieldMsg = '';
     if (S.progress.date !== todayKey()) {
-      recordHistoryFor((S.done && S.done.date) || S.progress.date, (S.done && S.done.ids) || {});
-      S.done = { date: todayKey(), ids: {} };
-      S.progress.date = todayKey();
-      S.progress.ballsAwardedToday = 0;
-      S.progress.sectionsToday = [];
+      // 토요일 → 일요일이면 주말 할 일 체크를 이어서 가져갑니다(rolloverToToday)
+      rolloverToToday((S.done && S.done.date) || S.progress.date, (S.done && S.done.ids) || {});
       shieldMsg = rolloverStreak();
       save();
     }
