@@ -1099,12 +1099,24 @@ body.focus-mode .focus-exit{display:block}
 .hgm-sub{font-size:13px;color:var(--ink-soft);line-height:1.3}
 .hg-tip{font-size:13.5px;color:var(--ink-soft);text-align:center;line-height:1.45;background:#fffaf0;border:2px dashed #e0cfae;border-radius:14px;padding:8px 10px}
 
+/* 게임 화면 맨 위 — 문제를 풀다가도 다른 놀이로 바로 바꿀 수 있는 선택 막대 */
+.hg-modebar{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px;border:3px solid var(--ink);border-radius:16px;background:#fff8ea;max-width:100%;box-sizing:border-box}
+.hg-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:50px;padding:4px 4px;border:0;border-radius:11px;
+  background:transparent;color:#7a6f5c;font-weight:800;line-height:1.15;touch-action:manipulation;transition:background .15s ease,color .15s ease}
+.hg-tab .temoji{font-size:18px;line-height:1}
+.hg-tab .tname{font-size:13.5px;letter-spacing:-0.2px;white-space:nowrap}
+.hg-tab.active{background:#2f8a4e;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)}
+.hg-tab.active .tname{font-weight:900}
+.hg-tab[data-mode="meaning"].active{background:#2b6fa8}
+.hg-tab[data-mode="build"].active{background:#a0548a}
+.hg-tab:active{transform:translateY(1px)}
+
 .hg-qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .hg-prog{font-size:15px;font-weight:800;background:#fff;border:2.5px solid var(--ink);border-radius:12px;padding:2px 10px}
 .hg-qmode{font-size:14.5px;font-weight:700;color:var(--ink-soft)}
 .hg-bar{height:10px;border-radius:8px;background:#f0e7d9;border:2px solid rgba(43,43,51,.16);overflow:hidden}
 .hg-bar i{display:block;height:100%;background:linear-gradient(90deg,#8ee06a,#3fae64);transition:width .3s ease}
-.hg-prompt{text-align:center;font-size:clamp(15px,2.4vw,17.5px);font-weight:700;line-height:1.4}
+.hg-prompt{text-align:center;font-size:clamp(15px,2.4vw,17.5px);font-weight:700;line-height:1.4;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;max-width:100%}
 
 .hg-strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;padding:16px 8px;border:3px dashed #e0cfae;border-radius:20px;background:#fffdf8}
 .hg-syl{font-size:clamp(30px,5.4vw,44px);font-weight:800;line-height:1.1;padding:2px 1px;border-radius:10px;transition:background .2s ease}
@@ -1190,6 +1202,37 @@ body.focus-mode .focus-exit{display:block}
 .hg-lock-stats{font-size:14.5px;font-weight:700;color:#6b4a00;background:#fff6d8;border:2px solid #d9b45a;border-radius:999px;padding:3px 12px}
 .hg-lock .hg-wide{flex:0 0 auto;align-self:stretch;max-width:320px;min-height:56px}
 .hg-lock-note{font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+
+/* 휴대폰 세로(≈360~480px) — 안내 문구는 줄바꿈되고, 글자·단어 사이 자리를 줄여 상자 안에 들어오게 */
+@media (max-width:480px){
+  .hg-prompt{font-size:15px;line-height:1.35;padding:0 2px}
+  .hg-qmode{display:none}
+  .hg-qhead{gap:6px}
+  .hg-prog{font-size:14px;padding:2px 8px}
+  .hg-modebar{gap:4px;padding:4px;border-width:2.5px;border-radius:14px}
+  .hg-tab{min-height:44px;padding:3px 2px}
+  .hg-tab .temoji{font-size:15px}
+  .hg-tab .tname{font-size:11.5px;letter-spacing:-0.4px}
+  .hg-strip{padding:12px 4px;max-width:100%;box-sizing:border-box}
+  .hg-syl{font-size:clamp(20px,5.8vw,25px);padding:2px 0}
+  .hg-gap{width:15px;min-width:15px;height:38px;margin:0 1px;border-width:2px;border-radius:9px}
+  .hg-gap::before{top:7px;bottom:7px;width:3px;margin-left:-1.5px}
+  .hg-gap.on{width:21px;min-width:21px;border-width:2.5px}
+  .hg-gap.on::before{width:6px;margin-left:-3px;top:6px;bottom:6px}
+  .hg-sentence{padding:10px 6px;gap:6px}
+  .hg-pill-w{font-size:clamp(19px,5vw,24px);padding:5px 9px;border-width:2.5px;border-radius:13px}
+  .hg-words{gap:6px}
+  .hg-chunk{font-size:clamp(20px,5.4vw,26px);padding:6px 10px;border-width:2.5px;border-radius:13px}
+  .hg-slots{padding:8px 6px;gap:6px}
+  .hg-slot{min-width:58px;min-height:50px}
+  .hg-slot-word{font-size:clamp(17px,4.6vw,22px)}
+  .hg-block{font-size:clamp(19px,5vw,24px);padding:8px 12px}
+  .hg-choices{gap:8px}
+  .hg-choice{min-height:132px;padding:10px 8px}
+  .hg-choice-emoji{font-size:clamp(32px,9vw,42px)}
+  .hg-choice-text{font-size:14px}
+  .hg-listen{font-size:14px;padding:0 10px}
+}
 </style>
 </head>
 <body>
@@ -4166,9 +4209,9 @@ body.focus-mode .focus-exit{display:block}
   var HANGUL_WORD_COLORS = 5;
 
   var HANGUL_MODES = {
-    split: { emoji: '✂️', name: '단어 끊어 읽기', sub: '어디서 끊어 읽는지 찾아요' },
-    meaning: { emoji: '🎯', name: '읽고 뜻 맞히기', sub: '읽고 그림을 찾아요' },
-    build: { emoji: '🧩', name: '문장 만들기', sub: '단어 블록을 차례대로' }
+    split: { emoji: '✂️', name: '단어 끊어 읽기', short: '끊어 읽기', sub: '어디서 끊어 읽는지 찾아요' },
+    meaning: { emoji: '🎯', name: '읽고 뜻 맞히기', short: '뜻 맞히기', sub: '읽고 그림을 찾아요' },
+    build: { emoji: '🧩', name: '문장 만들기', short: '문장 만들기', sub: '단어 블록을 차례대로' }
   };
 
   /* 그림(이모지) + 다른 말로 쓴 뜻 + 단어 덩어리(어절)
@@ -4343,6 +4386,20 @@ body.focus-mode .focus-exit{display:block}
       '</div>';
   }
 
+  /* 게임 화면 맨 위의 놀이 선택 막대 — 지금 어떤 놀이인지 보이고, 눌러서 바로 바꿔요 */
+  function hangulModeBarHtml() {
+    var cur = hangulState ? hangulState.mode : '';
+    var tabs = Object.keys(HANGUL_MODES).map(function (id) {
+      var m = HANGUL_MODES[id];
+      var on = id === cur;
+      return '<button class="hg-tab' + (on ? ' active' : '') + '" type="button" role="tab" aria-selected="' + (on ? 'true' : 'false') +
+        '" data-hact="switch" data-mode="' + id + '" title="' + esc(m.name) + '로 바꾸기">' +
+        '<span class="temoji" aria-hidden="true">' + m.emoji + '</span>' +
+        '<span class="tname">' + esc(m.short) + '</span></button>';
+    }).join('');
+    return '<div class="hg-modebar" role="tablist" aria-label="놀이 고르기">' + tabs + '</div>';
+  }
+
   function hangulFeedbackHtml() {
     if (!hangulState.msg) return '<div class="hg-feedback" id="hgFeedback"></div>';
     return '<div class="hg-feedback ' + (hangulState.msgKind === 'good' ? 'good' : 'warn') + '" id="hgFeedback">' +
@@ -4464,6 +4521,7 @@ body.focus-mode .focus-exit{display:block}
         (last ? '결과 보기 →' : '다음 문제 →') + '</button></div>'
       : '';
     return '<div class="hg-game" data-mode="' + st.mode + '" data-q="' + st.qIndex + '">' +
+      hangulModeBarHtml() +
       '<div class="hg-qhead">' +
         '<span class="hg-prog">' + m.emoji + ' ' + (st.qIndex + 1) + ' / ' + total + '</span>' +
         '<span class="hg-qmode">' + m.name + '</span>' +
@@ -4642,6 +4700,17 @@ body.focus-mode .focus-exit{display:block}
     hangulRender(true);
   }
 
+  /* 게임 화면의 놀이 선택 막대 — 다른 놀이를 누르면 그 놀이 5문제 판을 새로 시작해요.
+     한 판을 끝내야만 오늘 판 수가 늘어나므로, 바꾸는 것만으로는 제한이 줄지 않아요. */
+  function hangulSwitchMode(mode) {
+    if (!HANGUL_MODES[mode]) return;
+    var st = hangulState;
+    if (!st || st.screen !== 'play') { hangulStartRound(mode); return; }
+    if (st.mode === mode) return;          // 지금 하는 놀이를 다시 누르면 하던 문제 그대로
+    hangulStartRound(mode);
+    toast('🎮 ' + HANGUL_MODES[mode].name + '로 바꿨어! 새 판 시작!');
+  }
+
   function openHangul() {
     hangulState = hangulBlankState();
     hangulDay();
@@ -4807,6 +4876,7 @@ body.focus-mode .focus-exit{display:block}
   function hangulHandleAct(el) {
     var act = el.getAttribute('data-hact');
     if (act === 'mode') { hangulStartRound(el.getAttribute('data-mode')); return; }
+    if (act === 'switch') { hangulSwitchMode(el.getAttribute('data-mode')); return; }
     if (act === 'gap') { hangulTapGap(Number(el.getAttribute('data-gap')), el.getAttribute('data-ok') === '1'); return; }
     if (act === 'say') { speak(el.getAttribute('data-say') || ''); return; }
     if (act === 'pick') { hangulPickChoice(Number(el.getAttribute('data-pick'))); return; }
