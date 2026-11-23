@@ -1113,12 +1113,13 @@ body.focus-mode .focus-exit{display:block}
 .hg-syl.w2{background:#eafbe4}
 .hg-syl.w3{background:#fdeaf6}
 .hg-syl.w4{background:#eef0ff}
-.hg-gap{position:relative;width:26px;min-width:26px;height:56px;padding:0;border:0;background:transparent;touch-action:manipulation}
-.hg-gap::before{content:'';position:absolute;left:11px;top:8px;bottom:8px;width:4px;border-radius:4px;
-  background:repeating-linear-gradient(180deg,#e2d3bb 0 6px,transparent 6px 12px)}
-.hg-gap:active::before{background:#c9b592}
-.hg-gap.on{width:34px;min-width:34px}
-.hg-gap.on::before{left:14px;width:7px;background:#2f8a4e;box-shadow:0 0 0 3px rgba(47,138,78,.15)}
+.hg-gap{position:relative;width:30px;min-width:30px;height:58px;padding:0;border:2.5px solid #e6d8c0;border-radius:12px;
+  background:#fbf5e9;touch-action:manipulation;margin:0 2px}
+.hg-gap::before{content:'';position:absolute;left:50%;margin-left:-2px;top:9px;bottom:9px;width:4px;border-radius:4px;
+  background:repeating-linear-gradient(180deg,#cdb692 0 7px,transparent 7px 13px)}
+.hg-gap:active{background:#f3e7d2;border-color:#d9c39f}
+.hg-gap.on{width:38px;min-width:38px;background:#e8f7ea;border-color:#7fc08c}
+.hg-gap.on::before{background:#2f8a4e;width:7px;margin-left:-3.5px;top:8px;bottom:8px}
 
 .hg-words{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .hg-chunk{font-size:clamp(26px,4.8vw,34px);font-weight:800;line-height:1.15;padding:8px 14px;border:3px solid var(--ink);
@@ -1130,7 +1131,7 @@ body.focus-mode .focus-exit{display:block}
 .hg-chunk.w4{background:#eef0ff;border-color:#8f97d8}
 @keyframes hgPop{0%{transform:scale(.72)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
 .hg-solved{display:flex;flex-direction:column;gap:10px;align-items:center;padding:6px 0}
-.hg-solved-scene{font-size:clamp(42px,8vw,62px);line-height:1.1;letter-spacing:4px;text-align:center}
+.hg-solved-scene{font-size:clamp(48px,8.6vw,70px);line-height:1.1;letter-spacing:4px;text-align:center}
 .hg-solved-say{font-size:15.5px;font-weight:700;color:#2f6b3a;text-align:center;background:#eefbee;border:2.5px solid #8ecb9b;border-radius:14px;padding:7px 12px}
 .hg-hintline{display:flex;justify-content:center}
 
@@ -1146,11 +1147,11 @@ body.focus-mode .focus-exit{display:block}
   border:3px solid var(--ink);border-radius:20px;background:#fffdf8;box-shadow:0 5px 0 rgba(43,43,51,.2)}
 .hg-choice:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(43,43,51,.2)}
 .hg-choice-emoji{font-size:clamp(36px,6.6vw,52px);line-height:1.05;letter-spacing:2px;text-align:center}
-.hg-choice-text{font-size:14.5px;font-weight:700;line-height:1.32;text-align:center;color:#4a4034}
+.hg-choice-text{font-size:15.5px;font-weight:700;line-height:1.32;text-align:center;color:#4a4034}
 .hg-choice.wrong{opacity:.5;background:#f3eee6}
 .hg-choice.wrong .hg-choice-text{text-decoration:line-through}
 
-.hg-scene{font-size:clamp(44px,8.4vw,66px);line-height:1.15;letter-spacing:6px;text-align:center}
+.hg-scene{font-size:clamp(52px,9vw,76px);line-height:1.15;letter-spacing:6px;text-align:center}
 .hg-slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:74px;padding:10px;border:3px dashed #cfd8c4;border-radius:18px;background:#fbfdf8}
 .hg-slot{display:grid;place-items:center;min-width:76px;min-height:58px;padding:4px;border:3px dashed #d5ddca;border-radius:14px;color:#b3bda7;font-size:13px;font-weight:700}
 .hg-slot.filled{border-style:solid;border-color:#6fa8d6;background:#e6f4ff;color:var(--ink)}
@@ -1161,7 +1162,7 @@ body.focus-mode .focus-exit{display:block}
 .hg-slot-word{border:0;background:transparent;font-size:clamp(19px,3.4vw,24px);font-weight:800;color:var(--ink);padding:4px 6px}
 .hg-slot.bad{border-color:#e06a5a;background:#ffeceb;animation:hgShake .3s ease}
 .hg-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 0}
-.hg-block{font-size:clamp(20px,3.6vw,26px);font-weight:800;padding:8px 14px;border:3px solid var(--ink);border-radius:14px;
+.hg-block{font-size:clamp(22px,3.8vw,28px);font-weight:800;padding:10px 16px;border:3px solid var(--ink);border-radius:14px;
   background:#fffdf8;box-shadow:0 4px 0 rgba(43,43,51,.2)}
 .hg-block:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,43,51,.2)}
 @keyframes hgShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
