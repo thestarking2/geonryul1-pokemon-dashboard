@@ -1147,6 +1147,9 @@ body.focus-mode .focus-exit{display:block}
 .hg-solved-scene{font-size:clamp(48px,8.6vw,70px);line-height:1.1;letter-spacing:4px;text-align:center}
 .hg-solved-say{font-size:15.5px;font-weight:700;color:#2f6b3a;text-align:center;background:#eefbee;border:2.5px solid #8ecb9b;border-radius:14px;padding:7px 12px}
 .hg-hintline{display:flex;justify-content:center}
+/* 문제 푸는 동안의 '읽기' 안내 — 소리(듣기) 단서 대신 글자로만 도와줍니다 */
+.hg-readtip{font-size:15px;font-weight:800;line-height:1.4;color:#255a86;text-align:center;white-space:normal;word-break:keep-all;
+  background:#eef6ff;border:2.5px dashed #9ec3e0;border-radius:14px;padding:7px 12px;max-width:100%;box-sizing:border-box}
 
 .hg-sentence{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px 8px;border:3px dashed #cddcee;border-radius:20px;background:#fbfdff}
 .hg-pill-w{font-size:clamp(22px,4.2vw,32px);font-weight:800;padding:6px 14px;border-radius:999px;border:3px solid #6fa8d6;background:#e6f4ff;box-shadow:0 3px 0 rgba(43,43,51,.14)}
@@ -1174,6 +1177,8 @@ body.focus-mode .focus-exit{display:block}
 .hg-slot.filled.w4{border-color:#8f97d8;background:#eef0ff}
 .hg-slot-word{border:0;background:transparent;font-size:clamp(19px,3.4vw,24px);font-weight:800;color:var(--ink);padding:4px 6px}
 .hg-slot.bad{border-color:#e06a5a;background:#ffeceb;animation:hgShake .3s ease}
+/* 순서를 틀렸을 때 — 소리 대신 첫 자리를 짚어 줍니다 */
+.hg-slot.hint{outline:3px dashed #d9822b;outline-offset:2px}
 .hg-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 0}
 .hg-block{font-size:clamp(22px,3.8vw,28px);font-weight:800;padding:10px 16px;border:3px solid var(--ink);border-radius:14px;
   background:#fffdf8;box-shadow:0 4px 0 rgba(43,43,51,.2)}
@@ -4407,15 +4412,24 @@ body.focus-mode .focus-exit{display:block}
       esc(hangulState.msg) + '</div>';
   }
 
+  /* 맞힌 뒤에만 나오는 확인용 듣기 버튼 — 방금 자기가 읽은 문장이 맞는지 들어 봅니다.
+     문제를 푸는 동안에는 어떤 소리 단서도 없어요. (읽어야만 풀 수 있게) */
+  var HANGUL_LISTEN_LABEL = {
+    split: '🔊 잘 읽었는지 들어 보기',
+    meaning: '🔊 문장 들어 보기',
+    build: '🔊 완성된 문장 들어 보기'
+  };
+
   /* 맞힌 뒤 — 단어 덩어리로 나뉜 문장과 그림, 뜻을 함께 보여 줍니다 */
   function hangulSolvedBox(item) {
+    var label = HANGUL_LISTEN_LABEL[(hangulState && hangulState.mode) || ''] || '🔊 문장 들어 보기';
     return '<div class="hg-solved">' +
       '<div class="hg-solved-scene">' + item.emoji + '</div>' +
       '<div class="hg-words">' + item.w.map(function (w, i) {
         return '<button class="hg-chunk w' + (i % HANGUL_WORD_COLORS) + '" type="button" data-hact="say" data-say="' + esc(w) + '" title="눌러서 들어 보기">' + esc(w) + '</button>';
       }).join('') + '</div>' +
       '<div class="hg-solved-say">' + esc(item.say) + '</div>' +
-      '<button class="hg-listen" type="button" data-hact="say" data-say="' + esc(item.w.join(' ')) + '">🔊 문장으로 듣기</button>' +
+      '<button class="hg-listen" type="button" data-hact="say" data-say="' + esc(item.w.join(' ')) + '">' + label + '</button>' +
       '</div>';
   }
 
@@ -4442,6 +4456,7 @@ body.focus-mode .focus-exit{display:block}
       bounds[acc] = true;
     }
     var html = '<div class="hg-prompt">✂️ 어디서 끊어 읽을까? 단어 사이를 눌러 봐!</div>';
+    html += '<div class="hg-readtip">👄 글자를 소리 내어 읽으면서, 단어가 바뀌는 곳을 찾아봐!</div>';
     html += '<div class="hg-strip">';
     sylls.forEach(function (ch, i) {
       if (i > 0) {
@@ -4451,8 +4466,6 @@ body.focus-mode .focus-exit{display:block}
       html += '<span class="hg-syl w' + (hangulSegmentOf(i, st.cuts) % HANGUL_WORD_COLORS) + '">' + esc(ch) + '</span>';
     });
     html += '</div>';
-    html += '<div class="hg-hintline"><button class="hg-listen" type="button" data-hact="say" data-say="' +
-      esc(item.w.join(' ')) + '">🔊 먼저 들어 보기</button></div>';
     return html;
   }
 
@@ -4463,12 +4476,11 @@ body.focus-mode .focus-exit{display:block}
       return '<div class="hg-prompt">🎯 읽은 문장과 그림이 딱 맞았어!</div>' + hangulSolvedBox(item);
     }
     var html = '<div class="hg-prompt">🎯 문장을 읽고, 그림이 맞는 것을 골라 봐!</div>';
+    html += '<div class="hg-readtip">👄 먼저 소리 내어 읽어 봐! 다 읽은 다음에 그림을 골라!</div>';
+    /* 문제 푸는 동안에는 단어를 눌러도 소리가 나지 않아요 — 읽어야만 골라집니다 */
     html += '<div class="hg-sentence">' + item.w.map(function (w, i) {
-      return '<button class="hg-pill-w w' + (i % HANGUL_WORD_COLORS) + '" type="button" data-hact="say" data-say="' +
-        esc(w) + '" title="이 단어만 듣기">' + esc(w) + '</button>';
+      return '<span class="hg-pill-w w' + (i % HANGUL_WORD_COLORS) + '">' + esc(w) + '</span>';
     }).join('') + '</div>';
-    html += '<div class="hg-hintline"><button class="hg-listen" type="button" data-hact="say" data-say="' +
-      esc(item.w.join(' ')) + '">🔊 문장 읽어 주기</button></div>';
     html += '<div class="hg-choices">' + st.options.map(function (o, i) {
       var wrong = st.picked.indexOf(i) >= 0;
       return '<button class="hg-choice' + (wrong ? ' wrong' : '') + '" type="button" data-hact="pick" data-pick="' + i +
@@ -4487,10 +4499,12 @@ body.focus-mode .focus-exit{display:block}
     }
     var slots = '';
     item.w.forEach(function (w, i) {
+      /* 순서를 틀린 뒤에는 소리 대신 첫 자리를 콕 짚어 줍니다 */
+      var hint = st.wrongThis && i === 0 ? ' hint' : '';
       if (i < st.placed.length) {
         var v = st.placed[i];
         var bad = st.badSlots && st.badSlots[i];
-        slots += '<div class="hg-slot filled w' + (i % HANGUL_WORD_COLORS) + (bad ? ' bad' : '') + '" data-slot="' + i + '">' +
+        slots += '<div class="hg-slot filled w' + (i % HANGUL_WORD_COLORS) + (bad ? ' bad' : '') + hint + '" data-slot="' + i + '">' +
           '<button class="hg-slot-word" type="button" data-hact="take" data-slot="' + i + '" title="다시 놓기">' +
           esc(item.w[v]) + '</button></div>';
       } else {
@@ -4505,8 +4519,7 @@ body.focus-mode .focus-exit{display:block}
       '<div class="hg-scene">' + item.emoji + '</div>' +
       '<div class="hg-slots">' + slots + '</div>' +
       '<div class="hg-bank">' + bank + '</div>' +
-      (st.wrongThis ? '<div class="hg-hintline"><button class="hg-listen" type="button" data-hact="say" data-say="' +
-        esc(item.w.join(' ')) + '">🔊 순서대로 들어 보기</button></div>' : '');
+      (st.wrongThis ? '<div class="hg-hintline"><div class="hg-readtip">👄 첫 번째 말부터 소리 내어 읽어 보자! 읽은 대로 놓으면 돼!</div></div>' : '');
   }
 
   function hangulQuestionHtml() {
@@ -4606,17 +4619,36 @@ body.focus-mode .focus-exit{display:block}
     return hangulShuffle(out);
   }
 
-  /* 뜻 맞히기 선택지 — 정답 + 다른 주제 그림 2개 (같은 이모지·같은 설명은 피함) */
+  /* 뜻 맞히기 선택지 — 정답 + 방해 그림 2개.
+     그림만 보고 찍지 못하도록, 같은 주어(같은 사람·동물)의 다른 문장을 먼저 하나 고릅니다.
+     그러면 '누가 무엇을 하는지' 서술어를 읽어야만 고를 수 있어요.
+     그다음 같은 주제(비슷한 상황), 그래도 모자라면 다른 주제에서 채웁니다. */
   function hangulMakeOptions(item) {
     var used = {};
     used[item.say] = true;
     used[item.emoji] = true;
+    var subj = item.w[0];
     function usable(o) { return o !== item && !used[o.say] && !used[o.emoji]; }
-    var far = hangulShuffle(HANGUL_ITEMS.filter(function (o) { return usable(o) && o.topic !== item.topic; }));
-    var near = hangulShuffle(HANGUL_ITEMS.filter(function (o) { return usable(o) && o.topic === item.topic; }));
+    function pool(fn) {
+      return hangulShuffle(HANGUL_ITEMS.filter(function (o) { return usable(o) && fn(o); }));
+    }
+    var sameSubject = pool(function (o) { return o.w[0] === subj; });
+    var sameTopic = pool(function (o) { return o.topic === item.topic && o.w[0] !== subj; });
+    var rest = pool(function (o) { return o.topic !== item.topic && o.w[0] !== subj; });
     var picks = [];
-    while (picks.length < 2 && far.length) picks.push(far.shift());
-    while (picks.length < 2 && near.length) picks.push(near.shift());
+    function take(list, upto) {
+      while (picks.length < upto && list.length) {
+        var o = list.shift();
+        if (!usable(o)) continue;
+        used[o.say] = true;
+        used[o.emoji] = true;
+        picks.push(o);
+      }
+    }
+    take(sameSubject, 1);   // 하나는 꼭 '같은 주어 · 다른 할 일'
+    take(sameTopic, 2);     // 하나는 비슷한 상황
+    take(sameSubject, 2);
+    take(rest, 2);
     return hangulShuffle([item].concat(picks));
   }
 
@@ -4737,11 +4769,10 @@ body.focus-mode .focus-exit{display:block}
       Object.keys(st.cuts).forEach(function (k) { if (st.cuts[k]) have++; });
       if (have >= need) {
         st.solved = true;
-        st.msg = '✨ 단어마다 끊었어! 이제 무슨 뜻인지 보이지?';
+        st.msg = '✨ 단어마다 끊었어! 이제 무슨 뜻인지 보이지? 아래 🔊 로 잘 읽었는지 들어 봐!';
         st.msgKind = 'good';
         if (!st.wrongThis) st.correct += 1;
         sndFanfare();
-        speak(item.w.join(' '));
       } else {
         st.msg = '👏 여기가 단어 사이야! 잘 찾았어!';
         st.msgKind = 'good';
@@ -4764,15 +4795,14 @@ body.focus-mode .focus-exit{display:block}
     if (!chosen) return;
     if (chosen === item) {
       st.solved = true;
-      st.msg = '🎉 맞았어! ' + item.say;
+      st.msg = '🎉 맞았어! ' + item.say + ' — 아래 🔊 로 문장을 다시 들어 봐!';
       st.msgKind = 'good';
       if (!st.wrongThis) st.correct += 1;
       sndFanfare();
-      speak(item.w.join(' '));
     } else {
       if (st.picked.indexOf(i) === -1) st.picked.push(i);
       st.wrongThis = true;
-      st.msg = '🤔 다시 읽어 볼까? 문장을 천천히 읽어 봐!';
+      st.msg = '🤔 다시 읽어 볼까? 문장을 천천히 소리 내어 읽고 골라 봐!';
       st.msgKind = 'warn';
       sndUncheck();
     }
@@ -4797,15 +4827,14 @@ body.focus-mode .focus-exit{display:block}
       st.placed.forEach(function (v, k) { if (v !== k) okAll = false; });
       if (okAll) {
         st.solved = true;
-        st.msg = '🧩 문장을 멋지게 만들었어!';
+        st.msg = '🧩 문장을 멋지게 만들었어! 아래 🔊 로 완성된 문장을 들어 봐!';
         st.msgKind = 'good';
         if (!st.wrongThis) st.correct += 1;
         sndFanfare();
-        speak(item.w.join(' '));
       } else {
         st.wrongThis = true;
         st.badSlots = st.placed.map(function (v, k) { return v !== k; });
-        st.msg = '🙂 순서가 조금 달라. 빨간 블록을 눌러서 빼고 다시 놓아 봐!';
+        st.msg = '🙂 순서가 조금 달라. 첫 번째 말부터 소리 내어 읽고 다시 놓아 봐!';
         st.msgKind = 'warn';
         sndUncheck();
       }
