@@ -4467,7 +4467,7 @@ body.focus-mode .focus-exit{display:block}
       '<input class="hg-type" id="hgType" type="text" maxlength="40" value="' + esc(st.typed) + '" ' +
       'placeholder="들은 문장을 써 봐" autocomplete="off" autocorrect="off" autocapitalize="off" ' +
       'spellcheck="false" inputmode="text" aria-label="받아쓰기 답">' +
-      '<button class="btn primary hg-wide" type="button" data-hact="submit">확인</button>';
+      '<div class="hg-actions"><button class="btn primary hg-wide" type="button" data-hact="submit">확인</button></div>';
     if (st.wrongThis) {
       html += hangulDiffBox(st.typed, item.text);
       html += '<div class="hg-actions"><button class="btn hg-wide" type="button" data-hact="reveal">정답 보기</button></div>';
