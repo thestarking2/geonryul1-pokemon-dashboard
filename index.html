@@ -1074,7 +1074,7 @@ body.focus-mode .focus-exit{display:block}
   .qbtn{padding:0 10px;gap:5px}
 }
 
-/* ---------- 🔤 한글놀이 ---------- */
+/* ---------- ✏️ 공부놀이 ---------- */
 .qbtn.hangul{background:linear-gradient(170deg,#f2fff0,#c8ecb6);border-color:#255c33;color:#1f4d2b;box-shadow:0 4px 0 #8bc078}
 @media (min-width:768px){.qbtn.hangul{box-shadow:0 3px 0 #8bc078}}
 .qbtn .chip.hg-chip{background:#2f8a4e;min-width:24px;padding:1px 6px;font-size:14px}
@@ -1108,8 +1108,10 @@ body.focus-mode .focus-exit{display:block}
 @media (min-width:601px){.hg-modebar{max-width:560px;margin:0 auto}.hg-tab .tname{font-size:15px}.hg-tab .temoji{font-size:20px}}
 .hg-tab.active{background:#2f8a4e;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)}
 .hg-tab.active .tname{font-weight:900}
-.hg-tab[data-mode="meaning"].active{background:#2b6fa8}
-.hg-tab[data-mode="build"].active{background:#a0548a}
+.hg-tab[data-mode="dictation"].active{background:#2f8a4e}
+.hg-tab[data-mode="math"].active{background:#2b6fa8}
+.hg-tab[data-mode="english"].active{background:#a0548a}
+.hg-tab[data-mode="math"] .temoji{font-size:14px;letter-spacing:-1px}
 .hg-tab:active{transform:translateY(1px)}
 
 .hg-qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -1118,21 +1120,6 @@ body.focus-mode .focus-exit{display:block}
 .hg-bar{height:10px;border-radius:8px;background:#f0e7d9;border:2px solid rgba(43,43,51,.16);overflow:hidden}
 .hg-bar i{display:block;height:100%;background:linear-gradient(90deg,#8ee06a,#3fae64);transition:width .3s ease}
 .hg-prompt{text-align:center;font-size:clamp(15px,2.4vw,17.5px);font-weight:700;line-height:1.4;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;max-width:100%}
-
-.hg-strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;padding:16px 8px;border:3px dashed #e0cfae;border-radius:20px;background:#fffdf8}
-.hg-syl{font-size:clamp(30px,5.4vw,44px);font-weight:800;line-height:1.1;padding:2px 1px;border-radius:10px;transition:background .2s ease}
-.hg-syl.w0{background:#e6f4ff}
-.hg-syl.w1{background:#fff1d6}
-.hg-syl.w2{background:#eafbe4}
-.hg-syl.w3{background:#fdeaf6}
-.hg-syl.w4{background:#eef0ff}
-.hg-gap{position:relative;width:30px;min-width:30px;height:58px;padding:0;border:2.5px solid #e6d8c0;border-radius:12px;
-  background:#fbf5e9;touch-action:manipulation;margin:0 2px}
-.hg-gap::before{content:'';position:absolute;left:50%;margin-left:-2px;top:9px;bottom:9px;width:4px;border-radius:4px;
-  background:repeating-linear-gradient(180deg,#cdb692 0 7px,transparent 7px 13px)}
-.hg-gap:active{background:#f3e7d2;border-color:#d9c39f}
-.hg-gap.on{width:38px;min-width:38px;background:#e8f7ea;border-color:#7fc08c}
-.hg-gap.on::before{background:#2f8a4e;width:7px;margin-left:-3.5px;top:8px;bottom:8px}
 
 .hg-words{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .hg-chunk{font-size:clamp(26px,4.8vw,34px);font-weight:800;line-height:1.15;padding:8px 14px;border:3px solid var(--ink);
@@ -1146,44 +1133,16 @@ body.focus-mode .focus-exit{display:block}
 .hg-solved{display:flex;flex-direction:column;gap:10px;align-items:center;padding:6px 0}
 .hg-solved-scene{font-size:clamp(48px,8.6vw,70px);line-height:1.1;letter-spacing:4px;text-align:center}
 .hg-solved-say{font-size:15.5px;font-weight:700;color:#2f6b3a;text-align:center;background:#eefbee;border:2.5px solid #8ecb9b;border-radius:14px;padding:7px 12px}
-.hg-hintline{display:flex;justify-content:center}
 /* 문제 푸는 동안의 '읽기' 안내 — 소리(듣기) 단서 대신 글자로만 도와줍니다 */
 .hg-readtip{font-size:15px;font-weight:800;line-height:1.4;color:#255a86;text-align:center;white-space:normal;word-break:keep-all;
   background:#eef6ff;border:2.5px dashed #9ec3e0;border-radius:14px;padding:7px 12px;max-width:100%;box-sizing:border-box}
 
-.hg-sentence{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px 8px;border:3px dashed #cddcee;border-radius:20px;background:#fbfdff}
-.hg-pill-w{font-size:clamp(22px,4.2vw,32px);font-weight:800;padding:6px 14px;border-radius:999px;border:3px solid #6fa8d6;background:#e6f4ff;box-shadow:0 3px 0 rgba(43,43,51,.14)}
-.hg-pill-w.w1{background:#fff1d6;border-color:#d8b062}
-.hg-pill-w.w2{background:#eafbe4;border-color:#7fb96a}
-.hg-pill-w.w3{background:#fdeaf6;border-color:#d18ab8}
-.hg-pill-w.w4{background:#eef0ff;border-color:#8f97d8}
 .hg-listen{align-self:center;min-height:44px;padding:0 14px;border:2.5px solid var(--ink);border-radius:12px;background:#fff;font-size:15px;font-weight:700;box-shadow:0 3px 0 rgba(43,43,51,.2)}
 .hg-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .hg-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:158px;padding:12px 10px;
   border:3px solid var(--ink);border-radius:20px;background:#fffdf8;box-shadow:0 5px 0 rgba(43,43,51,.2)}
 .hg-choice:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(43,43,51,.2)}
-.hg-choice-emoji{font-size:clamp(36px,6.6vw,52px);line-height:1.05;letter-spacing:2px;text-align:center}
-.hg-choice-text{font-size:15.5px;font-weight:700;line-height:1.32;text-align:center;color:#4a4034}
 .hg-choice.wrong{opacity:.5;background:#f3eee6}
-.hg-choice.wrong .hg-choice-text{text-decoration:line-through}
-
-.hg-scene{font-size:clamp(52px,9vw,76px);line-height:1.15;letter-spacing:6px;text-align:center}
-.hg-slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:74px;padding:10px;border:3px dashed #cfd8c4;border-radius:18px;background:#fbfdf8}
-.hg-slot{display:grid;place-items:center;min-width:76px;min-height:58px;padding:4px;border:3px dashed #d5ddca;border-radius:14px;color:#b3bda7;font-size:13px;font-weight:700}
-.hg-slot.filled{border-style:solid;border-color:#6fa8d6;background:#e6f4ff;color:var(--ink)}
-.hg-slot.filled.w1{border-color:#d8b062;background:#fff1d6}
-.hg-slot.filled.w2{border-color:#7fb96a;background:#eafbe4}
-.hg-slot.filled.w3{border-color:#d18ab8;background:#fdeaf6}
-.hg-slot.filled.w4{border-color:#8f97d8;background:#eef0ff}
-.hg-slot-word{border:0;background:transparent;font-size:clamp(19px,3.4vw,24px);font-weight:800;color:var(--ink);padding:4px 6px}
-.hg-slot.bad{border-color:#e06a5a;background:#ffeceb;animation:hgShake .3s ease}
-/* 순서를 틀렸을 때 — 소리 대신 첫 자리를 짚어 줍니다 */
-.hg-slot.hint{outline:3px dashed #d9822b;outline-offset:2px}
-.hg-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:6px 0}
-.hg-block{font-size:clamp(22px,3.8vw,28px);font-weight:800;padding:10px 16px;border:3px solid var(--ink);border-radius:14px;
-  background:#fffdf8;box-shadow:0 4px 0 rgba(43,43,51,.2)}
-.hg-block:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,43,51,.2)}
-@keyframes hgShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 
 .hg-feedback{min-height:24px;font-size:15px;font-weight:800;text-align:center;line-height:1.4}
 .hg-feedback.good{color:#2f8a4e}
@@ -1209,8 +1168,53 @@ body.focus-mode .focus-exit{display:block}
 .hg-lock .hg-wide{flex:0 0 auto;align-self:stretch;max-width:320px;min-height:56px}
 .hg-lock-note{font-size:13.5px;color:var(--ink-soft);line-height:1.45}
 
-/* 휴대폰 세로(≈360~480px) — 안내 문구는 줄바꿈되고, 글자·단어 사이 자리를 줄여 상자 안에 들어오게 */
-@media (max-width:480px){
+/* ---------- ✏️ 받아쓰기 ---------- */
+.hg-say-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hg-say{min-height:64px;padding:6px 10px;border:3px solid #2f8a4e;border-radius:18px;
+  background:linear-gradient(175deg,#f4fff0,#d8f2c8);color:#1f4d2b;font-family:inherit;
+  font-size:clamp(16px,2.6vw,19px);font-weight:900;box-shadow:0 4px 0 #8bc078;touch-action:manipulation}
+.hg-say.slow{border-color:#2b6fa8;background:linear-gradient(175deg,#f2f9ff,#d6ebfb);color:#174a70;box-shadow:0 4px 0 #9cc4e8}
+.hg-say:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,43,51,.2)}
+.hg-type{width:100%;box-sizing:border-box;min-height:64px;padding:8px 14px;border:3px solid var(--ink);border-radius:18px;
+  background:#fffdf8;font-family:inherit;font-size:clamp(22px,4.4vw,30px);font-weight:800;letter-spacing:1px;text-align:center;color:var(--ink)}
+.hg-type::placeholder{font-size:15px;font-weight:700;color:#b3a894;letter-spacing:0}
+.hg-type:focus{outline:0;border-color:#2f8a4e;box-shadow:0 0 0 4px rgba(47,138,78,.18)}
+.hg-diff{display:flex;flex-direction:column;gap:6px;padding:10px;border:3px dashed #e0a08c;border-radius:16px;background:#fff8f5}
+.hg-diff-row{display:flex;align-items:center;gap:8px;font-size:clamp(16px,2.6vw,19px);font-weight:800;flex-wrap:wrap}
+.hg-diff-row .lbl{flex:0 0 auto;font-size:12.5px;font-weight:800;color:#8a4a37;background:#ffeae3;border-radius:999px;padding:2px 9px}
+.hg-diff-row.ok .lbl{color:#2f6b3a;background:#e7f8e9}
+.hg-diff-row .txt{letter-spacing:1px}
+.hg-ch{padding:0 1px;border-radius:5px}
+.hg-ch.bad{color:#c1272d;background:#ffe1de;text-decoration:underline wavy #e06a5a}
+.hg-diff-note{font-size:13.5px;font-weight:800;color:#a4562f}
+
+/* ---------- ➕➖ 두 자릿수 ---------- */
+.hg-math{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 10px;border:3px dashed #cddcee;border-radius:20px;background:#fbfdff;flex-wrap:nowrap}
+.hg-math .num{font-size:clamp(34px,7vw,52px);font-weight:900;letter-spacing:1px;color:#1d3c58}
+.hg-math .op{font-size:clamp(28px,5.6vw,44px);font-weight:900;color:#2b6fa8}
+.hg-math .eq{font-size:clamp(28px,5.6vw,44px);font-weight:900;color:#8a7f70}
+.hg-ans{display:inline-grid;place-items:center;min-width:clamp(64px,16vw,110px);min-height:clamp(54px,10vw,74px);padding:0 10px;
+  border:3px solid #9cc4e8;border-radius:16px;background:#fff;font-size:clamp(32px,6.4vw,48px);font-weight:900;color:#1d3c58}
+.hg-ans.has{border-color:#2b6fa8;background:#eaf4ff}
+.hg-ans.solved{border-color:#7fb96a;background:#eafbe4;color:#255a2a}
+.hg-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:420px;margin:0 auto;width:100%;box-sizing:border-box}
+.hg-key{min-height:60px;border:3px solid var(--ink);border-radius:16px;background:#fffdf8;font-family:inherit;
+  font-size:clamp(22px,4.4vw,28px);font-weight:900;color:var(--ink);box-shadow:0 4px 0 rgba(43,43,51,.2);touch-action:manipulation}
+.hg-key:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(43,43,51,.2)}
+.hg-key.del{background:#fff1d6;border-color:#d8b062}
+.hg-key.ok{background:#dff3d6;border-color:#2f8a4e;color:#1f4d2b}
+
+/* ---------- 🔤 영어 단어 시험 ---------- */
+.hg-enq{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px;border:3px dashed #cddcee;border-radius:20px;background:#fbfdff}
+.hg-enq-emoji{font-size:clamp(50px,9vw,74px);line-height:1.1}
+.hg-enq-ko{font-size:clamp(22px,4vw,30px);font-weight:900;color:#1d3c58}
+.hg-choices.en{grid-template-columns:repeat(2,minmax(0,1fr))}
+.hg-choice.en{min-height:96px;padding:10px 8px}
+.hg-choice-word{font-size:clamp(19px,3.6vw,26px);font-weight:900;letter-spacing:.5px;color:#1d3c58;word-break:break-word;text-align:center;line-height:1.2}
+.hg-choice.en.wrong .hg-choice-word{text-decoration:line-through}
+.hg-enword{font-size:clamp(30px,6vw,44px);font-weight:900;letter-spacing:1px;color:#1d3c58}
+
+/* 휴대폰 세로(≈360~480px) — 안내 문구는 줄바꿈되고, 글자·단어 사이 자리를 줄여 상자 안에 들어오게 */@media (max-width:480px){
   .hg-prompt{font-size:15px;line-height:1.35;padding:0 2px}
   .hg-qmode{display:none}
   .hg-qhead{gap:6px}
@@ -1219,25 +1223,20 @@ body.focus-mode .focus-exit{display:block}
   .hg-tab{min-height:44px;padding:3px 2px}
   .hg-tab .temoji{font-size:15px}
   .hg-tab .tname{font-size:11.5px;letter-spacing:-0.4px}
-  .hg-strip{padding:12px 4px;max-width:100%;box-sizing:border-box}
-  .hg-syl{font-size:clamp(20px,5.8vw,25px);padding:2px 0}
-  .hg-gap{width:15px;min-width:15px;height:38px;margin:0 1px;border-width:2px;border-radius:9px}
-  .hg-gap::before{top:7px;bottom:7px;width:3px;margin-left:-1.5px}
-  .hg-gap.on{width:21px;min-width:21px;border-width:2.5px}
-  .hg-gap.on::before{width:6px;margin-left:-3px;top:6px;bottom:6px}
-  .hg-sentence{padding:10px 6px;gap:6px}
-  .hg-pill-w{font-size:clamp(19px,5vw,24px);padding:5px 9px;border-width:2.5px;border-radius:13px}
   .hg-words{gap:6px}
   .hg-chunk{font-size:clamp(20px,5.4vw,26px);padding:6px 10px;border-width:2.5px;border-radius:13px}
-  .hg-slots{padding:8px 6px;gap:6px}
-  .hg-slot{min-width:58px;min-height:50px}
-  .hg-slot-word{font-size:clamp(17px,4.6vw,22px)}
-  .hg-block{font-size:clamp(19px,5vw,24px);padding:8px 12px}
   .hg-choices{gap:8px}
   .hg-choice{min-height:132px;padding:10px 8px}
-  .hg-choice-emoji{font-size:clamp(32px,9vw,42px)}
-  .hg-choice-text{font-size:14px}
   .hg-listen{font-size:14px;padding:0 10px}
+  .hg-say{min-height:52px;font-size:14.5px;padding:4px 6px;border-width:2.5px}
+  .hg-type{min-height:54px;font-size:21px;padding:6px 10px;border-width:2.5px}
+  .hg-math{gap:5px;padding:12px 4px;border-width:2.5px}
+  .hg-math .num{font-size:clamp(28px,7.6vw,38px)}
+  .hg-ans{min-width:56px;min-height:50px;font-size:clamp(26px,7vw,34px);padding:0 6px;border-width:2.5px}
+  .hg-key{min-height:50px;font-size:20px;border-width:2.5px;border-radius:13px}
+  .hg-keypad{gap:6px}
+  .hg-choice.en{min-height:78px}
+  .hg-choice-word{font-size:clamp(17px,4.6vw,21px)}
 }
 </style>
 </head>
@@ -1271,7 +1270,7 @@ body.focus-mode .focus-exit{display:block}
 
       <nav class="quick-actions">
         <button class="qbtn dict" id="btnDict" type="button" title="영어 낱말 뜻·발음·따라 말하기">📖 영어사전</button>
-        <button class="qbtn hangul" id="btnHangul" type="button" title="단어로 끊어 읽고 뜻 맞히기 (하루 3판)">🔤 한글놀이<b class="chip hg-chip" id="hangulChip">3</b></button>
+        <button class="qbtn hangul" id="btnHangul" type="button" title="받아쓰기 · 두 자릿수 계산 · 영어 단어 시험 (하루 3판)">✏️ 공부놀이<b class="chip hg-chip" id="hangulChip">3</b></button>
         <button class="qbtn" id="btnFocus" type="button" title="할 일을 크게 보여줘요">🔎 할 일 크게</button>
         <button class="qbtn on" id="btnSound" type="button" title="효과음 켜기/끄기">🔊 소리</button>
         <button class="qbtn gacha" id="btnGacha" type="button" title="포켓몬 뽑기">
@@ -1912,7 +1911,7 @@ body.focus-mode .focus-exit{display:block}
     return s || cleanText(t);
   }
 
-  function speak(text) {
+  function speak(text, rate) {
     var msg = koSpeakText(text);
     if (!msg) return false;
     if (!TTS_OK) { toast('이 기기에서는 읽어주기를 쓸 수 없어요'); return false; }
@@ -1924,7 +1923,7 @@ body.focus-mode .focus-exit{display:block}
       if (koVoice) u.voice = koVoice;
       /* lang 은 표준 표기(ko-KR)로 — 안드로이드의 ko_KR 을 그대로 쓰지 않습니다 */
       u.lang = (koVoice && koVoice.lang) ? String(koVoice.lang).replace(/_/g, '-') : 'ko-KR';
-      u.rate = 0.95;      // 또박또박하되 늘어지지 않게
+      u.rate = (Number(rate) > 0) ? Number(rate) : 0.95;   // 또박또박하되 늘어지지 않게
       u.pitch = 1;        // 음을 올리면 외국인 억양처럼 들려서 그대로
       window.speechSynthesis.speak(u);
       if (!koVoice && voiceList().length && !koVoiceMissNoticed) {
@@ -4203,96 +4202,86 @@ body.focus-mode .focus-exit{display:block}
   }
 
   /* ---------------------------------------------------------------
-     9-2. 🔤 한글놀이 — 단어(어절)로 끊어 읽고 뜻과 잇기
-     · 가나다는 아는 건률이가 한 글자씩이 아니라 '단어 덩어리'로 읽도록
+     9-2. ✏️ 공부놀이 — 받아쓰기 · 두 자릿수 더하기·빼기 · 영어 단어 시험
+     · 예전 '한글놀이'의 저장 키(S.hangul, S.settings.hangulDailyLimit)를 그대로 써서
+       쌓아 둔 오늘 판 수와 부모 설정이 끊기지 않습니다.
      · 하루 판 수는 부모 설정에서 정하고, 다 하면 그날은 잠깁니다 (무제한 없음)
   --------------------------------------------------------------- */
-  var HANGUL_XP = 10;              // 한 판을 끝내면 주는 XP
-  var HANGUL_STAR = 1;             // 한 판을 끝내면 주는 별
-  var HANGUL_REWARD_CAP = 3;       // 하루에 보상을 주는 판 수
-  var HANGUL_DEFAULT_LIMIT = 3;    // 하루에 할 수 있는 판 수 (기본)
+  var HANGUL_XP = 10;                 // 한 판을 끝내면 주는 XP
+  var HANGUL_STAR = 1;                // 한 판을 끝내면 주는 별
+  var HANGUL_REWARD_CAP = 3;          // 하루에 보상을 주는 판 수
+  var HANGUL_DEFAULT_LIMIT = 3;       // 하루에 할 수 있는 판 수 (기본)
   var HANGUL_LIMIT_CHOICES = [0, 1, 2, 3, 5];
   var HANGUL_WORD_COLORS = 5;
+  var HANGUL_QUESTION_COUNT = 5;      // 한 판에 푸는 문제 수
 
+  /* 놀이 3가지 — 화면 위 탭도 이 순서 그대로예요 */
   var HANGUL_MODES = {
-    split: { emoji: '✂️', name: '단어 끊어 읽기', short: '끊어 읽기', sub: '어디서 끊어 읽는지 찾아요' },
-    meaning: { emoji: '🎯', name: '읽고 뜻 맞히기', short: '뜻 맞히기', sub: '읽고 그림을 찾아요' },
-    build: { emoji: '🧩', name: '문장 만들기', short: '문장 만들기', sub: '단어 블록을 차례대로' }
+    dictation: { emoji: '✍️', name: '받아쓰기', short: '받아쓰기', sub: '듣고 또박또박 써요' },
+    math: { emoji: '➕➖', name: '두 자릿수 더하기·빼기', short: '두 자릿수', sub: '10부터 99까지 계산해요' },
+    english: { emoji: '🔤', name: '영어 단어 시험', short: '영어 시험', sub: '그림과 뜻을 보고 낱말 고르기' }
   };
+  var HANGUL_MODE_ORDER = ['dictation', 'math', 'english'];
 
-  /* 그림(이모지) + 다른 말로 쓴 뜻 + 단어 덩어리(어절)
-     say 는 문장을 그대로 옮기지 않고 '무엇을 하는 그림인지'만 말해요.
-     그래서 뜻 맞히기에서 문장을 외우지 않고 읽어서 고르게 됩니다. */
-  var HANGUL_ITEMS = [
-    // --- 음식 ---
-    { w: ['아기가', '사과를', '먹어요'], emoji: '🍎😋', say: '달콤한 빨간 과일을 냠냠', topic: 'food' },
-    { w: ['엄마가', '김치찌개를', '끓여요'], emoji: '🍲🔥', say: '보글보글 매운 국을 만들어요', topic: 'food' },
-    { w: ['나는', '우유를', '벌컥벌컥', '마셔요'], emoji: '🥛😮', say: '하얀 음료를 시원하게 들이켜요', topic: 'food' },
-    { w: ['동생이', '바나나를', '깨물어요'], emoji: '🍌😬', say: '노란 과일을 한 입 베어 물어요', topic: 'food' },
-    { w: ['아빠가', '계란을', '부쳐요'], emoji: '🍳🔥', say: '노른자가 동글동글, 프라이를 만들어요', topic: 'food' },
-    { w: ['우리는', '피자를', '나눠', '먹어요'], emoji: '🍕🤝', say: '동그란 빵을 조각조각 같이 먹어요', topic: 'food' },
-    { w: ['국수가', '후루룩', '넘어가요'], emoji: '🍜💨', say: '가느다란 면이 입안으로 쏙', topic: 'food' },
-    { w: ['수박이', '아주', '달아요'], emoji: '🍉😋', say: '빨간 과일이 참 시원하고 달콤해요', topic: 'food' },
-    // --- 동물 ---
-    { w: ['강아지가', '공을', '굴려요'], emoji: '🐶⚽', say: '멍멍이가 동그란 것을 발로 데굴데굴', topic: 'animal' },
-    { w: ['고양이가', '창가에서', '졸아요'], emoji: '🐱☀️', say: '냥이가 햇빛 아래에서 꾸벅꾸벅', topic: 'animal' },
-    { w: ['토끼가', '당근을', '냠냠', '먹어요'], emoji: '🐰🥕', say: '긴 귀 동물이 주황색 채소를 먹어요', topic: 'animal' },
-    { w: ['병아리가', '삐약삐약', '울어요'], emoji: '🐥🎵', say: '노란 아기 새가 소리를 내요', topic: 'animal' },
-    { w: ['코끼리가', '코로', '물을', '뿜어요'], emoji: '🐘💦', say: '긴 코로 시원한 물을 뿌려요', topic: 'animal' },
-    { w: ['거북이가', '느릿느릿', '걸어요'], emoji: '🐢🌿', say: '등딱지 동물이 아주 천천히 움직여요', topic: 'animal' },
-    { w: ['새가', '하늘을', '날아요'], emoji: '🐦☁️', say: '작은 날개를 펄럭이며 위로 올라가요', topic: 'animal' },
-    { w: ['개구리가', '폴짝', '뛰어요'], emoji: '🐸💨', say: '초록 동물이 높이 뛰어올라요', topic: 'animal' },
-    { w: ['사자가', '크게', '으르렁', '해요'], emoji: '🦁📢', say: '동물의 왕이 무섭게 소리쳐요', topic: 'animal' },
-    { w: ['다람쥐가', '도토리를', '모아요'], emoji: '🐿️🌰', say: '작은 꼬리 동물이 알밤을 주워 담아요', topic: 'animal' },
-    // --- 학교 · 유치원 ---
-    { w: ['건률이가', '가방을', '메요'], emoji: '🎒🙋', say: '어린이가 어깨에 짐을 걸쳐요', topic: 'school' },
-    { w: ['친구와', '블록을', '쌓아요'], emoji: '🧱🧒', say: '같이 높은 탑을 만들어요', topic: 'school' },
-    { w: ['선생님이', '이름을', '불러요'], emoji: '👩‍🏫📣', say: '어른이 우리를 부르는 소리를 내요', topic: 'school' },
-    { w: ['우리는', '크레파스로', '그려요'], emoji: '🖍️🎨', say: '알록달록 색으로 종이를 칠해요', topic: 'school' },
-    { w: ['동생이', '낮잠을', '자요'], emoji: '😴🛏️', say: '어린 동생이 눈을 감고 쉬어요', topic: 'school' },
-    { w: ['건률이가', '손을', '높이', '들어요'], emoji: '🙋✋', say: '질문하려고 팔을 쭉 올려요', topic: 'school' },
-    { w: ['친구가', '미끄럼틀을', '타요'], emoji: '🛝😄', say: '놀이터에서 쭉 미끄러져 내려와요', topic: 'school' },
-    { w: ['모두', '노래를', '불러요'], emoji: '🎤🎶', say: '다 같이 입을 모아 소리내요', topic: 'school' },
-    // --- 가족 ---
-    { w: ['엄마가', '나를', '안아', '줘요'], emoji: '🤗💗', say: '따뜻하게 품에 꼭 껴안아요', topic: 'family' },
-    { w: ['아빠와', '산책을', '해요'], emoji: '🚶‍♂️🌳', say: '아침에 같이 공원을 걸어요', topic: 'family' },
-    { w: ['할머니가', '웃으세요'], emoji: '👵😊', say: '나이 든 어른이 환하게 미소 지어요', topic: 'family' },
-    { w: ['가족이', '함께', '밥을', '먹어요'], emoji: '🍚👨‍👩‍👦', say: '식탁에 다 같이 모여 식사해요', topic: 'family' },
-    { w: ['동생이', '안아', '달라고', '해요'], emoji: '🤲👶', say: '아기가 팔을 뻗어 품어 달래요', topic: 'family' },
-    { w: ['건률이가', '엄마를', '도와요'], emoji: '🧹👩', say: '집안일을 같이 거들어요', topic: 'family' },
-    // --- 날씨 · 자연 ---
-    { w: ['비가', '주룩주룩', '내려요'], emoji: '🌧️☔', say: '하늘에서 물방울이 줄줄 쏟아져요', topic: 'nature' },
-    { w: ['하늘이', '아주', '맑아요'], emoji: '☀️🌤️', say: '구름이 없이 파랗고 환해요', topic: 'nature' },
-    { w: ['바람이', '살랑살랑', '불어요'], emoji: '🍃🌬️', say: '시원한 공기가 부드럽게 지나가요', topic: 'nature' },
-    { w: ['눈이', '소복소복', '쌓여요'], emoji: '❄️⛄', say: '하얀 것이 하늘에서 내려 수북해져요', topic: 'nature' },
-    { w: ['무지개가', '하늘에', '떠요'], emoji: '🌈☁️', say: '일곱 빛깔 다리가 하늘에 나타나요', topic: 'nature' },
-    { w: ['해가', '반짝반짝', '빛나요'], emoji: '☀️✨', say: '둥근 별이 눈부시게 빛을 내요', topic: 'nature' },
-    { w: ['나뭇잎이', '바람에', '흔들려요'], emoji: '🍂🍃', say: '초록 잎이 사르르 움직여요', topic: 'nature' },
-    { w: ['단풍잎이', '빨갛게', '물들어요'], emoji: '🍁🍂', say: '가을 잎이 새빨개져요', topic: 'nature' },
-    // --- 포켓몬 ---
-    { w: ['피카츄가', '빨리', '달려요'], emoji: '⚡🏃', say: '노란 쥐가 아주 빠르게 뛰어가요', topic: 'pokemon' },
-    { w: ['파이리가', '불을', '뿜어요'], emoji: '🔥🦎', say: '도마뱀 꼬리에서 뜨거운 것이 나와요', topic: 'pokemon' },
-    { w: ['꼬부기가', '물을', '쏴요'], emoji: '💧🐢', say: '거북이 등에서 물줄기가 나가요', topic: 'pokemon' },
-    { w: ['이상해씨가', '잎을', '흔들어요'], emoji: '🌿🌱', say: '등에 새싹이 달린 친구가 인사해요', topic: 'pokemon' },
-    { w: ['이브이가', '꼬리를', '흔들어요'], emoji: '🦊🌀', say: '복슬복슬 꼬리를 사르르 움직여요', topic: 'pokemon' },
-    { w: ['잠만보가', '쿨쿨', '자요'], emoji: '😴💤', say: '커다란 몸이 코를 골며 잠들었어요', topic: 'pokemon' },
-    { w: ['피츄가', '볼을', '반짝여요'], emoji: '⚡🐭', say: '아기 쥐의 뺨에서 작은 불빛이 나요', topic: 'pokemon' },
-    { w: ['리자몽이', '하늘을', '날아요'], emoji: '🔥🐉', say: '큰 날개로 하늘 높이 올라가요', topic: 'pokemon' }
+  /* ✍️ 초등 1학년 받아쓰기 — 기본 받침 · 된소리 · 겹받침 · 띄어쓰기를 고루 담았어요.
+     마침표 없이 또박또박, 띄어쓰기까지 그대로 채점합니다. */
+  var HANGUL_DICTATION = [
+    '나비가 날아가요',
+    '우유를 마셔요',
+    '학교에 가요',
+    '비가 내려요',
+    '친구가 웃어요',
+    '하늘이 파래요',
+    '토끼가 깡충 뛰어요',
+    '동생이 잘 자요',
+    '엄마가 밥을 해요',
+    '아기가 웃어요',
+    '꽃이 피었어요',
+    '손을 씻어요',
+    '책을 읽어요',
+    '물을 마셔요',
+    '밖에 눈이 와요',
+    '새가 노래해요',
+    '강아지가 멍멍 짖어요',
+    '닭이 꼬꼬댁 울어요',
+    '구름이 흘러가요',
+    '바람이 시원해요',
+    '아침에 일어나요',
+    '이를 닦아요',
+    '가방을 챙겨요',
+    '신발을 신어요',
+    '시계를 봐요',
+    '할머니를 도와요',
+    '아빠가 웃으세요',
+    '감자가 동글동글해요',
+    '딸기가 빨개요',
+    '옷을 입어요',
+    '방을 깨끗이 해요',
+    '산에 올라가요',
+    '물고기가 헤엄쳐요',
+    '무지개가 떴어요',
+    '국수를 후루룩 먹어요',
+    '잠자리가 날아요',
+    '잎이 초록초록해요',
+    '여우가 살금살금 걸어요',
+    '종이에 그림을 그려요',
+    '사탕을 하나 받았어요',
+    '고양이가 앉아요',
+    '밥을 맛있게 먹어요'
   ];
-  HANGUL_ITEMS.forEach(function (it, i) { it.idx = i; });
 
   var hangulState = null;
 
   function hangulBlankState() {
     return {
       screen: 'home', mode: '', items: [], qIndex: 0, correct: 0,
-      solved: false, cuts: {}, picked: [], placed: [], bank: [], options: [],
-      badSlots: null, msg: '', msgKind: '', finished: false, wrongThis: false,
+      solved: false, typed: '', picked: [], options: [],
+      msg: '', msgKind: '', finished: false, wrongThis: false,
       earnedXp: 0, earnedStar: 0, leveled: false
     };
   }
 
-  /* 오늘의 한글놀이 기록 — 날이 바뀌면 판 수·보상을 새로 시작해요 */
+  /* 오늘의 공부놀이 기록 — 날이 바뀌면 판 수·보상을 새로 시작해요 */
   function hangulDay() {
     var t = todayKey();
     if (!S.hangul || typeof S.hangul !== 'object') {
@@ -4358,14 +4347,14 @@ body.focus-mode .focus-exit{display:block}
     var h = hangulDay();
     var did = h.todayRounds;
     var msg = did > 0
-      ? '건률아, 오늘 <b>' + did + '판</b>이나 읽었네! 참 잘했어!<br>내일 또 만나자!'
-      : '오늘은 한글놀이 쉬는 날이야.<br>내일 또 만나자!';
+      ? '건률아, 오늘 <b>' + did + '판</b>이나 풀었네! 참 잘했어!<br>내일 또 만나자!'
+      : '오늘은 공부놀이 쉬는 날이야.<br>내일 또 만나자!';
     return '<div class="hg-lock">' +
       '<div class="hg-lock-moon">🌙</div>' +
-      '<h4>오늘 한글놀이 끝!</h4>' +
+      '<h4>오늘 공부놀이 끝!</h4>' +
       '<p class="hg-lock-say">' + msg + '</p>' +
       (withStatus ? hangulStatusPills() : '') +
-      (did > 0 ? '<div class="hg-lock-stats">오늘 읽은 문제 ' + (did * 5) + '개 · 받은 별 ⭐' + h.rewarded + '개</div>' : '') +
+      (did > 0 ? '<div class="hg-lock-stats">오늘 푼 문제 ' + (did * HANGUL_QUESTION_COUNT) + '개 · 받은 별 ⭐' + h.rewarded + '개</div>' : '') +
       '<p class="hg-lock-note">내일 다시 열려요. 이제 할 일을 하고 포켓몬과 놀자!</p>' +
       '<button class="btn hg-wide" type="button" data-close="1">닫기</button>' +
       '</div>';
@@ -4376,26 +4365,26 @@ body.focus-mode .focus-exit{display:block}
     var h = hangulDay();
     var left = Math.max(0, hangulLimit() - h.todayRounds);
     var modes = '';
-    Object.keys(HANGUL_MODES).forEach(function (id) {
+    HANGUL_MODE_ORDER.forEach(function (id) {
       var m = HANGUL_MODES[id];
       modes += '<button class="hg-mode" type="button" data-hact="mode" data-mode="' + id + '">' +
         '<span class="hgm-emoji">' + m.emoji + '</span>' +
-        '<span class="hgm-name">' + m.name + '</span>' +
-        '<span class="hgm-sub">' + m.sub + '</span></button>';
+        '<span class="hgm-name">' + esc(m.name) + '</span>' +
+        '<span class="hgm-sub">' + esc(m.sub) + '</span></button>';
     });
     return '<div class="hg-home">' +
       hangulStatusPills() +
-      '<div class="hg-intro">건률아, 오늘 <b>' + left + '판</b> 더 놀 수 있어요!<br>' +
-        '<span>한 판은 문제 5개예요.</span></div>' +
+      '<div class="hg-intro">건률아, 오늘 <b>' + left + '판</b> 더 할 수 있어요!<br>' +
+        '<span>한 판은 문제 ' + HANGUL_QUESTION_COUNT + '개예요.</span></div>' +
       '<div class="hg-modes">' + modes + '</div>' +
-      '<div class="hg-tip">💡 글자를 하나씩 읽지 말고, <b>단어마다</b> 끊어서 읽어 봐요.</div>' +
+      '<div class="hg-tip">💡 받아쓰기 · 두 자릿수 계산 · 영어 낱말을 골고루 해 봐요.</div>' +
       '</div>';
   }
 
   /* 게임 화면 맨 위의 놀이 선택 막대 — 지금 어떤 놀이인지 보이고, 눌러서 바로 바꿔요 */
   function hangulModeBarHtml() {
     var cur = hangulState ? hangulState.mode : '';
-    var tabs = Object.keys(HANGUL_MODES).map(function (id) {
+    var tabs = HANGUL_MODE_ORDER.map(function (id) {
       var m = HANGUL_MODES[id];
       var on = id === cur;
       return '<button class="hg-tab' + (on ? ' active' : '') + '" type="button" role="tab" aria-selected="' + (on ? 'true' : 'false') +
@@ -4412,123 +4401,230 @@ body.focus-mode .focus-exit{display:block}
       esc(hangulState.msg) + '</div>';
   }
 
-  /* 맞힌 뒤에만 나오는 확인용 듣기 버튼 — 방금 자기가 읽은 문장이 맞는지 들어 봅니다.
-     문제를 푸는 동안에는 어떤 소리 단서도 없어요. (읽어야만 풀 수 있게) */
-  var HANGUL_LISTEN_LABEL = {
-    split: '🔊 잘 읽었는지 들어 보기',
-    meaning: '🔊 문장 들어 보기',
-    build: '🔊 완성된 문장 들어 보기'
-  };
+  /* ---------- ✍️ 받아쓰기 ---------- */
 
-  /* 맞힌 뒤 — 단어 덩어리로 나뉜 문장과 그림, 뜻을 함께 보여 줍니다 */
-  function hangulSolvedBox(item) {
-    var label = HANGUL_LISTEN_LABEL[(hangulState && hangulState.mode) || ''] || '🔊 문장 들어 보기';
-    return '<div class="hg-solved">' +
-      '<div class="hg-solved-scene">' + item.emoji + '</div>' +
-      '<div class="hg-words">' + item.w.map(function (w, i) {
-        return '<button class="hg-chunk w' + (i % HANGUL_WORD_COLORS) + '" type="button" data-hact="say" data-say="' + esc(w) + '" title="눌러서 들어 보기">' + esc(w) + '</button>';
-      }).join('') + '</div>' +
-      '<div class="hg-solved-say">' + esc(item.say) + '</div>' +
-      '<button class="hg-listen" type="button" data-hact="say" data-say="' + esc(item.w.join(' ')) + '">' + label + '</button>' +
+  /* 채점용 비교 — 앞뒤·사이의 빈칸은 하나로 맞추고, 끝에 찍은 마침표는 봐줍니다 */
+  function hangulNormText(s) {
+    return String(s == null ? '' : s)
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/[.?!。？！,、]+$/, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function hangulSameText(a, b) {
+    return hangulNormText(a) === hangulNormText(b);
+  }
+
+  /* 틀렸을 때 — 내가 쓴 글에서 다른 글자를 빨갛게, 바른 글은 그대로 보여 줍니다.
+     띄어쓰기는 그대로 살려 두고, 글자만 자리마다 견줘요. */
+  function hangulDiffBox(typed, answer) {
+    var t = String(typed == null ? '' : typed);
+    var a = String(answer || '');
+    var ti = 0, ai = 0, marks = '';
+    while (ti < t.length) {
+      var ch = t.charAt(ti);
+      if (ch === ' ') { marks += '<span class="hg-ch"> </span>'; ti++; continue; }
+      while (ai < a.length && a.charAt(ai) === ' ') ai++;
+      var ac = a.charAt(ai);
+      marks += '<span class="hg-ch' + (ch === ac ? '' : ' bad') + '">' + esc(ch) + '</span>';
+      ti++; ai++;
+    }
+    while (ai < a.length) {                        // 덜 쓴 글자는 점으로 짚어 줍니다
+      if (a.charAt(ai) !== ' ') marks += '<span class="hg-ch bad">·</span>';
+      ai++;
+    }
+    var tNo = t.replace(/\s+/g, '');
+    var aNo = a.replace(/\s+/g, '');
+    var spaceNote = (tNo === aNo && hangulNormText(t) !== hangulNormText(a))
+      ? '<div class="hg-diff-note">👉 글자는 맞았어! 띄어쓰기를 다시 살펴봐.</div>' : '';
+    return '<div class="hg-diff">' +
+      '<div class="hg-diff-row"><span class="lbl">내가 쓴 글</span><span class="txt">' + marks + '</span></div>' +
+      '<div class="hg-diff-row ok"><span class="lbl">바르게 쓰면</span><span class="txt">' + esc(a) + '</span></div>' +
+      spaceNote +
       '</div>';
   }
 
-  function hangulSegmentOf(i, cuts) {
-    var seg = 0;
-    for (var g = 1; g <= i; g++) if (cuts[g]) seg++;
-    return seg;
-  }
-
-  /* 모드 1 — 띄어쓰기 없이 붙여 쓴 문장에서 단어 경계 찾기 */
-  function hangulSplitHtml(item) {
+  function hangulDictationHtml(item) {
     var st = hangulState;
     if (st.solved) {
-      return '<div class="hg-prompt">✂️ 단어마다 끊었어! 뜻이 한 번에 보이지?</div>' + hangulSolvedBox(item);
+      return '<div class="hg-prompt">' + (st.msgKind === 'warn' ? '📖 정답은 이렇게 써요!' : '✍️ 정확하게 받아썼어!') + '</div>' +
+        '<div class="hg-solved">' +
+        '<div class="hg-words">' + String(item.text).split(' ').map(function (w, i) {
+          return '<span class="hg-chunk w' + (i % HANGUL_WORD_COLORS) + '">' + esc(w) + '</span>';
+        }).join('') + '</div>' +
+        '<div class="hg-solved-say">' + esc(item.text) + '</div>' +
+        '<button class="hg-listen" type="button" data-hact="say" data-say="' + esc(item.text) + '">🔊 다시 들어 보기</button>' +
+        '</div>';
     }
-    var sylls = [];
-    item.w.forEach(function (w) {
-      String(w).split('').forEach(function (ch) { sylls.push(ch); });
-    });
-    var bounds = {};
-    var acc = 0;
-    for (var k = 0; k < item.w.length - 1; k++) {
-      acc += String(item.w[k]).length;
-      bounds[acc] = true;
+    var html = '<div class="hg-prompt">✍️ 들려주는 문장을 받아쓰세요!</div>' +
+      '<div class="hg-readtip">👂 잘 듣고, 띄어쓰기까지 맞춰서 써 봐!</div>' +
+      '<div class="hg-say-row">' +
+      '<button class="hg-say" type="button" data-hact="listen" data-rate="0.95">🔊 문제 듣기</button>' +
+      '<button class="hg-say slow" type="button" data-hact="listen" data-rate="0.55">🐢 천천히 듣기</button>' +
+      '</div>' +
+      '<input class="hg-type" id="hgType" type="text" maxlength="40" value="' + esc(st.typed) + '" ' +
+      'placeholder="들은 문장을 써 봐" autocomplete="off" autocorrect="off" autocapitalize="off" ' +
+      'spellcheck="false" inputmode="text" aria-label="받아쓰기 답">' +
+      '<button class="btn primary hg-wide" type="button" data-hact="submit">확인</button>';
+    if (st.wrongThis) {
+      html += hangulDiffBox(st.typed, item.text);
+      html += '<div class="hg-actions"><button class="btn hg-wide" type="button" data-hact="reveal">정답 보기</button></div>';
     }
-    var html = '<div class="hg-prompt">✂️ 어디서 끊어 읽을까? 단어 사이를 눌러 봐!</div>';
-    html += '<div class="hg-readtip">👄 글자를 소리 내어 읽으면서, 단어가 바뀌는 곳을 찾아봐!</div>';
-    html += '<div class="hg-strip">';
-    sylls.forEach(function (ch, i) {
-      if (i > 0) {
-        html += '<button class="hg-gap' + (st.cuts[i] ? ' on' : '') + '" type="button" data-hact="gap" data-gap="' + i +
-          '" data-ok="' + (bounds[i] ? '1' : '0') + '" aria-label="' + i + '번째와 ' + (i + 1) + '번째 글자 사이"></button>';
+    return html;
+  }
+
+  /* ---------- ➕➖ 두 자릿수 더하기·빼기 ---------- */
+
+  function hangulRand(min, max) {
+    if (max <= min) return min;
+    return min + Math.floor(Math.random() * (max - min + 1));
+  }
+
+  /* 두 자릿수 문제 하나 — 받아올림/받아내림이 있는 것과 없는 것을 골라 만듭니다 */
+  function hangulMathProblem(kind) {
+    var a, b;
+    if (kind === 'add' || kind === 'addCarry') {
+      if (kind === 'addCarry') {                  // 일의 자리에서 받아올림
+        var ca0 = hangulRand(2, 9);
+        var cb0 = hangulRand(10 - ca0, 9);
+        var ca1 = hangulRand(1, 7);
+        var cb1 = hangulRand(1, 8 - ca1);
+        a = ca1 * 10 + ca0; b = cb1 * 10 + cb0;
+      } else {                                    // 받아올림 없이
+        var na0 = hangulRand(1, 8);
+        var nb0 = hangulRand(1, 9 - na0);
+        var na1 = hangulRand(1, 7);
+        var nb1 = hangulRand(1, 8 - na1);
+        a = na1 * 10 + na0; b = nb1 * 10 + nb0;
       }
-      html += '<span class="hg-syl w' + (hangulSegmentOf(i, st.cuts) % HANGUL_WORD_COLORS) + '">' + esc(ch) + '</span>';
+      return { a: a, b: b, op: '+', answer: a + b };
+    }
+    if (kind === 'subBorrow') {                   // 일의 자리에서 받아내림
+      var ba0 = hangulRand(1, 8);
+      var bb0 = hangulRand(ba0 + 1, 9);
+      var ba1 = hangulRand(3, 9);
+      var bb1 = hangulRand(1, ba1 - 2);
+      a = ba1 * 10 + ba0; b = bb1 * 10 + bb0;
+    } else {                                      // 받아내림 없이, 답은 0보다 커요
+      var sa0 = hangulRand(2, 9);
+      var sb0 = hangulRand(1, sa0 - 1);
+      var sa1 = hangulRand(2, 9);
+      var sb1 = hangulRand(1, sa1 - 1);
+      a = sa1 * 10 + sa0; b = sb1 * 10 + sb0;
+    }
+    return { a: a, b: b, op: '-', answer: a - b };
+  }
+
+  /* 한 판 5문제 — 덧셈 2 · 뺄셈 2 · 나머지 1로 골고루, 받아올림/받아내림도 한 번씩 */
+  function hangulMakeMathRound() {
+    var plan = hangulShuffle(['add', 'addCarry', 'sub', 'subBorrow', 'any']);
+    var out = [], used = {}, guard = 0;
+    while (out.length < HANGUL_QUESTION_COUNT && guard++ < 400) {
+      var kind = plan[out.length];
+      if (kind === 'any') kind = hangulShuffle(['add', 'addCarry', 'sub', 'subBorrow'])[0];
+      var p = hangulMathProblem(kind);
+      var key = p.a + p.op + p.b;
+      if (used[key]) continue;
+      used[key] = true;
+      out.push(p);
+    }
+    return hangulShuffle(out);
+  }
+
+  function hangulKeypadHtml() {
+    var keys = '';
+    for (var d = 1; d <= 9; d++) {
+      keys += '<button class="hg-key" type="button" data-hact="key" data-key="' + d + '">' + d + '</button>';
+    }
+    keys += '<button class="hg-key del" type="button" data-hact="key" data-key="del" aria-label="지우기">⌫</button>';
+    keys += '<button class="hg-key" type="button" data-hact="key" data-key="0">0</button>';
+    keys += '<button class="hg-key ok" type="button" data-hact="key" data-key="ok" aria-label="확인">✓</button>';
+    return '<div class="hg-keypad" role="group" aria-label="숫자 키패드">' + keys + '</div>';
+  }
+
+  function hangulMathHtml(problem) {
+    var st = hangulState;
+    var head = '<div class="hg-math" data-a="' + problem.a + '" data-b="' + problem.b + '" data-op="' + esc(problem.op) + '">' +
+      '<span class="num">' + problem.a + '</span>' +
+      '<span class="op">' + problem.op + '</span>' +
+      '<span class="num">' + problem.b + '</span>' +
+      '<span class="eq">=</span>';
+    if (st.solved) {
+      return '<div class="hg-prompt">' + (st.msgKind === 'warn' ? '📖 정답은 이렇게 계산해요!' : '✅ 답을 맞혔어!') + '</div>' +
+        head + '<span class="hg-ans solved">' + problem.answer + '</span></div>' +
+        '<div class="hg-solved-say">' + problem.a + ' ' + problem.op + ' ' + problem.b + ' = ' + problem.answer + '</div>';
+    }
+    var shown = st.typed ? String(st.typed) : '?';
+    var html = '<div class="hg-prompt">' + (problem.op === '+' ? '➕' : '➖') + ' 두 자릿수 계산을 해 봐!</div>' +
+      '<div class="hg-readtip">🧮 일의 자리부터 차근차근 계산해 봐!</div>' +
+      head + '<span class="hg-ans' + (st.typed ? ' has' : '') + '">' + esc(shown) + '</span></div>' +
+      hangulKeypadHtml();
+    if (st.wrongThis) html += '<div class="hg-actions"><button class="btn hg-wide" type="button" data-hact="reveal">정답 보기</button></div>';
+    return html;
+  }
+
+  /* ---------- 🔤 영어 단어 시험 ---------- */
+
+  function hangulEnglishPool() {
+    return DICT_WORDS.filter(function (e) { return e.builtin && e.word && e.emoji; });
+  }
+
+  /* 정답 + 방해 낱말 3개 — 같은 분류에서 먼저 채워 뜻을 읽고 골라야 하게 */
+  function hangulMakeEnglishOptions(entry) {
+    var seen = {};
+    seen[entry.word] = true;
+    var picks = [];
+    function take(list) {
+      list.forEach(function (o) {
+        if (picks.length >= 3) return;
+        if (seen[o.word]) return;
+        seen[o.word] = true;
+        picks.push(o);
+      });
+    }
+    var all = hangulEnglishPool();
+    take(hangulShuffle(all.filter(function (o) { return o.cat === entry.cat; })));
+    take(hangulShuffle(all.filter(function (o) { return o.cat !== entry.cat; })));
+    return hangulShuffle([entry].concat(picks));
+  }
+
+  function hangulEnglishHtml(item) {
+    var st = hangulState;
+    if (st.solved) {
+      return '<div class="hg-prompt">' + (st.msgKind === 'warn' ? '📖 정답은 이 낱말이에요!' : '🎉 낱말을 잘 읽었어!') + '</div>' +
+        '<div class="hg-solved">' +
+        '<div class="hg-solved-scene">' + item.emoji + '</div>' +
+        '<div class="hg-enword">' + esc(item.word) + '</div>' +
+        '<div class="hg-solved-say">' + esc(item.ko) + (item.phonetic ? ' · ' + esc(item.phonetic) : '') + '</div>' +
+        '<button class="hg-listen" type="button" data-hact="ensay" data-word="' + esc(item.word) + '">🔊 발음 들어 보기</button>' +
+        '</div>';
+    }
+    var html = '<div class="hg-prompt">🔤 그림과 뜻에 맞는 영어 낱말을 골라 봐!</div>' +
+      '<div class="hg-readtip">👀 영어 낱말을 하나씩 소리 내어 읽고 골라 봐!</div>' +
+      '<div class="hg-enq"><span class="hg-enq-emoji">' + item.emoji + '</span>' +
+      '<span class="hg-enq-ko">' + esc(item.ko) + '</span></div>' +
+      '<div class="hg-choices en">';
+    st.options.forEach(function (o, i) {
+      var wrong = st.picked.indexOf(i) >= 0;
+      html += '<button class="hg-choice en' + (wrong ? ' wrong' : '') + '" type="button" data-hact="pick" data-pick="' + i +
+        '" data-correct="' + (o.word === item.word ? '1' : '0') + '">' +
+        '<span class="hg-choice-word">' + esc(o.word) + '</span></button>';
     });
     html += '</div>';
     return html;
   }
 
-  /* 모드 2 — 단어마다 색이 다른 문장을 읽고 그림 뜻 찾기 */
-  function hangulMeaningHtml(item) {
-    var st = hangulState;
-    if (st.solved) {
-      return '<div class="hg-prompt">🎯 읽은 문장과 그림이 딱 맞았어!</div>' + hangulSolvedBox(item);
-    }
-    var html = '<div class="hg-prompt">🎯 문장을 읽고, 그림이 맞는 것을 골라 봐!</div>';
-    html += '<div class="hg-readtip">👄 먼저 소리 내어 읽어 봐! 다 읽은 다음에 그림을 골라!</div>';
-    /* 문제 푸는 동안에는 단어를 눌러도 소리가 나지 않아요 — 읽어야만 골라집니다 */
-    html += '<div class="hg-sentence">' + item.w.map(function (w, i) {
-      return '<span class="hg-pill-w w' + (i % HANGUL_WORD_COLORS) + '">' + esc(w) + '</span>';
-    }).join('') + '</div>';
-    html += '<div class="hg-choices">' + st.options.map(function (o, i) {
-      var wrong = st.picked.indexOf(i) >= 0;
-      return '<button class="hg-choice' + (wrong ? ' wrong' : '') + '" type="button" data-hact="pick" data-pick="' + i +
-        '" data-correct="' + (o === item ? '1' : '0') + '">' +
-        '<span class="hg-choice-emoji">' + o.emoji + '</span>' +
-        '<span class="hg-choice-text">' + esc(o.say) + '</span></button>';
-    }).join('') + '</div>';
-    return html;
-  }
-
-  /* 모드 3 — 그림을 보고 단어 블록을 차례대로 놓기 */
-  function hangulBuildHtml(item) {
-    var st = hangulState;
-    if (st.solved) {
-      return '<div class="hg-prompt">🧩 단어를 차례대로 잘 놓았어!</div>' + hangulSolvedBox(item);
-    }
-    var slots = '';
-    item.w.forEach(function (w, i) {
-      /* 순서를 틀린 뒤에는 소리 대신 첫 자리를 콕 짚어 줍니다 */
-      var hint = st.wrongThis && i === 0 ? ' hint' : '';
-      if (i < st.placed.length) {
-        var v = st.placed[i];
-        var bad = st.badSlots && st.badSlots[i];
-        slots += '<div class="hg-slot filled w' + (i % HANGUL_WORD_COLORS) + (bad ? ' bad' : '') + hint + '" data-slot="' + i + '">' +
-          '<button class="hg-slot-word" type="button" data-hact="take" data-slot="' + i + '" title="다시 놓기">' +
-          esc(item.w[v]) + '</button></div>';
-      } else {
-        slots += '<div class="hg-slot" data-slot="' + i + '">' + (i + 1) + '</div>';
-      }
-    });
-    var bank = st.bank.filter(function (idx) { return st.placed.indexOf(idx) === -1; }).map(function (idx) {
-      return '<button class="hg-block" type="button" data-hact="block" data-idx="' + idx + '" data-pos="' + idx + '">' +
-        esc(item.w[idx]) + '</button>';
-    }).join('');
-    return '<div class="hg-prompt">🧩 그림을 보고, 단어 블록을 차례대로 놓아 봐!</div>' +
-      '<div class="hg-scene">' + item.emoji + '</div>' +
-      '<div class="hg-slots">' + slots + '</div>' +
-      '<div class="hg-bank">' + bank + '</div>' +
-      (st.wrongThis ? '<div class="hg-hintline"><div class="hg-readtip">👄 첫 번째 말부터 소리 내어 읽어 보자! 읽은 대로 놓으면 돼!</div></div>' : '');
-  }
+  /* ---------- 문제 화면 ---------- */
 
   function hangulQuestionHtml() {
     var st = hangulState;
-    var m = HANGUL_MODES[st.mode] || HANGUL_MODES.meaning;
+    var m = HANGUL_MODES[st.mode] || HANGUL_MODES.dictation;
     var total = st.items.length;
     var item = st.items[st.qIndex];
-    var body = st.mode === 'split' ? hangulSplitHtml(item)
-      : (st.mode === 'build' ? hangulBuildHtml(item) : hangulMeaningHtml(item));
+    var body = st.mode === 'math' ? hangulMathHtml(item)
+      : (st.mode === 'english' ? hangulEnglishHtml(item) : hangulDictationHtml(item));
     var last = st.qIndex >= total - 1;
     var acts = st.solved
       ? '<div class="hg-actions"><button class="btn primary hg-wide" type="button" data-hact="next">' +
@@ -4538,7 +4634,7 @@ body.focus-mode .focus-exit{display:block}
       hangulModeBarHtml() +
       '<div class="hg-qhead">' +
         '<span class="hg-prog">' + m.emoji + ' ' + (st.qIndex + 1) + ' / ' + total + '</span>' +
-        '<span class="hg-qmode">' + m.name + '</span>' +
+        '<span class="hg-qmode">' + esc(m.name) + '</span>' +
         '<span class="hg-pill xp" style="margin-left:auto">맞힌 문제 ' + st.correct + '</span>' +
       '</div>' +
       '<div class="hg-bar"><i style="width:' + Math.round(st.qIndex / total * 100) + '%"></i></div>' +
@@ -4566,12 +4662,12 @@ body.focus-mode .focus-exit{display:block}
 
   function hangulSummaryHtml() {
     var st = hangulState;
-    var total = st.items.length || 5;
+    var total = st.items.length || HANGUL_QUESTION_COUNT;
     var acc = Math.round((st.correct / total) * 100);
     var face = acc >= 80 ? '🏆' : (acc >= 40 ? '🌟' : '🌱');
     var rewardLine = (st.earnedXp || st.earnedStar)
       ? '🎁 +' + st.earnedXp + ' XP · ⭐ +' + st.earnedStar
-      : '오늘 보상은 이미 ' + HANGUL_REWARD_CAP + '번 다 받았어요 (그래도 읽는 건 좋아요!)';
+      : '오늘 보상은 이미 ' + HANGUL_REWARD_CAP + '번 다 받았어요 (그래도 공부는 좋아요!)';
     var html = '<div class="hg-summary">' +
       '<div class="hg-sum-face">' + face + '</div>' +
       '<h4>한 판 끝!</h4>' +
@@ -4597,84 +4693,25 @@ body.focus-mode .focus-exit{display:block}
     return a;
   }
 
-  /* 문제 5개 — 주제를 골고루 섞어서 고릅니다 */
+  /* 한 판 문제 5개 — 놀이마다 다른 방식으로 고릅니다 */
   function hangulPickQuestions(mode) {
-    var pool = HANGUL_ITEMS.filter(function (it) {
-      if (mode === 'split') return it.w.length >= 3;
-      return it.w.length >= 2 && it.w.length <= 4;
-    });
-    var byTopic = {};
-    pool.forEach(function (it) { (byTopic[it.topic] = byTopic[it.topic] || []).push(it); });
-    var topics = hangulShuffle(Object.keys(byTopic));
-    topics.forEach(function (t) { byTopic[t] = hangulShuffle(byTopic[t]); });
-    var out = [], guard = 0;
-    while (out.length < 5 && guard++ < 100) {
-      var added = false;
-      for (var i = 0; i < topics.length && out.length < 5; i++) {
-        var arr = byTopic[topics[i]];
-        if (arr.length) { out.push(arr.shift()); added = true; }
-      }
-      if (!added) break;
-    }
-    return hangulShuffle(out);
-  }
-
-  /* 뜻 맞히기 선택지 — 정답 + 방해 그림 2개.
-     그림만 보고 찍지 못하도록, 같은 주어(같은 사람·동물)의 다른 문장을 먼저 하나 고릅니다.
-     그러면 '누가 무엇을 하는지' 서술어를 읽어야만 고를 수 있어요.
-     그다음 같은 주제(비슷한 상황), 그래도 모자라면 다른 주제에서 채웁니다. */
-  function hangulMakeOptions(item) {
-    var used = {};
-    used[item.say] = true;
-    used[item.emoji] = true;
-    var subj = item.w[0];
-    function usable(o) { return o !== item && !used[o.say] && !used[o.emoji]; }
-    function pool(fn) {
-      return hangulShuffle(HANGUL_ITEMS.filter(function (o) { return usable(o) && fn(o); }));
-    }
-    var sameSubject = pool(function (o) { return o.w[0] === subj; });
-    var sameTopic = pool(function (o) { return o.topic === item.topic && o.w[0] !== subj; });
-    var rest = pool(function (o) { return o.topic !== item.topic && o.w[0] !== subj; });
-    var picks = [];
-    function take(list, upto) {
-      while (picks.length < upto && list.length) {
-        var o = list.shift();
-        if (!usable(o)) continue;
-        used[o.say] = true;
-        used[o.emoji] = true;
-        picks.push(o);
-      }
-    }
-    take(sameSubject, 1);   // 하나는 꼭 '같은 주어 · 다른 할 일'
-    take(sameTopic, 2);     // 하나는 비슷한 상황
-    take(sameSubject, 2);
-    take(rest, 2);
-    return hangulShuffle([item].concat(picks));
+    if (mode === 'math') return hangulMakeMathRound();
+    var pool = mode === 'english'
+      ? hangulEnglishPool()
+      : HANGUL_DICTATION.map(function (t) { return { text: t }; });
+    return hangulShuffle(pool).slice(0, HANGUL_QUESTION_COUNT);
   }
 
   function hangulSetupQuestion() {
     var st = hangulState;
     var item = st.items[st.qIndex];
     st.solved = false;
-    st.cuts = {};
+    st.typed = '';
     st.picked = [];
-    st.placed = [];
-    st.badSlots = null;
     st.msg = '';
     st.msgKind = '';
     st.wrongThis = false;
-    if (st.mode === 'meaning') st.options = hangulMakeOptions(item);
-    else st.options = [];
-    if (st.mode === 'build') {
-      var ids = item.w.map(function (_, i) { return i; });
-      var bank = hangulShuffle(ids);
-      if (ids.length > 1 && bank.every(function (v, i) { return v === i; })) {
-        var t = bank[0]; bank[0] = bank[1]; bank[1] = t;
-      }
-      st.bank = bank;
-    } else {
-      st.bank = [];
-    }
+    st.options = (st.mode === 'english' && item) ? hangulMakeEnglishOptions(item) : [];
   }
 
   /* 중간에 창을 닫아도 같은 판을 이어서 하도록 저장 (새 판으로 계속 도는 것 방지) */
@@ -4682,10 +4719,18 @@ body.focus-mode .focus-exit{display:block}
     var st = hangulState;
     if (!st || st.screen !== 'play') return;
     var h = hangulDay();
+    var items;
+    if (st.mode === 'math') {
+      items = st.items.map(function (p) { return [p.a, p.b, p.op]; });
+    } else if (st.mode === 'english') {
+      items = st.items.map(function (e) { return e.word; });
+    } else {
+      items = st.items.map(function (e) { return e.text; });
+    }
     h.progress = {
       date: todayKey(),
       mode: st.mode,
-      ids: st.items.map(function (it) { return it.idx; }),
+      items: items,
       q: st.qIndex,
       correct: st.correct
     };
@@ -4698,12 +4743,26 @@ body.focus-mode .focus-exit{display:block}
     if (!pr || typeof pr !== 'object') return false;
     if (pr.date !== todayKey()) return false;
     if (!HANGUL_MODES[pr.mode]) return false;
-    if (!pr.ids || !pr.ids.length || pr.ids.length > 10) return false;
+    if (!pr.items || !pr.items.length || pr.items.length > HANGUL_QUESTION_COUNT) return false;
     var items = [];
-    for (var i = 0; i < pr.ids.length; i++) {
-      var it = HANGUL_ITEMS[Number(pr.ids[i])];
-      if (!it) return false;
-      items.push(it);
+    for (var i = 0; i < pr.items.length; i++) {
+      var raw = pr.items[i];
+      if (pr.mode === 'math') {
+        if (!raw || raw.length !== 3) return false;
+        var a = Number(raw[0]), b = Number(raw[1]), op = String(raw[2]);
+        if (!(a >= 10 && a <= 99 && b >= 10 && b <= 99)) return false;
+        if (op !== '+' && op !== '-') return false;
+        if (op === '-' && a < b) return false;
+        items.push({ a: a, b: b, op: op, answer: op === '+' ? a + b : a - b });
+      } else if (pr.mode === 'english') {
+        var e = DICT_BY_WORD[String(raw)];
+        if (!e) return false;
+        items.push(e);
+      } else {
+        var t = String(raw);
+        if (HANGUL_DICTATION.indexOf(t) < 0) return false;
+        items.push({ text: t });
+      }
     }
     hangulState = hangulBlankState();
     hangulState.screen = 'play';
@@ -4716,7 +4775,7 @@ body.focus-mode .focus-exit{display:block}
   }
 
   function hangulStartRound(mode) {
-    if (!HANGUL_MODES[mode]) mode = 'meaning';
+    if (!HANGUL_MODES[mode]) mode = 'dictation';
     if (hangulLocked()) {
       hangulState = hangulBlankState();
       hangulRender();
@@ -4754,104 +4813,125 @@ body.focus-mode .focus-exit{display:block}
     }
     save();
     paintHangulChip();
-    openModal(modalShell('🔤 한글놀이', hangulBodyHtml(), { wide: true }), true);
+    openModal(modalShell('✏️ 공부놀이', hangulBodyHtml(), { wide: true }), true);
   }
 
-  function hangulTapGap(g, ok) {
+  /* 🔊 문제 듣기 — 받아쓰기에서만, 누를 때만 읽어 줍니다 */
+  function hangulListen(rate) {
     var st = hangulState;
-    if (!st || st.solved || st.screen !== 'play') return;
+    if (!st || st.screen !== 'play' || st.mode !== 'dictation') return;
     var item = st.items[st.qIndex];
-    if (ok) {
-      if (st.cuts[g]) return;
-      st.cuts[g] = true;
-      var need = item.w.length - 1;
-      var have = 0;
-      Object.keys(st.cuts).forEach(function (k) { if (st.cuts[k]) have++; });
-      if (have >= need) {
-        st.solved = true;
-        st.msg = '✨ 단어마다 끊었어! 이제 무슨 뜻인지 보이지? 아래 🔊 로 잘 읽었는지 들어 봐!';
-        st.msgKind = 'good';
-        if (!st.wrongThis) st.correct += 1;
-        sndFanfare();
-      } else {
-        st.msg = '👏 여기가 단어 사이야! 잘 찾았어!';
-        st.msgKind = 'good';
-        sndCheck();
-      }
-    } else {
-      st.wrongThis = true;
-      st.msg = '🙂 여기는 아직 한 단어야. 다른 곳을 찾아볼까?';
+    if (!item) return;
+    speak(item.text, rate);
+  }
+
+  /* ✍️ 받아쓰기 채점 */
+  function hangulSubmitDictation() {
+    var st = hangulState;
+    if (!st || st.solved || st.screen !== 'play' || st.mode !== 'dictation') return;
+    var item = st.items[st.qIndex];
+    var el = $('hgType');
+    var typed = el ? el.value : st.typed;
+    st.typed = String(typed == null ? '' : typed);
+    if (!hangulNormText(st.typed)) {
+      st.msg = '✍️ 먼저 들은 문장을 써 봐!';
       st.msgKind = 'warn';
-      sndUncheck();
+      hangulRender();
+      return;
     }
+    if (hangulSameText(st.typed, item.text)) {
+      st.solved = true;
+      st.msg = st.wrongThis
+        ? '🎉 고쳐서 맞혔구나! 이렇게 쓰는 거야!'
+        : '🎉 정확하게 받아썼어! 정말 잘했어!';
+      st.msgKind = 'good';
+      if (!st.wrongThis) st.correct += 1;
+      sndFanfare();
+      hangulRender();
+      return;
+    }
+    st.wrongThis = true;
+    st.msg = '🤔 조금 달라. 빨간 글자를 보고 다시 써 봐!';
+    st.msgKind = 'warn';
+    sndUncheck();
+    hangulRender();
+    var inp = $('hgType');
+    if (inp && inp.focus) { try { inp.focus(); } catch (e) { } }
+  }
+
+  /* ➕➖ 키패드 */
+  function hangulPressKey(k) {
+    var st = hangulState;
+    if (!st || st.solved || st.screen !== 'play' || st.mode !== 'math') return;
+    if (k === 'ok') { hangulSubmitMath(); return; }
+    if (k === 'del') { st.typed = st.typed.slice(0, -1); hangulRender(); return; }
+    if (!/^[0-9]$/.test(String(k))) return;
+    if (st.typed.length >= 3) return;
+    st.typed += String(k);
     hangulRender();
   }
 
+  function hangulSubmitMath() {
+    var st = hangulState;
+    if (!st || st.solved || st.screen !== 'play' || st.mode !== 'math') return;
+    var p = st.items[st.qIndex];
+    if (!st.typed) {
+      st.msg = '🔢 숫자를 눌러 답을 만들어 봐!';
+      st.msgKind = 'warn';
+      hangulRender();
+      return;
+    }
+    if (Number(st.typed) === p.answer) {
+      st.solved = true;
+      st.msg = st.wrongThis ? '🎉 다시 계산해서 맞혔어! 멋지다!' : '🎉 정답! 계산을 잘했어!';
+      st.msgKind = 'good';
+      if (!st.wrongThis) st.correct += 1;
+      sndFanfare();
+      hangulRender();
+      return;
+    }
+    st.wrongThis = true;
+    st.typed = '';
+    st.msg = '🤔 일의 자리부터 다시 계산해 보자!';
+    st.msgKind = 'warn';
+    sndUncheck();
+    hangulRender();
+  }
+
+  /* 🔤 영어 낱말 고르기 */
   function hangulPickChoice(i) {
     var st = hangulState;
-    if (!st || st.solved || st.screen !== 'play' || st.mode !== 'meaning') return;
+    if (!st || st.solved || st.screen !== 'play' || st.mode !== 'english') return;
     var item = st.items[st.qIndex];
     var chosen = st.options[i];
     if (!chosen) return;
-    if (chosen === item) {
+    if (chosen.word === item.word) {
       st.solved = true;
-      st.msg = '🎉 맞았어! ' + item.say + ' — 아래 🔊 로 문장을 다시 들어 봐!';
+      st.msg = '🎉 맞았어! ' + item.word + ' = ' + item.ko + ' — 아래 🔊 로 발음을 들어 봐!';
       st.msgKind = 'good';
       if (!st.wrongThis) st.correct += 1;
       sndFanfare();
     } else {
       if (st.picked.indexOf(i) === -1) st.picked.push(i);
       st.wrongThis = true;
-      st.msg = '🤔 다시 읽어 볼까? 문장을 천천히 소리 내어 읽고 골라 봐!';
+      st.msg = '🤔 다시 읽어 볼까? 영어 낱말을 하나씩 소리 내어 읽고 골라 봐!';
       st.msgKind = 'warn';
       sndUncheck();
     }
     hangulRender();
   }
 
-  function hangulPlaceBlock(idx) {
-    var st = hangulState;
-    if (!st || st.solved || st.screen !== 'play' || st.mode !== 'build') return;
-    var item = st.items[st.qIndex];
-    idx = Number(idx);
-    if (!(idx >= 0 && idx < item.w.length)) return;
-    if (st.placed.indexOf(idx) !== -1) return;
-    if (st.placed.length >= item.w.length) return;
-    st.placed.push(idx);
-    st.badSlots = null;
-    st.msg = '';
-    st.msgKind = '';
-    sndBall();
-    if (st.placed.length === item.w.length) {
-      var okAll = true;
-      st.placed.forEach(function (v, k) { if (v !== k) okAll = false; });
-      if (okAll) {
-        st.solved = true;
-        st.msg = '🧩 문장을 멋지게 만들었어! 아래 🔊 로 완성된 문장을 들어 봐!';
-        st.msgKind = 'good';
-        if (!st.wrongThis) st.correct += 1;
-        sndFanfare();
-      } else {
-        st.wrongThis = true;
-        st.badSlots = st.placed.map(function (v, k) { return v !== k; });
-        st.msg = '🙂 순서가 조금 달라. 첫 번째 말부터 소리 내어 읽고 다시 놓아 봐!';
-        st.msgKind = 'warn';
-        sndUncheck();
-      }
-    }
-    hangulRender();
-  }
-
-  function hangulTakeBack(slot) {
+  /* 정답 보기 — 맞힌 것으로 세지 않고, 바른 답을 또렷하게 보여 줍니다 */
+  function hangulReveal() {
     var st = hangulState;
     if (!st || st.solved || st.screen !== 'play') return;
-    slot = Number(slot);
-    if (!(slot >= 0 && slot < st.placed.length)) return;
-    st.placed.splice(slot, 1);
-    st.badSlots = null;
-    st.msg = '';
-    st.msgKind = '';
-    hangulRender();
+    var item = st.items[st.qIndex];
+    st.solved = true;
+    st.msgKind = 'warn';
+    if (st.mode === 'math') st.msg = '정답은 ' + item.answer + '이에요. 다음에 다시 계산해 보자!';
+    else if (st.mode === 'english') st.msg = '정답은 ' + item.word + '예요. 발음을 들어 보고 기억해 두자!';
+    else st.msg = '정답은 이렇게 써요. 한 번 더 읽어 보고 기억해 두자!';
+    hangulRender(true);
   }
 
   function hangulNext() {
@@ -4892,7 +4972,7 @@ body.focus-mode .focus-exit{display:block}
       var bits = [];
       if (st.earnedXp) bits.push('+' + st.earnedXp + ' XP');
       if (st.earnedStar) bits.push('⭐ +' + st.earnedStar);
-      toast('🎉 한글놀이 한 판! ' + bits.join(' · '), 'gold');
+      toast('🎉 공부놀이 한 판! ' + bits.join(' · '), 'gold');
     }
     if (st.leveled) {
       setTimeout(function () {
@@ -4907,11 +4987,13 @@ body.focus-mode .focus-exit{display:block}
     var act = el.getAttribute('data-hact');
     if (act === 'mode') { hangulStartRound(el.getAttribute('data-mode')); return; }
     if (act === 'switch') { hangulSwitchMode(el.getAttribute('data-mode')); return; }
-    if (act === 'gap') { hangulTapGap(Number(el.getAttribute('data-gap')), el.getAttribute('data-ok') === '1'); return; }
+    if (act === 'listen') { hangulListen(Number(el.getAttribute('data-rate')) || 1); return; }
     if (act === 'say') { speak(el.getAttribute('data-say') || ''); return; }
+    if (act === 'ensay') { dictSpeak(el.getAttribute('data-word') || '', 'en-US', 1); return; }
     if (act === 'pick') { hangulPickChoice(Number(el.getAttribute('data-pick'))); return; }
-    if (act === 'block') { hangulPlaceBlock(el.getAttribute('data-idx')); return; }
-    if (act === 'take') { hangulTakeBack(el.getAttribute('data-slot')); return; }
+    if (act === 'key') { hangulPressKey(el.getAttribute('data-key')); return; }
+    if (act === 'submit') { hangulSubmitDictation(); return; }
+    if (act === 'reveal') { hangulReveal(); return; }
     if (act === 'next') { hangulNext(); return; }
     if (act === 'again') { hangulStartRound(hangulState.mode); return; }
     if (act === 'modes') {
@@ -5918,9 +6000,9 @@ body.focus-mode .focus-exit{display:block}
       '<button class="btn" type="button" data-act="open-box">포켓몬 박스 열기</button></div>' +
       '<span class="hint">포켓몬마다 레벨과 XP가 따로 쌓여요. 파트너를 바꾸면 그 포켓몬의 레벨로 보여요.</span></div>' +
 
-      '<div class="set-group"><h4>🔤 한글놀이</h4>' +
+      '<div class="set-group"><h4>✏️ 공부놀이</h4>' +
       '<div class="field"><label>하루에 할 판 수</label><select id="setHangulLimit">' + hangulLimitOptions() + '</select></div>' +
-      '<span class="hint">한 판은 문제 5개예요. 다 하면 그날은 잠기고 내일 다시 열려요. 0으로 두면 오늘은 잠겨요.</span>' +
+      '<span class="hint">받아쓰기 · 두 자릿수 더하기·빼기 · 영어 단어 시험. 한 판은 문제 5개예요. 다 하면 그날은 잠기고 내일 다시 열려요. 0으로 두면 오늘은 잠겨요.</span>' +
       '<div class="empty-note" style="padding:0">오늘 ' + hangulDay().todayRounds + '판 · 보상 ' +
         hangulDay().rewarded + ' / ' + HANGUL_REWARD_CAP + '회</div>' +
       '</div>' +
@@ -6374,6 +6456,19 @@ body.focus-mode .focus-exit{display:block}
       if (!t || t.id !== 'dictQuery' || ev.key !== 'Enter') return;
       if (ev.preventDefault) ev.preventDefault();
       dictSubmitQuery();
+    });
+
+    // 공부놀이 받아쓰기 글자판 — 쓰는 대로 답을 기억해 두었다가 채점해요
+    $('modalRoot').addEventListener('input', function (ev) {
+      var t = ev.target;
+      if (!t || t.id !== 'hgType' || !hangulState) return;
+      hangulState.typed = String(t.value == null ? '' : t.value);
+    });
+    $('modalRoot').addEventListener('keydown', function (ev) {
+      var t = ev.target;
+      if (!t || t.id !== 'hgType' || ev.key !== 'Enter') return;
+      if (ev.preventDefault) ev.preventDefault();
+      hangulSubmitDictation();
     });
 
     // 모달 공통
