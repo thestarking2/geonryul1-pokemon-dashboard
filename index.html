@@ -804,6 +804,17 @@ body.focus-mode .focus-exit{display:block}
 }
 .move-detail h4{font-size:16px;margin-bottom:4px}
 .move-kv{display:flex;gap:12px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-soft);margin:4px 0 6px}
+/* 배운 기술 칩 — 누르면 기술 연출이 다시 열립니다 */
+.learned-wrap{margin-top:16px;border-top:3px dashed #e3d6bf;padding-top:12px}
+.learned-chips{display:flex;flex-wrap:wrap;gap:7px;max-height:150px;overflow-y:auto}
+.learned-chip{
+  display:inline-flex;align-items:center;gap:6px;border:2.5px solid var(--ink);border-radius:999px;
+  background:#fff;padding:6px 11px 6px 8px;font-size:14px;font-weight:700;color:var(--ink);
+  box-shadow:0 3px 0 rgba(43,43,51,.16);
+}
+.learned-chip:active{transform:translateY(2px);box-shadow:none}
+.learned-chip .lc-dot{width:10px;height:10px;border-radius:50%;flex:none;border:2px solid rgba(0,0,0,.25)}
+.learned-chip .lc-lv{font-size:11.5px;font-weight:800;color:#8a5a00;background:#fff3c4;border-radius:999px;padding:1px 7px}
 .evo-track{display:flex;align-items:center;gap:6px;margin-top:14px;flex-wrap:wrap}
 .evo-stage{
   border:3px solid #cbb99d;border-radius:16px;padding:6px;width:96px;text-align:center;background:#fff;opacity:.55;
@@ -1255,6 +1266,140 @@ body.focus-mode .focus-exit{display:block}
   .hg-choice.en{min-height:78px}
   .hg-choice-word{font-size:clamp(17px,4.6vw,21px)}
 }
+
+/* ===============================================================
+   레벨업 · 기술 배우기 연출 (큰 포켓몬 + 타입별 효과 + 기술 카드)
+   =============================================================== */
+.move-stage{
+  --mv:#f7d02c;--mv2:#fff;
+  position:fixed;inset:0;z-index:260;display:none;place-items:center;padding:16px;overflow:hidden;
+  background:radial-gradient(circle at 50% 45%,rgba(34,26,44,.88),rgba(10,8,14,.95));
+}
+.move-stage.open{display:grid;animation:fade .18s ease}
+.move-stage .mv-bg{
+  position:absolute;inset:-12%;pointer-events:none;filter:blur(8px);opacity:.45;
+  background:radial-gradient(circle at 50% 48%,var(--mv),transparent 62%);
+  animation:mvBg 2.2s ease-in-out infinite alternate;
+}
+@keyframes mvBg{from{opacity:.3;transform:scale(.94)}to{opacity:.68;transform:scale(1.06)}}
+
+.mv-card{
+  position:relative;width:min(560px,100%);max-height:94vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:linear-gradient(180deg,#fffdf6,#fff1d6);border:5px solid var(--ink);border-radius:28px;
+  box-shadow:0 16px 0 rgba(0,0,0,.35);padding:14px 16px 18px;text-align:center;
+}
+.mv-badge{
+  display:inline-block;max-width:100%;background:linear-gradient(160deg,#ffd23f,#f5a623);color:#4a3200;
+  border:3px solid var(--ink);border-radius:999px;padding:7px 14px;font-weight:800;line-height:1.3;
+  font-size:clamp(13.5px,3.6vw,17px);box-shadow:0 4px 0 rgba(0,0,0,.22);
+}
+.mv-mon-wrap{position:relative;margin:4px 0 0;height:clamp(178px,29vh,240px);display:grid;place-items:center}
+.mv-aura{
+  position:absolute;width:min(72vw,230px);height:min(72vw,230px);border-radius:50%;
+  background:radial-gradient(circle,var(--mv) 0%,rgba(255,255,255,.55) 44%,transparent 68%);
+  opacity:.45;animation:mvAura 1.5s ease-in-out infinite alternate;
+}
+@keyframes mvAura{from{transform:scale(.85);opacity:.32}to{transform:scale(1.14);opacity:.72}}
+.mv-mon{
+  position:relative;width:clamp(168px,26vh,220px);height:auto;image-rendering:pixelated;
+  transform-origin:50% 92%;filter:drop-shadow(0 12px 14px rgba(0,0,0,.35));
+}
+.move-stage.play .mv-mon{animation:mvLunge 1.05s cubic-bezier(.3,.85,.35,1) both}
+@keyframes mvLunge{
+  0%{transform:translateY(0) scale(.86);filter:brightness(1.7)}
+  16%{transform:translateY(8px) scale(.8) rotate(-3deg)}
+  30%{transform:translateY(-30px) scale(1.1) rotate(2deg)}
+  44%{transform:translateY(0) scale(1.02)}
+  56%{transform:translate(-16px,2px) rotate(-7deg) scale(1.08)}
+  64%{transform:translate(18px,-2px) rotate(7deg) scale(1.14)}
+  72%{transform:translate(-8px,1px) rotate(-3deg) scale(1.06)}
+  100%{transform:none}
+}
+.move-stage.play .mv-card{animation:mvShake .62s .5s ease both}
+@keyframes mvShake{
+  0%,100%{transform:none}
+  10%{transform:translate(-9px,3px) rotate(-.7deg)}
+  26%{transform:translate(10px,-5px) rotate(.8deg)}
+  42%{transform:translate(-7px,2px) rotate(-.5deg)}
+  58%{transform:translate(6px,-3px) rotate(.4deg)}
+  76%{transform:translate(-3px,1px)}
+}
+.move-stage.play[data-fx="quake"]{animation:mvQuake .6s .5s ease both}
+@keyframes mvQuake{
+  0%,100%{transform:none}
+  18%{transform:translate(-7px,5px) rotate(-.25deg)}
+  42%{transform:translate(8px,-6px) rotate(.25deg)}
+  66%{transform:translate(-4px,3px)}
+}
+
+.mv-fx{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.mv-p{
+  position:absolute;left:50%;top:52%;width:var(--sz);height:var(--sz);border-radius:50%;
+  background:var(--mv);box-shadow:0 0 12px var(--mv);opacity:0;
+  transform:rotate(var(--a)) translateX(26px);
+}
+.move-stage.play .mv-p{animation:mvParticle 1.15s var(--dl) cubic-bezier(.2,.7,.4,1) forwards}
+@keyframes mvParticle{
+  0%{opacity:0;transform:rotate(var(--a)) translateX(18px) scale(.3)}
+  22%{opacity:1}
+  75%{opacity:.95}
+  100%{opacity:0;transform:rotate(var(--a)) translateX(var(--d)) scale(1.15)}
+}
+.move-stage[data-fx="leaf"] .mv-p{border-radius:2px 70% 2px 70%;background:linear-gradient(150deg,#ccf790,#45a025);box-shadow:0 0 8px #7ac74c}
+.move-stage[data-fx="splash"] .mv-p{border-radius:60% 60% 60% 10%;background:linear-gradient(160deg,#d9f3ff,#3597dd);box-shadow:0 0 10px #63b8ff}
+.move-stage[data-fx="quake"] .mv-p{border-radius:3px;background:linear-gradient(150deg,#dcc08a,#6b4d26);box-shadow:none}
+.move-stage[data-fx="mist"] .mv-p{filter:blur(3px);background:radial-gradient(circle,#e4d2ff,#472c73);box-shadow:0 0 16px #8a5bd0}
+.move-stage[data-fx="star"] .mv-p{clip-path:polygon(50% 0,61% 37%,100% 50%,61% 63%,50% 100%,39% 63%,0 50%,39% 37%);box-shadow:0 0 14px var(--mv)}
+.move-stage[data-fx="wind"] .mv-p{width:calc(var(--sz) * 4);height:3px;border-radius:99px;background:linear-gradient(90deg,transparent,#ecfdff);box-shadow:0 0 8px #bfefff}
+
+.mv-ring{
+  position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;
+  border-radius:50%;border:4px solid var(--mv);opacity:0;
+}
+.move-stage.play .mv-ring{animation:mvRing .95s .5s ease-out forwards}
+.move-stage.play .mv-ring.r2{animation-delay:.74s}
+@keyframes mvRing{0%{opacity:.9;transform:scale(.35)}100%{opacity:0;transform:scale(4.4)}}
+
+.mv-bolt{
+  display:none;position:absolute;left:50%;top:4%;width:11px;height:48%;
+  background:linear-gradient(180deg,#fff,#ffe45c);
+  clip-path:polygon(46% 0,100% 36%,62% 40%,86% 100%,0 52%,42% 47%);
+  filter:drop-shadow(0 0 12px #ffe45c);opacity:.9;
+}
+.move-stage[data-type="electric"] .mv-bolt{display:block;animation:mvBolts .32s steps(2) infinite}
+.mv-bolt.b1{transform:rotate(15deg) translateX(-92px)}
+.mv-bolt.b2{transform:rotate(-19deg) translateX(92px);animation-delay:.1s}
+@keyframes mvBolts{0%{opacity:.3}50%{opacity:1}100%{opacity:.55}}
+
+.mv-beam{
+  display:none;position:absolute;left:-20%;top:50%;width:140%;height:26px;opacity:0;
+  transform:rotate(-12deg);filter:blur(2px);
+  background:linear-gradient(90deg,transparent,var(--mv) 22%,#fff 50%,var(--mv) 78%,transparent);
+}
+.move-stage[data-fx="cosmic"] .mv-beam{display:block}
+.move-stage.play[data-fx="cosmic"] .mv-beam{animation:mvBeam .95s .38s ease-out forwards}
+@keyframes mvBeam{
+  0%{opacity:0;transform:rotate(-12deg) scaleX(.25)}
+  30%{opacity:1}
+  100%{opacity:0;transform:rotate(-12deg) scaleX(1.2)}
+}
+.mv-flash{position:absolute;inset:0;background:#fff;opacity:0}
+.move-stage.play .mv-flash{animation:mvFlash .55s .48s ease-out both}
+@keyframes mvFlash{0%{opacity:0}18%{opacity:.72}100%{opacity:0}}
+
+.mv-move{margin-top:8px;border:4px solid var(--ink);border-radius:20px;background:#fff;padding:10px 12px;box-shadow:0 6px 0 rgba(0,0,0,.16)}
+.mv-move-head{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.mv-name{font-size:clamp(21px,5.6vw,28px);font-weight:800;color:var(--ink);line-height:1.2}
+.mv-power{font-size:13.5px;font-weight:800;color:#8a5a00;background:#fff3c4;border:2px solid var(--ink);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.mv-line{margin-top:7px;font-size:clamp(13.5px,3.6vw,16px);font-weight:700;color:#4b4552;line-height:1.45}
+.mv-btns{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
+.mv-btns .btn{width:100%}
+@media (max-width:380px){.mv-btns{grid-template-columns:1fr}}
+@media (max-height:560px){
+  .mv-mon-wrap{height:150px}
+  .mv-mon{width:150px}
+  .mv-badge{font-size:13px;padding:5px 11px}
+}
 </style>
 </head>
 <body>
@@ -1421,6 +1566,7 @@ body.focus-mode .focus-exit{display:block}
 <button class="focus-exit" id="btnFocusExit" type="button">↩︎ 원래 화면으로</button>
 
 <div class="modal-backdrop" id="modalRoot" role="dialog" aria-modal="true"></div>
+<div class="move-stage" id="moveStage" role="dialog" aria-modal="true" aria-hidden="true"></div>
 <div class="toast-wrap" id="toastWrap"></div>
 <script>
 /* ================= 건률네 포켓몬 대시보드 — 앱 ================= */
@@ -1487,6 +1633,285 @@ body.focus-mode .focus-exit{display:block}
     { id: 25, tag: '전기' }, { id: 4, tag: '불꽃' }, { id: 7, tag: '물' },
     { id: 1, tag: '풀' }, { id: 501, tag: '물' }, { id: 133, tag: '노말' }
   ];
+
+  /* ---------------------------------------------------------------
+     기술 도감 (앱 안에 담아 둔 기술)
+     인터넷이 없거나 PokeAPI 기술 요청이 실패해도 레벨업 때 기술을 배우고
+     연출할 수 있도록 타입별 기술을 앱 안에 담아둡니다.
+     형식: [영문 이름, 한글 이름, 위력, 분류(physical/special)]
+  --------------------------------------------------------------- */
+  var MOVE_LIB_ROWS = {
+    normal: [
+      ['tackle', '몸통박치기', 40, 'physical'],
+      ['scratch', '할퀴기', 40, 'physical'],
+      ['quick-attack', '전광석화', 40, 'physical'],
+      ['headbutt', '박치기', 70, 'physical'],
+      ['body-slam', '누르기', 85, 'physical'],
+      ['take-down', '이판사판태클', 90, 'physical'],
+      ['razor-wind', '칼날바람', 80, 'special'],
+      ['hyper-beam', '파괴광선', 150, 'special']
+    ],
+    fire: [
+      ['ember', '불꽃세례', 40, 'special'],
+      ['fire-punch', '불꽃펀치', 75, 'physical'],
+      ['flame-wheel', '화염자동차', 60, 'physical'],
+      ['flamethrower', '화염방사', 90, 'special'],
+      ['heat-wave', '열풍', 95, 'special'],
+      ['inferno', '연옥', 100, 'special'],
+      ['fire-blast', '불대문자', 110, 'special'],
+      ['overheat', '오버히트', 130, 'special']
+    ],
+    water: [
+      ['water-gun', '물대포', 40, 'special'],
+      ['bubble', '거품', 40, 'special'],
+      ['aqua-jet', '아쿠아제트', 40, 'physical'],
+      ['water-pulse', '물의파동', 60, 'special'],
+      ['waterfall', '폭포오르기', 80, 'physical'],
+      ['surf', '파도타기', 90, 'special'],
+      ['hydro-pump', '하이드로펌프', 110, 'special'],
+      ['water-spout', '해수스파우트', 150, 'special']
+    ],
+    electric: [
+      ['thunder-shock', '전기쇼크', 40, 'special'],
+      ['spark', '스파크', 65, 'physical'],
+      ['volt-switch', '볼트체인지', 70, 'special'],
+      ['thunder-punch', '번개펀치', 75, 'physical'],
+      ['discharge', '방전', 80, 'special'],
+      ['thunderbolt', '10만볼트', 90, 'special'],
+      ['wild-charge', '와일드볼트', 90, 'physical'],
+      ['thunder', '번개', 110, 'special']
+    ],
+    grass: [
+      ['vine-whip', '덩굴채찍', 45, 'physical'],
+      ['razor-leaf', '잎날가르기', 55, 'physical'],
+      ['magical-leaf', '마법의잎', 60, 'special'],
+      ['seed-bomb', '씨폭탄', 80, 'physical'],
+      ['energy-ball', '에너지볼', 90, 'special'],
+      ['solar-beam', '솔라빔', 120, 'special'],
+      ['wood-hammer', '우드해머', 120, 'physical'],
+      ['leaf-storm', '리프스톰', 130, 'special']
+    ],
+    ice: [
+      ['powder-snow', '눈싸라기', 40, 'special'],
+      ['icy-wind', '얼다바람', 55, 'special'],
+      ['frost-breath', '얼음숨결', 60, 'special'],
+      ['aurora-beam', '오로라빔', 65, 'special'],
+      ['freeze-dry', '프리즈드라이', 70, 'special'],
+      ['ice-punch', '냉동펀치', 75, 'physical'],
+      ['icicle-crash', '고드름떨구기', 85, 'physical'],
+      ['ice-beam', '얼음빔', 90, 'special'],
+      ['blizzard', '눈보라', 110, 'special']
+    ],
+    fighting: [
+      ['vacuum-wave', '진공파', 40, 'special'],
+      ['drain-punch', '드레인펀치', 75, 'physical'],
+      ['aura-sphere', '파동탄', 80, 'special'],
+      ['jump-kick', '무릎차기', 100, 'physical'],
+      ['close-combat', '인파이트', 120, 'physical'],
+      ['superpower', '엄청난힘', 120, 'physical'],
+      ['focus-blast', '기합구슬', 120, 'special']
+    ],
+    poison: [
+      ['poison-sting', '독침', 15, 'physical'],
+      ['acid', '애시드', 40, 'special'],
+      ['poison-fang', '독엄니', 50, 'physical'],
+      ['venoshock', '베놈쇼크', 65, 'special'],
+      ['cross-poison', '크로스포이즌', 70, 'physical'],
+      ['poison-jab', '독찌르기', 80, 'physical'],
+      ['sludge-bomb', '오물폭탄', 90, 'special'],
+      ['sludge-wave', '오물웨이브', 95, 'special']
+    ],
+    ground: [
+      ['mud-slap', '진흙뿌리기', 20, 'special'],
+      ['bulldoze', '땅울림', 60, 'physical'],
+      ['mud-bomb', '진흙폭탄', 65, 'special'],
+      ['dig', '구멍파기', 80, 'physical'],
+      ['earth-power', '대지의힘', 90, 'special'],
+      ['earthquake', '지진', 100, 'physical'],
+      ['precipice-blades', '단애의칼', 120, 'physical']
+    ],
+    flying: [
+      ['gust', '회오리바람', 40, 'special'],
+      ['wing-attack', '날개치기', 60, 'physical'],
+      ['aerial-ace', '제비반환', 60, 'physical'],
+      ['air-slash', '에어슬래시', 75, 'special'],
+      ['fly', '공중날기', 90, 'physical'],
+      ['hurricane', '폭풍', 110, 'special'],
+      ['brave-bird', '브레이브버드', 120, 'physical']
+    ],
+    psychic: [
+      ['confusion', '염동력', 50, 'special'],
+      ['stored-power', '축적의힘', 20, 'special'],
+      ['psyshock', '사이코쇼크', 80, 'special'],
+      ['psychic', '사이코키네시스', 90, 'special'],
+      ['psystrike', '사이코브레이크', 100, 'special'],
+      ['future-sight', '미래예지', 120, 'special']
+    ],
+    bug: [
+      ['struggle-bug', '벌레의저항', 50, 'special'],
+      ['bug-bite', '벌레먹기', 60, 'physical'],
+      ['silver-wind', '은빛바람', 60, 'special'],
+      ['x-scissor', '시저크로스', 80, 'physical'],
+      ['bug-buzz', '벌레의야단법석', 90, 'special'],
+      ['megahorn', '메가혼', 120, 'physical']
+    ],
+    rock: [
+      ['rock-throw', '돌떨구기', 50, 'physical'],
+      ['ancient-power', '원시의힘', 60, 'special'],
+      ['rock-slide', '록슬라이드', 75, 'physical'],
+      ['power-gem', '파워젬', 80, 'special'],
+      ['stone-edge', '스톤에지', 100, 'physical'],
+      ['head-smash', '양날박치기', 150, 'physical']
+    ],
+    ghost: [
+      ['lick', '핥기', 30, 'physical'],
+      ['shadow-punch', '섀도펀치', 60, 'physical'],
+      ['shadow-claw', '섀도클로', 70, 'physical'],
+      ['shadow-ball', '섀도볼', 80, 'special'],
+      ['phantom-force', '데스윙', 90, 'physical']
+    ],
+    dragon: [
+      ['dragon-breath', '용의숨결', 60, 'special'],
+      ['dragon-claw', '드래곤크루', 80, 'physical'],
+      ['dragon-pulse', '용의파동', 85, 'special'],
+      ['dragon-rush', '드래곤다이브', 100, 'physical'],
+      ['outrage', '역린', 120, 'physical'],
+      ['draco-meteor', '용성군', 130, 'special']
+    ],
+    dark: [
+      ['bite', '물기', 60, 'physical'],
+      ['sucker-punch', '기습', 70, 'physical'],
+      ['night-slash', '나이트슬래시', 70, 'physical'],
+      ['crunch', '깨물어부수기', 80, 'physical'],
+      ['dark-pulse', '어둠의파동', 80, 'special'],
+      ['night-daze', '악의파동', 85, 'special'],
+      ['foul-play', '속임수', 95, 'physical']
+    ],
+    steel: [
+      ['bullet-punch', '불릿펀치', 40, 'physical'],
+      ['metal-claw', '메탈클로', 50, 'physical'],
+      ['steel-wing', '강철날개', 70, 'physical'],
+      ['smart-strike', '스마트혼', 70, 'physical'],
+      ['iron-head', '아이언헤드', 80, 'physical'],
+      ['flash-cannon', '러스터캐논', 80, 'special'],
+      ['iron-tail', '아이언테일', 100, 'physical']
+    ],
+    fairy: [
+      ['fairy-wind', '요정의바람', 40, 'special'],
+      ['draining-kiss', '드레이닝키스', 50, 'special'],
+      ['dazzling-gleam', '매지컬샤인', 80, 'special'],
+      ['moonblast', '문포스', 95, 'special'],
+      ['misty-explosion', '미스트버스트', 100, 'special']
+    ]
+  };
+  var MOVE_LIB = {};
+  Object.keys(MOVE_LIB_ROWS).forEach(function (t) {
+    MOVE_LIB[t] = MOVE_LIB_ROWS[t].map(function (r) {
+      return { name: r[0], ko: r[1], power: r[2], cls: r[3], type: t };
+    });
+  });
+
+  /* 그 포켓몬다운 대표 기술 — 계획의 앞쪽에 먼저 들어갑니다 (그란돈의 단애의칼 등) */
+  var SIGNATURE_MOVES = {
+    383: [
+      { name: 'precipice-blades', ko: '단애의칼', type: 'ground', power: 120, cls: 'physical' },
+      { name: 'solar-beam', ko: '솔라빔', type: 'grass', power: 120, cls: 'special' },
+      { name: 'earthquake', ko: '지진', type: 'ground', power: 100, cls: 'physical' },
+      { name: 'flamethrower', ko: '화염방사', type: 'fire', power: 90, cls: 'special' }
+    ],
+    382: [
+      { name: 'origin-pulse', ko: '근원의파동', type: 'water', power: 110, cls: 'special' },
+      { name: 'ice-beam', ko: '얼음빔', type: 'ice', power: 90, cls: 'special' },
+      { name: 'thunder', ko: '번개', type: 'electric', power: 110, cls: 'special' },
+      { name: 'surf', ko: '파도타기', type: 'water', power: 90, cls: 'special' }
+    ],
+    1: [
+      { name: 'vine-whip', ko: '덩굴채찍', type: 'grass', power: 45, cls: 'physical' },
+      { name: 'razor-leaf', ko: '잎날가르기', type: 'grass', power: 55, cls: 'physical' },
+      { name: 'seed-bomb', ko: '씨폭탄', type: 'grass', power: 80, cls: 'physical' },
+      { name: 'solar-beam', ko: '솔라빔', type: 'grass', power: 120, cls: 'special' }
+    ],
+    4: [
+      { name: 'ember', ko: '불꽃세례', type: 'fire', power: 40, cls: 'special' },
+      { name: 'scratch', ko: '할퀴기', type: 'normal', power: 40, cls: 'physical' },
+      { name: 'flamethrower', ko: '화염방사', type: 'fire', power: 90, cls: 'special' },
+      { name: 'fire-blast', ko: '불대문자', type: 'fire', power: 110, cls: 'special' }
+    ],
+    6: [
+      { name: 'flamethrower', ko: '화염방사', type: 'fire', power: 90, cls: 'special' },
+      { name: 'air-slash', ko: '에어슬래시', type: 'flying', power: 75, cls: 'special' },
+      { name: 'dragon-claw', ko: '드래곤크루', type: 'dragon', power: 80, cls: 'physical' },
+      { name: 'fire-blast', ko: '불대문자', type: 'fire', power: 110, cls: 'special' }
+    ],
+    7: [
+      { name: 'water-gun', ko: '물대포', type: 'water', power: 40, cls: 'special' },
+      { name: 'bubble', ko: '거품', type: 'water', power: 40, cls: 'special' },
+      { name: 'aqua-jet', ko: '아쿠아제트', type: 'water', power: 40, cls: 'physical' },
+      { name: 'hydro-pump', ko: '하이드로펌프', type: 'water', power: 110, cls: 'special' }
+    ],
+    25: [
+      { name: 'thunder-shock', ko: '전기쇼크', type: 'electric', power: 40, cls: 'special' },
+      { name: 'spark', ko: '스파크', type: 'electric', power: 65, cls: 'physical' },
+      { name: 'thunderbolt', ko: '10만볼트', type: 'electric', power: 90, cls: 'special' },
+      { name: 'iron-tail', ko: '아이언테일', type: 'steel', power: 100, cls: 'physical' },
+      { name: 'thunder', ko: '번개', type: 'electric', power: 110, cls: 'special' }
+    ],
+    133: [
+      { name: 'tackle', ko: '몸통박치기', type: 'normal', power: 40, cls: 'physical' },
+      { name: 'quick-attack', ko: '전광석화', type: 'normal', power: 40, cls: 'physical' },
+      { name: 'bite', ko: '물기', type: 'dark', power: 60, cls: 'physical' },
+      { name: 'take-down', ko: '이판사판태클', type: 'normal', power: 90, cls: 'physical' }
+    ],
+    501: [
+      { name: 'water-gun', ko: '물대포', type: 'water', power: 40, cls: 'special' },
+      { name: 'razor-shell', ko: '조개껍질칼', type: 'water', power: 75, cls: 'physical' },
+      { name: 'aqua-jet', ko: '아쿠아제트', type: 'water', power: 40, cls: 'physical' },
+      { name: 'surf', ko: '파도타기', type: 'water', power: 90, cls: 'special' }
+    ],
+    143: [
+      { name: 'body-slam', ko: '누르기', type: 'normal', power: 85, cls: 'physical' },
+      { name: 'earthquake', ko: '지진', type: 'ground', power: 100, cls: 'physical' },
+      { name: 'ice-punch', ko: '냉동펀치', type: 'ice', power: 75, cls: 'physical' },
+      { name: 'hyper-beam', ko: '파괴광선', type: 'normal', power: 150, cls: 'special' }
+    ],
+    150: [
+      { name: 'psychic', ko: '사이코키네시스', type: 'psychic', power: 90, cls: 'special' },
+      { name: 'shadow-ball', ko: '섀도볼', type: 'ghost', power: 80, cls: 'special' },
+      { name: 'psystrike', ko: '사이코브레이크', type: 'psychic', power: 100, cls: 'special' },
+      { name: 'hyper-beam', ko: '파괴광선', type: 'normal', power: 150, cls: 'special' }
+    ],
+    448: [
+      { name: 'aura-sphere', ko: '파동탄', type: 'fighting', power: 80, cls: 'special' },
+      { name: 'close-combat', ko: '인파이트', type: 'fighting', power: 120, cls: 'physical' },
+      { name: 'iron-tail', ko: '아이언테일', type: 'steel', power: 100, cls: 'physical' },
+      { name: 'stone-edge', ko: '스톤에지', type: 'rock', power: 100, cls: 'physical' }
+    ],
+    658: [
+      { name: 'water-shuriken', ko: '물수리검', type: 'water', power: 15, cls: 'special' },
+      { name: 'aqua-jet', ko: '아쿠아제트', type: 'water', power: 40, cls: 'physical' },
+      { name: 'dark-pulse', ko: '어둠의파동', type: 'dark', power: 80, cls: 'special' },
+      { name: 'ice-beam', ko: '얼음빔', type: 'ice', power: 90, cls: 'special' }
+    ],
+    778: [
+      { name: 'shadow-claw', ko: '섀도클로', type: 'ghost', power: 70, cls: 'physical' },
+      { name: 'foul-play', ko: '속임수', type: 'dark', power: 95, cls: 'physical' },
+      { name: 'moonblast', ko: '문포스', type: 'fairy', power: 95, cls: 'special' },
+      { name: 'wood-hammer', ko: '우드해머', type: 'grass', power: 120, cls: 'physical' }
+    ]
+  };
+
+  /* 기술 연출 스타일 · 그림문자 */
+  var TYPE_FX = {
+    normal: { e: '⭐', fx: 'star' }, fire: { e: '🔥', fx: 'burst' },
+    water: { e: '💧', fx: 'splash' }, electric: { e: '⚡', fx: 'bolt' },
+    grass: { e: '🌿', fx: 'leaf' }, ice: { e: '❄️', fx: 'splash' },
+    fighting: { e: '👊', fx: 'burst' }, poison: { e: '☠️', fx: 'mist' },
+    ground: { e: '🌋', fx: 'quake' }, flying: { e: '🌪️', fx: 'wind' },
+    psychic: { e: '🔮', fx: 'cosmic' }, bug: { e: '🐛', fx: 'leaf' },
+    rock: { e: '🪨', fx: 'quake' }, ghost: { e: '👻', fx: 'mist' },
+    dragon: { e: '🐉', fx: 'cosmic' }, dark: { e: '🌑', fx: 'mist' },
+    steel: { e: '⚙️', fx: 'star' }, fairy: { e: '✨', fx: 'star' }
+  };
 
   /* ---------------------------------------------------------------
      오프라인 기본 도감
@@ -2444,6 +2869,11 @@ body.focus-mode .focus-exit{display:block}
     var mon = activeMon(true);
     if (!mon) return false;
     var leveled = false;
+    var learned = [];
+    /* 레벨이 오르기 전에 '언제 어떤 기술을 배울지' 계획을 먼저 만들어 둡니다.
+       (이미 지난 레벨의 기술은 조용히 '배운 기술'에 넣고, 새로 오르는 레벨만 연출해요) */
+    ensureMovePlan(mon.id, pokemonTypesFor(mon.id));
+    var monName = monDisplayName(mon.id);
     mon.xp += amount;
     var guard = 0;
     while (mon.xp >= xpNeed(mon.level) && guard < 50) {
@@ -2451,8 +2881,11 @@ body.focus-mode .focus-exit{display:block}
       mon.level += 1;
       leveled = true;
       guard++;
+      var got = learnMoveForLevel(mon, mon.level, monName);
+      if (got) learned.push(got);
     }
     syncProgressFromActive();
+    if (learned.length) queueMoveLearn(learned);
     return leveled;
   }
 
@@ -2816,6 +3249,7 @@ body.focus-mode .focus-exit{display:block}
       partnerData.pokemon = p;
       partnerData.id = p.id;
       paintPartner();
+      prefetchMovePool(p);          // 실제 기술 목록을 받아 두면 레벨업 때 그 기술을 배워요
       return getSpecies(p.speciesId).then(function (s) {
         partnerData.species = s;
         paintPartner();
@@ -2985,6 +3419,8 @@ body.focus-mode .focus-exit{display:block}
         entry.level = srcLevel;          // 진화해도 레벨 · XP는 그대로 이어집니다
         entry.xp = srcXp;
         entry.nameKo = name;
+        entry.sprite = p.sprite || '';
+        entry.moveTypes = (p.types || []).slice();
         entry.from = from;
         partnerData.id = 0;
         syncProgressFromActive();
@@ -3086,6 +3522,16 @@ body.focus-mode .focus-exit{display:block}
       html += '</div>';
 
       html += '<div class="moves-wrap"><div class="moves-title">🥊 기술 <span style="font-size:13px;color:#5d5a66;font-weight:400">(눌러서 설명 보기)</span></div><div class="moves" id="movesList"></div><div id="moveDetail"></div></div>';
+
+      /* 이 포켓몬이 배운 기술 — 칩을 누르면 레벨업 때와 같은 기술 연출을 다시 봅니다 */
+      ensureMovePlan(p.id, p.types || pokemonTypesFor(p.id));
+      var boxRec = monEntry(p.id, false);
+      if (boxRec) {
+        if (!boxRec.nameKo) boxRec.nameKo = name;
+        if (p.sprite) boxRec.sprite = p.sprite;
+      }
+      prefetchMovePool(p);
+      html += learnedMovesHtml(p.id);
 
       var foot = '<button class="btn" type="button" data-close="1">닫기</button>';
       if (!isPartner) foot = '<button class="btn primary" type="button" data-act="set-partner" data-id="' + p.id + '">⭐ 파트너로 설정</button>' + foot;
@@ -3194,6 +3640,428 @@ body.focus-mode .focus-exit{display:block}
       if (btn) btn.style.boxShadow = '0 0 0 3px #ffd23f inset';
     }).catch(function () {
       holder.innerHTML = '<div class="empty-note">기술 정보를 불러오지 못했어요.</div>';
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     9-2. ⚡ 레벨업 기술 배우기 · 기술 연출
+     · 포켓몬마다 '언제 어떤 기술을 배울지' 계획(movePlan)을 만들어 둡니다.
+       계획의 레벨 간격은 항상 2 이상 — 배운 레벨 바로 다음 레벨에는 배우지 않아요
+       (Lv.2 를 배우면 Lv.3 은 건넌다, 다음은 Lv.4 이후).
+     · 계획은 포켓몬 기록(S.box[id])에 저장되어 다시 열어도 그대로 이어집니다.
+     · 레벨업하면 큰 포켓몬 · 타입별 효과 · 기술 카드 팝업을 띄우고,
+       도감 상세에서는 '배운 기술' 칩을 눌러 같은 연출을 다시 볼 수 있어요.
+  --------------------------------------------------------------- */
+  var MOVE_LEARN_START_LEVEL = 2;      // 첫 기술은 Lv.2
+  var MOVE_LEARN_GAP_MIN = 2;          // 배운 레벨 → 다음 레벨은 최소 +2 (한 레벨은 건너뜀)
+  var MOVE_PLAN_END_LEVEL = 55;        // Lv.55 까지 계획
+  var MOVE_PLAN_MAX = 16;              // 계획에 담을 기술 수
+  var MOVE_LEARNED_MAX = 24;           // 기억해 둘 배운 기술 수
+
+  /* 화면에 보여 줄 포켓몬 이름 — 파트너 · 박스 · 기본 도감 순서로 찾습니다 */
+  function monDisplayName(id) {
+    id = Number(id) || 0;
+    if (!id) return '포켓몬';
+    if (partnerData.pokemon && Number(partnerData.id) === id) {
+      return displayNameKo(partnerData.pokemon, partnerData.species);
+    }
+    var e = monEntry(id, false);
+    if (e && e.nameKo) return e.nameKo;
+    var off = offlinePokemon(id);
+    if (off) return off.ko;
+    return 'No.' + id;
+  }
+
+  /* 이 포켓몬의 타입 — 계획을 만들 때 기술 후보를 고르는 데 씁니다 */
+  function pokemonTypesFor(id) {
+    id = Number(id) || 0;
+    if (partnerData.pokemon && Number(partnerData.id) === id) return partnerData.pokemon.types || [];
+    var e = monEntry(id, false);
+    if (e && e.moveTypes && e.moveTypes.length) return e.moveTypes.slice();
+    var off = offlinePokemon(id);
+    if (off) return off.types || [];
+    return [];
+  }
+
+  function spriteFor(id) {
+    id = Number(id) || 0;
+    if (partnerData.pokemon && Number(partnerData.id) === id && partnerData.pokemon.sprite) return partnerData.pokemon.sprite;
+    var e = monEntry(id, false);
+    if (e && e.sprite) return e.sprite;
+    var off = offlinePokemon(id);
+    if (off && off.sprite) return off.sprite;
+    return SPRITE + id + '.png';
+  }
+
+  /* 기술 후보: 그 포켓몬다운 대표 기술 + PokeAPI 에서 받은 실제 기술 + 타입별 기술
+     (인터넷이 없거나 기술 요청이 실패해도 앱 안의 목록으로 동작합니다) */
+  function movePoolFor(id, types) {
+    var out = [];
+    var seen = {};
+    function add(mv, type) {
+      if (!mv || !mv.ko || seen[mv.ko]) return;
+      if (!(Number(mv.power) > 0)) return;      // 변화 기술은 연출하지 않아요
+      seen[mv.ko] = true;
+      out.push({
+        name: mv.name, ko: mv.ko, type: mv.type || type || 'normal',
+        power: Number(mv.power), cls: mv.cls || 'physical'
+      });
+    }
+    (SIGNATURE_MOVES[id] || []).forEach(function (mv) { add(mv, mv.type); });
+    var e = monEntry(id, false);
+    if (e && Array.isArray(e.movePool)) e.movePool.forEach(function (mv) { add(mv, mv.type); });
+    (types && types.length ? types : ['normal']).forEach(function (t) {
+      (MOVE_LIB[t] || []).forEach(function (mv) { add(mv, t); });
+    });
+    if (!out.length) (MOVE_LIB.normal || []).forEach(function (mv) { add(mv, 'normal'); });
+    return out;
+  }
+
+  /* PokeAPI 의 그 포켓몬 실제 기술 목록(moves[])을 한글 이름·타입·위력까지 받아 둡니다.
+     화면은 기다리지 않고, 받은 뒤에 계획을 그 기술들로 다시 만듭니다. */
+  var movePoolJobs = {};
+  function prefetchMovePool(p) {
+    var id = Number(p && p.id) || 0;
+    if (!id) return Promise.resolve(null);
+    var e = monEntry(id, false);
+    if (!e) return Promise.resolve(null);
+    if (Array.isArray(e.movePool) && e.movePool.length) return Promise.resolve(e.movePool);
+    if (movePoolJobs[id]) return movePoolJobs[id];
+    var names = [];
+    (p.moves || []).slice(0, 10).forEach(function (m) {
+      if (m && m.name && names.indexOf(m.name) < 0) names.push(m.name);
+    });
+    (SIGNATURE_MOVES[id] || []).forEach(function (m) {
+      if (m && m.name && names.indexOf(m.name) < 0) names.push(m.name);
+    });
+    if (!names.length) return Promise.resolve(null);
+    var got = [];
+    var job = Promise.all(names.map(function (nm) {
+      return getMove(nm).then(function (mv) {
+        if (!mv || !mv.type || !(Number(mv.power) > 0)) return null;
+        got.push({ name: mv.name || nm, ko: mv.nameKo, type: mv.type, power: Number(mv.power), cls: mv.damageClass || 'physical' });
+        return null;
+      }).catch(function () { return null; });
+    })).then(function () {
+      if (got.length && e && typeof e === 'object') {
+        e.movePool = got;
+        // 아직 기술을 하나도 배우기 전이고, 앱이 만든 계획이면 실제 기술 목록으로 다시 만듭니다
+        if ((!Array.isArray(e.movePlan) || !e.movePlan.length || e.movePlanFrom === 'auto') &&
+          (!Array.isArray(e.learnedMoves) || !e.learnedMoves.length)) {
+          e.movePlan = null;
+          e.movePlanFrom = '';
+          ensureMovePlan(id, pokemonTypesFor(id));
+        }
+        save();
+      }
+      delete movePoolJobs[id];
+      return got.length ? got : null;
+    }).catch(function () {
+      delete movePoolJobs[id];
+      return null;
+    });
+    movePoolJobs[id] = job;
+    return job;
+  }
+
+  function moveShuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* 기술 계획 — 레벨 간격은 항상 2 이상(한 레벨은 꼭 건넌다) */
+  function buildMovePlan(pool, id) {
+    var sig = (SIGNATURE_MOVES[id] || []).filter(function (mv) { return Number(mv.power) > 0; });
+    var sigNames = {};
+    sig.forEach(function (mv) { sigNames[mv.ko] = true; });
+    var rest = pool.filter(function (mv) { return !sigNames[mv.ko]; });
+    var queue = sig.slice();
+    var bag = moveShuffle(rest.length ? rest : pool);
+    var plan = [];
+    var lv = MOVE_LEARN_START_LEVEL;
+    while (lv <= MOVE_PLAN_END_LEVEL && plan.length < MOVE_PLAN_MAX) {
+      if (!queue.length && !bag.length) break;      // 같은 기술을 두 번 배우지 않아요
+      var mv = queue.length ? queue.shift() : bag.shift();
+      if (!mv) break;
+      plan.push({ lv: lv, move: mv });
+      // 2·3·4 중 하나 — 어떤 경우에도 바로 다음 레벨은 건넙니다
+      lv += MOVE_LEARN_GAP_MIN + Math.floor(Math.random() * 3);
+    }
+    return plan;
+  }
+
+  function learnedRecord(move, lv, at) {
+    return {
+      name: move.name, ko: move.ko, type: move.type, power: move.power, cls: move.cls,
+      lv: Number(lv) || 1, at: at === undefined ? todayKey() : at
+    };
+  }
+
+  /* 계획이 없으면 지금 만든다. 이미 지난 레벨의 기술은 조용하며 '배운 기술'에 넣어 둡니다. */
+  function ensureMovePlan(id, types) {
+    id = Number(id) || 0;
+    if (!id) return null;
+    var e = monEntry(id, false);
+    if (!e) return null;
+    var provided = (types && types.length) ? types.slice() : null;
+    if (provided) e.moveTypes = provided;
+    if (Array.isArray(e.movePlan) && e.movePlan.length) return e.movePlan;
+    var useTypes = provided || (e.moveTypes || []);
+    if (!useTypes.length) {
+      var off = offlinePokemon(id);
+      if (off) useTypes = off.types || [];
+    }
+    if (!useTypes.length && partnerData.pokemon && Number(partnerData.id) === id) {
+      useTypes = partnerData.pokemon.types || [];
+    }
+    if (useTypes.length) e.moveTypes = useTypes.slice();
+    var plan = buildMovePlan(movePoolFor(id, useTypes), id);
+    e.movePlan = plan;
+    e.movePlanFrom = 'auto';
+    if (!Array.isArray(e.learnedMoves)) e.learnedMoves = [];
+    if (!e.learnedMoves.length) {
+      var level = Math.max(1, Number(e.level) || 1);
+      plan.forEach(function (slot) {
+        if (Number(slot.lv) > level) return;
+        e.learnedMoves.push(learnedRecord(slot.move, slot.lv, ''));
+      });
+    }
+    return plan;
+  }
+
+  /* 레벨이 올랐을 때 그 레벨에 배우기로 한 기술이 있는지 */
+  function learnMoveForLevel(mon, level, nameKo) {
+    if (!mon) return null;
+    var plan = mon.movePlan || [];
+    var slot = null;
+    for (var i = 0; i < plan.length; i++) {
+      if (Number(plan[i].lv) === Number(level)) { slot = plan[i]; break; }
+    }
+    if (!slot) return null;
+    if (!Array.isArray(mon.learnedMoves)) mon.learnedMoves = [];
+    for (var j = 0; j < mon.learnedMoves.length; j++) {
+      if (Number(mon.learnedMoves[j].lv) === Number(level)) return null;   // 이미 배운 레벨
+    }
+    var rec = learnedRecord(slot.move, level);
+    mon.learnedMoves.push(rec);
+    if (mon.learnedMoves.length > MOVE_LEARNED_MAX) {
+      mon.learnedMoves = mon.learnedMoves.slice(-MOVE_LEARNED_MAX);
+    }
+    return {
+      monId: mon.id, nameKo: nameKo || monDisplayName(mon.id),
+      level: Number(level), move: rec
+    };
+  }
+
+  /* ---- 연출 대기열: 레벨업 토스트가 끝난 뒤에 기술 팝업을 띄웁니다 ---- */
+  var moveLearnQueue = [];
+  var moveLearnTimer = null;
+  var moveStageCurrent = null;
+
+  function queueMoveLearn(list) {
+    (list || []).forEach(function (item) { moveLearnQueue.push(item); });
+    if (moveStageCurrent) return;              // 지금 연출 중이면 닫은 뒤에 이어서
+    scheduleMoveLearnStage(950);
+  }
+
+  function scheduleMoveLearnStage(ms) {
+    if (moveLearnTimer) { clearTimeout(moveLearnTimer); moveLearnTimer = null; }
+    if (!moveLearnQueue.length) return;
+    moveLearnTimer = setTimeout(function () {
+      moveLearnTimer = null;
+      if (moveStageCurrent) return;
+      var item = moveLearnQueue.shift();
+      if (!item) return;
+      showMoveShowcase({
+        monId: item.monId, nameKo: item.nameKo, move: item.move,
+        level: item.level, learned: true
+      });
+    }, ms == null ? 950 : ms);
+  }
+
+  /* 한국어 조사 고르기 — '그란돈이', '피카츄가', '단애의칼을', '몸통박치기를' */
+  function hasBatchim(s) {
+    var t = String(s == null ? '' : s).replace(/[)\]}」』\s]+$/, '');
+    if (!t) return false;
+    var ch = t.charCodeAt(t.length - 1);
+    if (isNaN(ch) || ch < 0xAC00 || ch > 0xD7A3) return false;
+    return ((ch - 0xAC00) % 28) !== 0;
+  }
+  function josaI(name) { return hasBatchim(name) ? '이' : '가'; }
+  function josaEul(name) { return hasBatchim(name) ? '을' : '를'; }
+
+  /* ---- 타입별 효과음 (Web Audio 로 직접 만듭니다) ---- */
+  var MOVE_TONE = {
+    normal: 320, fire: 220, water: 300, electric: 660, grass: 440, ice: 560,
+    fighting: 170, poison: 240, ground: 120, flying: 500, psychic: 720, bug: 400,
+    rock: 110, ghost: 200, dragon: 160, dark: 150, steel: 340, fairy: 780
+  };
+  function sweep(f0, f1, start, dur, type, vol) {
+    var ac = audioCtx();
+    if (!ac) return;
+    try {
+      var o = ac.createOscillator();
+      var g = ac.createGain();
+      o.type = type || 'sawtooth';
+      var t0 = ac.currentTime + (start || 0);
+      if (o.frequency.setValueAtTime) o.frequency.setValueAtTime(f0, t0);
+      if (o.frequency.exponentialRampToValueAtTime) {
+        o.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t0 + dur);
+      }
+      o.connect(g);
+      g.connect(ac.destination);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol || 0.2, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.start(t0);
+      o.stop(t0 + dur + 0.03);
+    } catch (e) { /* ignore */ }
+  }
+  function sndMoveUse(type) {
+    var base = MOVE_TONE[type] || 300;
+    for (var i = 0; i < 4; i++) {
+      tone(base * (1 + i * 0.5), i * 0.07, 0.14, 'triangle', 0.08);       // 기운을 모으는 소리
+    }
+    sweep(base * 5, base * 0.6, 0.34, 0.42, type === 'electric' ? 'square' : 'sawtooth', 0.2);
+    tone(base * 2, 0.36, 0.32, 'triangle', 0.1);                            // 내려치는 소리
+    if (type === 'electric') {
+      tone(1200, 0.4, 0.1, 'square', 0.07);
+      tone(900, 0.52, 0.1, 'square', 0.06);
+    }
+    if (type === 'ground' || type === 'rock') sweep(90, 40, 0.36, 0.5, 'sine', 0.22);
+  }
+
+  /* ---- 타입별 효과 조각 (쉬어가며 다시 뿌립니다) ---- */
+  function moveFxHtml() {
+    var html = '';
+    for (var i = 0; i < 20; i++) {
+      var ang = Math.round(i * 18 + (Math.random() * 16 - 8));
+      var dist = 110 + Math.round(Math.random() * 150);
+      var dl = Math.round(Math.random() * 5) / 10;
+      var sz = 6 + Math.round(Math.random() * 10);
+      html += '<i class="mv-p" style="--a:' + ang + 'deg;--d:' + dist + 'px;--dl:' + dl + 's;--sz:' + sz + 'px"></i>';
+    }
+    html += '<i class="mv-ring"></i><i class="mv-ring r2"></i>' +
+      '<i class="mv-bolt b1"></i><i class="mv-bolt b2"></i>' +
+      '<i class="mv-beam"></i><i class="mv-flash"></i>';
+    return html;
+  }
+
+  /* ---- 기술 연출 팝업 ---- */
+  function showMoveShowcase(opts) {
+    var stage = $('moveStage');
+    if (!stage) return;
+    var o = opts || {};
+    var mv = o.move || {};
+    var type = mv.type || 'normal';
+    var info = TYPE_FX[type] || TYPE_FX.normal;
+    var color = TYPE_COLOR[type] || '#f7d02c';
+    var nameKo = o.nameKo || monDisplayName(o.monId);
+    var lv = Number(o.level) || monLevel(o.monId);
+    var power = Number(mv.power) > 0 ? mv.power : null;
+    var clsKo = mv.cls === 'physical' ? '물리' : (mv.cls === 'special' ? '특수' : '');
+
+    moveStageCurrent = { monId: o.monId, move: mv, level: lv, learned: !!o.learned };
+
+    stage.setAttribute('data-type', type);
+    stage.setAttribute('data-fx', info.fx);
+    stage.style.setProperty('--mv', color);
+    stage.innerHTML =
+      '<div class="mv-bg"></div>' +
+      '<div class="mv-fx">' + moveFxHtml() + '</div>' +
+      '<div class="mv-card">' +
+        '<div class="mv-badge">🎉 Lv.' + lv + ' 달성! 새로운 기술을 배웠어요!</div>' +
+        '<div class="mv-mon-wrap">' +
+          '<div class="mv-aura"></div>' +
+          '<img class="mv-mon" src="' + esc(spriteFor(o.monId)) + '" alt="' + esc(nameKo) + '">' +
+        '</div>' +
+        '<div class="mv-move" style="--mv:' + color + '">' +
+          '<div class="mv-move-head">' +
+            '<span class="tbadge" style="background:' + color + '">' + esc(TYPE_KO[type] || type) + '</span>' +
+            '<span class="mv-name">' + esc(mv.ko || mv.name || '기술') + '</span>' +
+            '<span class="mv-power">위력 ' + (power == null ? '—' : power) + (clsKo ? ' · ' + clsKo : '') + '</span>' +
+          '</div>' +
+          '<div class="mv-line">' + info.e + ' ' + esc(nameKo) + josaI(nameKo) +
+            ' 「' + esc(mv.ko || mv.name || '기술') + '」' + josaEul(mv.ko || mv.name) + ' 사용했다!</div>' +
+        '</div>' +
+        '<div class="mv-btns">' +
+          '<button class="btn mv-replay" type="button" data-mact="replay">⚡ 다시 써 보기</button>' +
+          '<button class="btn primary mv-ok" type="button" data-mact="close">멋지다! 확인</button>' +
+        '</div>' +
+      '</div>';
+    stage.classList.add('open');
+    stage.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    playMoveStage();
+  }
+
+  function playMoveStage() {
+    var stage = $('moveStage');
+    if (!stage || !stage.classList.contains('open')) return;
+    var card = stage.querySelector('.mv-card');
+    stage.classList.remove('play');
+    if (card) card.style.animation = 'none';
+    void stage.offsetWidth;                  // 애니메이션을 처음부터 다시
+    if (card) card.style.animation = '';
+    stage.classList.add('play');
+    sndMoveUse((moveStageCurrent && moveStageCurrent.move && moveStageCurrent.move.type) || 'normal');
+  }
+
+  function replayMoveShowcase() {
+    var stage = $('moveStage');
+    if (!stage || !stage.classList.contains('open')) return;
+    var fxLayer = stage.querySelector('.mv-fx');
+    if (fxLayer) fxLayer.innerHTML = moveFxHtml();     // 효과를 새 자리에서 다시
+    playMoveStage();
+  }
+
+  function closeMoveShowcase() {
+    var stage = $('moveStage');
+    moveStageCurrent = null;
+    if (stage) {
+      stage.classList.remove('open', 'play');
+      stage.setAttribute('aria-hidden', 'true');
+      stage.innerHTML = '';
+      stage.removeAttribute('data-type');
+      stage.removeAttribute('data-fx');
+    }
+    // 도감 상세가 뒤에 열려 있으면 스크롤 잠금은 그대로 둡니다
+    var root = $('modalRoot');
+    document.body.style.overflow = (root && root.classList.contains('open')) ? 'hidden' : '';
+    if (moveLearnQueue.length) scheduleMoveLearnStage(420);   // 다음 기술이 남았으면 이어서
+  }
+
+  /* 도감 상세의 '배운 기술' — 누르면 같은 연출을 다시 봅니다 */
+  function learnedMovesHtml(id) {
+    var e = monEntry(id, false);
+    var list = (e && Array.isArray(e.learnedMoves)) ? e.learnedMoves : [];
+    if (!list.length) return '';
+    var chips = list.map(function (mv, i) {
+      var color = TYPE_COLOR[mv.type] || '#999';
+      return '<button class="learned-chip" type="button" data-act="move-showcase" data-id="' + Number(id) +
+        '" data-idx="' + i + '">' +
+        '<span class="lc-dot" style="background:' + color + '"></span>' +
+        '<span class="lc-name">' + esc(mv.ko || mv.name) + '</span>' +
+        '<span class="lc-lv">Lv.' + (Number(mv.lv) || '?') + '</span>' +
+        '</button>';
+    }).join('');
+    return '<div class="learned-wrap"><div class="moves-title">🎓 배운 기술 ' +
+      '<span style="font-size:13px;color:#5d5a66;font-weight:400">(눌러서 기술 연출 다시 보기)</span></div>' +
+      '<div class="learned-chips">' + chips + '</div></div>';
+  }
+
+  function showLearnedMove(id, idx) {
+    var e = monEntry(Number(id), false);
+    if (!e || !Array.isArray(e.learnedMoves)) return;
+    var mv = e.learnedMoves[Number(idx)];
+    if (!mv) return;
+    showMoveShowcase({
+      monId: Number(id), nameKo: monDisplayName(id), move: mv,
+      level: mv.lv, learned: false
     });
   }
 
@@ -5302,7 +6170,7 @@ body.focus-mode .focus-exit{display:block}
         var p = res[0], s = res[1];
         S.progress.balls = Math.max(0, S.progress.balls - 1);
         var nameKo = displayNameKo(p, s);
-        S.box[p.id] = { id: p.id, caughtAt: Date.now(), nameKo: nameKo, from: 'gacha', level: 1, xp: 0 };
+        S.box[p.id] = { id: p.id, caughtAt: Date.now(), nameKo: nameKo, sprite: p.sprite || '', moveTypes: (p.types || []).slice(), from: 'gacha', level: 1, xp: 0 };
         save();
         renderPartnerStats();
         showCatch(p, s, nameKo);
@@ -6611,8 +7479,24 @@ body.focus-mode .focus-exit{display:block}
 
     // 모달 공통
     $('modalRoot').addEventListener('click', onModalClick);
+
+    // 기술 연출 팝업 — ⚡ 다시 써 보기 · 멋지다! 확인
+    $('moveStage').addEventListener('click', function (ev) {
+      var b = ev.target.closest ? ev.target.closest('[data-mact]') : null;
+      if (!b) return;
+      var act = b.getAttribute('data-mact');
+      if (act === 'replay') replayMoveShowcase();
+      else if (act === 'close') closeMoveShowcase();
+    });
     document.addEventListener('keydown', function (ev) {
       if (ev.key !== 'Escape') return;
+      // 기술 연출이 떠 있으면 그것부터 닫아요 (아래 모달은 그대로)
+      var stage = $('moveStage');
+      if (stage && stage.classList.contains('open')) {
+        closeMoveShowcase();
+        if (ev.stopImmediatePropagation) ev.stopImmediatePropagation();
+        return;
+      }
       var root = $('modalRoot');
       if (root.classList.contains('open') && root.getAttribute('data-dismissible') !== '0') closeModal();
     });
@@ -6651,6 +7535,7 @@ body.focus-mode .focus-exit{display:block}
     var id = actEl.getAttribute('data-id');
 
     if (act === 'move') { showMoveDetail(actEl.getAttribute('data-move'), actEl); return; }
+    if (act === 'move-showcase') { showLearnedMove(Number(id), actEl.getAttribute('data-idx')); return; }
     if (act === 'set-partner') { setPartner(id); return; }
     if (act === 'box-open') { openDetail(id); return; }
     if (act === 'detail-retry') { openDetail(Number(id) || S.partner.id); return; }
