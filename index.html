@@ -1304,18 +1304,19 @@ body.focus-mode .focus-exit{display:block}
   position:relative;width:clamp(168px,26vh,220px);height:auto;image-rendering:pixelated;
   transform-origin:50% 92%;filter:drop-shadow(0 12px 14px rgba(0,0,0,.35));
 }
-.move-stage.play .mv-mon{animation:mvLunge 1.05s cubic-bezier(.3,.85,.35,1) both}
+.move-stage.play .mv-mon{animation:mvLunge 1.55s cubic-bezier(.3,.85,.35,1) both}
 @keyframes mvLunge{
   0%{transform:translateY(0) scale(.86);filter:brightness(1.7)}
-  16%{transform:translateY(8px) scale(.8) rotate(-3deg)}
-  30%{transform:translateY(-30px) scale(1.1) rotate(2deg)}
-  44%{transform:translateY(0) scale(1.02)}
-  56%{transform:translate(-16px,2px) rotate(-7deg) scale(1.08)}
-  64%{transform:translate(18px,-2px) rotate(7deg) scale(1.14)}
-  72%{transform:translate(-8px,1px) rotate(-3deg) scale(1.06)}
+  12%{transform:translateY(10px) scale(.78) rotate(-4deg)}
+  26%{transform:translateY(-34px) scale(1.12) rotate(3deg)}
+  38%{transform:translateY(0) scale(1.02)}
+  48%{transform:translate(-18px,2px) rotate(-8deg) scale(1.08)}
+  56%{transform:translate(20px,-2px) rotate(8deg) scale(1.15)}
+  64%{transform:translate(-10px,1px) rotate(-4deg) scale(1.07)}
+  72%{transform:translate(6px,0) rotate(1deg) scale(1.03)}
   100%{transform:none}
 }
-.move-stage.play .mv-card{animation:mvShake .62s .5s ease both}
+.move-stage.play .mv-card{animation:mvShake .9s .55s ease both}
 @keyframes mvShake{
   0%,100%{transform:none}
   10%{transform:translate(-9px,3px) rotate(-.7deg)}
@@ -1338,7 +1339,7 @@ body.focus-mode .focus-exit{display:block}
   background:var(--mv);box-shadow:0 0 12px var(--mv);opacity:0;
   transform:rotate(var(--a)) translateX(26px);
 }
-.move-stage.play .mv-p{animation:mvParticle 1.15s var(--dl) cubic-bezier(.2,.7,.4,1) forwards}
+.move-stage.play .mv-p{animation:mvParticle 2.1s var(--dl) cubic-bezier(.2,.7,.4,1) forwards}
 @keyframes mvParticle{
   0%{opacity:0;transform:rotate(var(--a)) translateX(18px) scale(.3)}
   22%{opacity:1}
@@ -1356,8 +1357,8 @@ body.focus-mode .focus-exit{display:block}
   position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;
   border-radius:50%;border:4px solid var(--mv);opacity:0;
 }
-.move-stage.play .mv-ring{animation:mvRing .95s .5s ease-out forwards}
-.move-stage.play .mv-ring.r2{animation-delay:.74s}
+.move-stage.play .mv-ring{animation:mvRing 1.7s .55s ease-out forwards}
+.move-stage.play .mv-ring.r2{animation-delay:.95s}
 @keyframes mvRing{0%{opacity:.9;transform:scale(.35)}100%{opacity:0;transform:scale(4.4)}}
 
 .mv-bolt{
@@ -1377,18 +1378,19 @@ body.focus-mode .focus-exit{display:block}
   background:linear-gradient(90deg,transparent,var(--mv) 22%,#fff 50%,var(--mv) 78%,transparent);
 }
 .move-stage[data-fx="cosmic"] .mv-beam{display:block}
-.move-stage.play[data-fx="cosmic"] .mv-beam{animation:mvBeam .95s .38s ease-out forwards}
+.move-stage.play[data-fx="cosmic"] .mv-beam{animation:mvBeam 1.5s .4s ease-out forwards}
 @keyframes mvBeam{
   0%{opacity:0;transform:rotate(-12deg) scaleX(.25)}
   30%{opacity:1}
   100%{opacity:0;transform:rotate(-12deg) scaleX(1.2)}
 }
 .mv-flash{position:absolute;inset:0;background:#fff;opacity:0}
-.move-stage.play .mv-flash{animation:mvFlash .55s .48s ease-out both}
-@keyframes mvFlash{0%{opacity:0}18%{opacity:.72}100%{opacity:0}}
+.move-stage.play .mv-flash{animation:mvFlash .8s .5s ease-out both}
+@keyframes mvFlash{0%{opacity:0}16%{opacity:.8}100%{opacity:0}}
 
 .mv-move{margin-top:8px;border:4px solid var(--ink);border-radius:20px;background:#fff;padding:10px 12px;box-shadow:0 6px 0 rgba(0,0,0,.16)}
 .mv-move-head{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.mv-move .tbadge{font-size:15px;padding:3px 11px;border-radius:999px}
 .mv-name{font-size:clamp(21px,5.6vw,28px);font-weight:800;color:var(--ink);line-height:1.2}
 .mv-power{font-size:13.5px;font-weight:800;color:#8a5a00;background:#fff3c4;border:2px solid var(--ink);border-radius:999px;padding:2px 9px;white-space:nowrap}
 .mv-line{margin-top:7px;font-size:clamp(13.5px,3.6vw,16px);font-weight:700;color:#4b4552;line-height:1.45}
