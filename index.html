@@ -1339,7 +1339,7 @@ body.focus-mode .focus-exit{display:block}
   background:var(--mv);box-shadow:0 0 12px var(--mv);opacity:0;
   transform:rotate(var(--a)) translateX(26px);
 }
-.move-stage.play .mv-p{animation:mvParticle 2.1s var(--dl) cubic-bezier(.2,.7,.4,1) forwards}
+.move-stage.play .mv-p{animation:mvParticle 2.4s var(--dl) cubic-bezier(.2,.7,.4,1) infinite}
 @keyframes mvParticle{
   0%{opacity:0;transform:rotate(var(--a)) translateX(18px) scale(.3)}
   22%{opacity:1}
@@ -3943,7 +3943,7 @@ body.focus-mode .focus-exit{display:block}
     for (var i = 0; i < 20; i++) {
       var ang = Math.round(i * 18 + (Math.random() * 16 - 8));
       var dist = 110 + Math.round(Math.random() * 150);
-      var dl = Math.round(Math.random() * 5) / 10;
+      var dl = Math.round(Math.random() * 12) / 10;
       var sz = 6 + Math.round(Math.random() * 10);
       html += '<i class="mv-p" style="--a:' + ang + 'deg;--d:' + dist + 'px;--dl:' + dl + 's;--sz:' + sz + 'px"></i>';
     }
